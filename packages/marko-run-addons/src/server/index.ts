@@ -16,11 +16,11 @@ export type { Validator, ValidateOptions } from "./validation";
 
 declare module "@marko/run" {
   interface Context {
-    body: unknown;
+    body?: unknown;
     csrf: CsrfService;
     flash: FlashService;
-    form: string;
-    query: unknown;
+    form?: string;
+    query?: unknown;
     session: Session;
   }
 }
