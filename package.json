@@ -1,5 +1,5 @@
 {
-  "name": "@marko/run addons monorepo",
+  "name": "@marko/run-addons",
   "private": true,
   "devDependencies": {
     "@eslint/js": "^9.8.0",
