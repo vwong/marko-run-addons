@@ -1,0 +1,44 @@
+{
+  "name": "@marko/run addons monorepo",
+  "private": true,
+  "devDependencies": {
+    "@eslint/js": "^9.8.0",
+    "@marko/testing-library": "^6.2.0",
+    "@marko/type-check": "^1.1.8",
+    "@vitest/coverage-v8": "^2.0.5",
+    "autoprefixer": "^10.4.20",
+    "eslint": "^9.8.0",
+    "eslint-config-prettier": "^9.1.0",
+    "globals": "^15.9.0",
+    "htmljs-parser": "^5.5.2",
+    "postcss": "^8.4.40",
+    "postcss-scss": "^4.0.9",
+    "prettier": "^3.3.3",
+    "prettier-plugin-marko": "^3.1.2",
+    "rollup-plugin-visualizer": "^5.12.0",
+    "sass": "^1.77.8",
+    "stylelint": "^16.8.1",
+    "stylelint-config-recommended-scss": "^14.1.0",
+    "stylelint-config-standard-scss": "^13.1.0",
+    "stylelint-order": "^6.0.4",
+    "stylelint-scss": "^6.4.1",
+    "typescript-eslint": "^8.0.0",
+    "vite": "^5.3.5",
+    "vitest": "^2.0.5"
+  },
+  "scripts": {
+    "lint": "npm run lint:js && npm run lint:css",
+    "lint:css": "stylelint '**/*.scss' '**/*.marko'",
+    "lint:js": "eslint --max-warnings=0",
+    "prettier": "prettier --list-different --plugin=prettier-plugin-marko .",
+    "prettier:fix": "prettier --cache --list-different --write --plugin=prettier-plugin-marko .",
+    "test": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "typecheck": "mtc"
+  },
+  "workspaces": [
+    "packages/marko-run-addons",
+    "packages/marko-run-example"
+  ],
+  "type": "module"
+}

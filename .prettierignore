@@ -1,0 +1,7 @@
+coverage/
+dist/
+public/
+tmp/
+stats.html
+vitest.config.ts
+.marko-run/

@@ -1,0 +1,10 @@
+<if($global.flash.current.length)>
+  <section aria-labelledby:scoped="flash" class="flash">
+    <div class="visually-hidden" id:scoped="flash">
+      Notices
+    </div>
+    <for|{ message }| of=($global.flash.current)>
+      <div>$!{message}</div>
+    </for>
+  </section>
+</if>

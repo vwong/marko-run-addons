@@ -1,0 +1,19 @@
+$ const links = [
+  { href: "/", text: "Home" },
+  { href: "/search-params", text: "Search Params" },
+  { href: "/request-body", text: "Request Body" },
+];
+<nav>
+  <ul>
+    <for|{ href, text }| of=links>
+      <li>
+        <a
+          aria-current=(href === $global.url.pathname ? "page" : undefined)
+          href=href
+        >
+          ${text}
+        </a>
+      </li>
+    </for>
+  </ul>
+</nav>

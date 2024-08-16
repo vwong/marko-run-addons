@@ -1,0 +1,31 @@
+<h1>Search Params</h1>
+
+<h2>With forms</h2>
+<p>
+  This page validates search parameters. Try negative values to see an error.
+</p>
+<form id:scoped="form">
+  <label for:scoped="page">
+    Page
+  </label>
+  <input id:scoped="page" name="page" type="number" value="1">
+  <button type="submit">
+    Submit
+  </button>
+</form>
+<form-validator for:scoped="form"/>
+
+<h2>With direct links</h2>
+<p>Alternatively, instead of form GETs, we can link URLs directly</p>
+<ul>
+  <li>
+    <a href="?page=1">
+      Page 1
+    </a>
+  </li>
+  <li>
+    <a href="?page=-1">
+      Page -1 (error)
+    </a>
+  </li>
+</ul>

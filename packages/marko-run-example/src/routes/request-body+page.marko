@@ -1,0 +1,42 @@
+<h1>Request Body</h1>
+
+<h2>With CSRF Token</h2>
+<p>
+  This uses native form POST submissions. It will fail server-side validation when the count is greater than 5.
+</p>
+<form id:scoped="form" method="POST">
+  <csrf-token/>
+  <label for:scoped="count">
+    Count
+  </label>
+  <input id:scoped="count" name="count" type="number" value="0">
+
+  <label for:scoped="count2">
+    Count2
+  </label>
+  <input id:scoped="count2" name="count2" type="number" value="0">
+
+  <button type="submit">
+    Submit
+  </button>
+</form>
+<form-validator for:scoped="form"/>
+
+<h2>Without CSRF Token</h2>
+<p>
+  This uses native form POST submissions, but will fail since it has no CSRF tokens. This will not happen under normal conditions, since should be considered a bug to forget to include any CSRF tokens.
+</p>
+<form method="POST">
+  <label for:scoped="count-error">
+    Count
+  </label>
+  <input id:scoped="count-error" name="count" type="number" value="0">
+  <button type="submit">
+    Submit
+  </button>
+</form>
+
+<h2>Note about CSRF Tokens life</h2>
+<p>
+  CSRF Tokens have short lives (about a typical session), and are rotated frequently to avoid replay attacks. If the user has been idle for a while, they may encounter an expired CSRF token. This will get regenerated on the next visit.
+</p>

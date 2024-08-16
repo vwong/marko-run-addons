@@ -1,0 +1,36 @@
+export interface Input {
+  renderBody: Marko.Body;
+}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta
+      content="width=device-width,initial-scale=1,viewport-fit=cover"
+      name="viewport"
+    >
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  </head>
+  <body>
+    <navigation/>
+    <flash-notice/>
+    <main>
+      <${input.renderBody}/>
+    </main>
+  </body>
+</html>
+style.scss {
+  html {
+    font-family: $font-family-sans-serif;
+  }
+
+  input:invalid {
+    border: 2px dashed red;
+  }
+
+  .visually-hidden {
+    overflow: hidden;
+    position: absolute;
+    width: 0;
+  }
+}
