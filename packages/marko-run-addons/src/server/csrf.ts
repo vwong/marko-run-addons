@@ -55,7 +55,7 @@ export class CsrfService {
 }
 
 export interface CsrfOptions {
-  disableCheck?: boolean;
+  disableCheck?: (context: MarkoRun.Context) => boolean;
   maxAge: number;
   minAge: number;
   onError: (context: MarkoRun.Context) => void;
@@ -63,7 +63,7 @@ export interface CsrfOptions {
 
 export const csrf =
   ({
-    disableCheck = false,
+    disableCheck = () => false,
     minAge,
     maxAge,
     onError,
@@ -76,7 +76,7 @@ export const csrf =
     });
 
     if (
-      !disableCheck &&
+      !disableCheck(context) &&
       (context as unknown as Context).body !== undefined &&
       !csrf.isValid((context as unknown as Context).body!._csrf)
     ) {
