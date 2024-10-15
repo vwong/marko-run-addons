@@ -1,4 +1,4 @@
-import cookie, { CookieSerializeOptions } from "cookie";
+import cookie, { SerializeOptions } from "cookie";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { cloneDeep, isEqual } from "lodash-es";
 import { randomBytes } from "node:crypto";
@@ -15,7 +15,7 @@ export abstract class SessionStore {
 export interface SessionOptions {
   clockTolerance: number;
   cookieName: string;
-  cookieOptions: Omit<CookieSerializeOptions, "expires" | "maxAge">;
+  cookieOptions: Omit<SerializeOptions, "expires" | "maxAge">;
   create: () => Promise<Session>;
   maxAge: number;
   minAge: number;
@@ -45,7 +45,7 @@ export const session = ({
   const setCookie = (
     response: Response,
     token: string,
-    options: Partial<CookieSerializeOptions>,
+    options: Partial<SerializeOptions>,
   ) => {
     if (response.headers.has("Set-cookie")) {
       /* don't clobber */

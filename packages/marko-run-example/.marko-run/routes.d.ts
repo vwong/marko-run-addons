@@ -4,7 +4,7 @@
 */
 
 import { NotHandled, NotMatched, GetPaths, PostPaths, GetablePath, GetableHref, PostablePath, PostableHref, Platform } from "@marko/run/namespace";
-import type Run from "@marko/run";
+import type * as Run from "@marko/run";
 import type { NodePlatformInfo } from '@marko/run-adapter-node'
 
 declare module "@marko/run" {
@@ -25,6 +25,7 @@ declare module "../src/routes/+handler" {
     export type Route = Run.Routes["/"];
     export type Context = Run.MultiRouteContext<Route>;
     export type Handler = Run.HandlerLike<Route>;
+    /** @deprecated use `((context, next) => { ... }) satisfies MarkoRun.Handler` instead */
     export const route: Run.HandlerTypeFn<Route>;
   }
 }
@@ -35,6 +36,7 @@ declare module "../src/routes/request-body+handler" {
     export type Route = Run.Routes["/request-body"];
     export type Context = Run.MultiRouteContext<Route>;
     export type Handler = Run.HandlerLike<Route>;
+    /** @deprecated use `((context, next) => { ... }) satisfies MarkoRun.Handler` instead */
     export const route: Run.HandlerTypeFn<Route>;
   }
 }
@@ -45,6 +47,7 @@ declare module "../src/routes/+middleware" {
     export type Route = Run.Routes["/" | "/request-body" | "/search-params"];
     export type Context = Run.MultiRouteContext<Route>;
     export type Handler = Run.HandlerLike<Route>;
+    /** @deprecated use `((context, next) => { ... }) satisfies MarkoRun.Handler` instead */
     export const route: Run.HandlerTypeFn<Route>;
   }
 }
@@ -55,6 +58,7 @@ declare module "../src/routes/+page.marko" {
     export type Route = Run.Routes["/"];
     export type Context = Run.MultiRouteContext<Route> & Marko.Global;
     export type Handler = Run.HandlerLike<Route>;
+    /** @deprecated use `((context, next) => { ... }) satisfies MarkoRun.Handler` instead */
     export const route: Run.HandlerTypeFn<Route>;
   }
 }
@@ -65,6 +69,7 @@ declare module "../src/routes/request-body+page.marko" {
     export type Route = Run.Routes["/request-body"];
     export type Context = Run.MultiRouteContext<Route> & Marko.Global;
     export type Handler = Run.HandlerLike<Route>;
+    /** @deprecated use `((context, next) => { ... }) satisfies MarkoRun.Handler` instead */
     export const route: Run.HandlerTypeFn<Route>;
   }
 }
@@ -75,6 +80,7 @@ declare module "../src/routes/search-params+page.marko" {
     export type Route = Run.Routes["/search-params"];
     export type Context = Run.MultiRouteContext<Route> & Marko.Global;
     export type Handler = Run.HandlerLike<Route>;
+    /** @deprecated use `((context, next) => { ... }) satisfies MarkoRun.Handler` instead */
     export const route: Run.HandlerTypeFn<Route>;
   }
 }
@@ -88,6 +94,7 @@ declare module "../src/routes/+layout.marko" {
     export type Route = Run.Routes["/" | "/request-body" | "/search-params"];
     export type Context = Run.MultiRouteContext<Route> & Marko.Global;
     export type Handler = Run.HandlerLike<Route>;
+    /** @deprecated use `((context, next) => { ... }) satisfies MarkoRun.Handler` instead */
     export const route: Run.HandlerTypeFn<Route>;
   }
 }
