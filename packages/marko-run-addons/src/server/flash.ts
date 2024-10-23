@@ -1,8 +1,3 @@
-export interface Context {
-  flash: FlashService;
-  session: FlashSession;
-}
-
 export interface FlashMessage {
   id: number;
   message: string;
@@ -52,7 +47,7 @@ export class FlashService {
 }
 
 export const flash = (): MarkoRun.Handler => (context) => {
-  (context as unknown as Context).flash = new FlashService({
-    session: (context as unknown as Context).session,
+  context.flash = new FlashService({
+    session: context.session,
   });
 };

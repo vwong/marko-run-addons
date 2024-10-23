@@ -1,0 +1,72 @@
+import { contents } from "../../contents";
+
+<div class="navigation">
+  <button popovertarget:scoped="nav">
+    Menu
+  </button>
+  <nav aria-labelledby:scoped="heading" id:scoped="nav" popover>
+    <h1 class="visually-hidden" id:scoped="heading">
+      Topics
+    </h1>
+    <ul>
+      <for|{ contents: innerContents, href, text }| of=contents>
+        <li>
+          <if(innerContents)>
+            <${href ? "a" : "span"}
+              aria-current=(href === $global.url.pathname ? "page" : undefined)
+              class=(href ? "link" : undefined)
+              href=href
+            >
+              ${text}
+            </>
+            <ul>
+              <for|{ href, text }| of=innerContents>
+                <li>
+                  <a
+                    aria-current=(
+                      href === $global.url.pathname ? "page" : undefined
+                    )
+                    class="link"
+                    href=href
+                  >
+                    ${text}
+                  </a>
+                </li>
+              </for>
+            </ul>
+          </if>
+          <else>
+            <a
+              aria-current=(href === $global.url.pathname ? "page" : undefined)
+              class="link"
+              href=href
+            >
+              ${text}
+            </a>
+          </else>
+        </li>
+      </for>
+    </ul>
+  </nav>
+</div>
+
+<style-link/>
+<style-visually-hidden/>
+style.scss {
+  .navigation {
+    & button:focus-visible {
+      outline-offset: -5px;
+    }
+
+    & [popover] {
+      border: 1px solid $color-line;
+      border-radius: $radius-m;
+    }
+
+    & :popover-open {
+      left: $s-4;
+      position: absolute;
+      top: calc($v-30 + $s-4);
+    }
+  }
+}

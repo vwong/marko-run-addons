@@ -1,0 +1,8 @@
+{
+  "attributes": {
+    "*": {
+      "preserve-name": true,
+      "remove-dashes": false
+    }
+  }
+}

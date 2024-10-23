@@ -1,0 +1,73 @@
+// @ts-nocheck
+
+<!-- use tags -->
+export interface Input {
+  src: string;
+}
+
+<let/key=0/>
+<let/body=new URLSearchParams()/>
+<let/isPending=false/>
+<let/isError=false/>
+<form/form
+  action=input.src
+  class="random"
+  method="POST"
+  onSubmit(event: Event) {
+    event.preventDefault();
+    body = new URLSearchParams(
+      new FormData(form()) as unknown as URLSearchParams,
+    );
+    isPending = true;
+    isError = true;
+    key++;
+  }
+>
+  <if=key>
+    <micro-frame
+      fetch(url, options, fetch) {
+        return fetch(url, {
+          ...options,
+          credentials: "same-origin",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            "X-Requested-With": "XMLHttpRequest",
+          },
+          method: "POST",
+          body,
+        })
+          .catch(() => {
+            isError = true;
+          })
+          .finally(() => {
+            isPending = false;
+          });
+      }
+      src=`${input.src}#${key}`
+    >
+      <@loading>
+        <div>...</div>
+      </@loading>
+      <@catch|err: Error|>
+        ${JSON.stringify(err)}
+      </@catch>
+    </micro-frame>
+  </if>
+  <else>
+    <micro-frame src=input.src/>
+  </else>
+  <button class="button" disabled=isPending type="submit">
+    Regenerate
+  </button>
+</form>
+
+<style-button/>
+
+<style.scss>
+  .random {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    margin-top: $v-10;
+  }
+</style>

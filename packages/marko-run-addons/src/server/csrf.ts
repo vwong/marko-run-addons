@@ -1,11 +1,7 @@
 import { randomBytes } from "node:crypto";
 
-export interface Context {
-  csrf: CsrfService;
-  body?: {
-    _csrf: string;
-  };
-  session: CsrfSession;
+interface FormBody {
+  _csrf?: string;
 }
 
 export interface CsrfToken {
@@ -72,16 +68,16 @@ export const csrf =
     const csrf = new CsrfService({
       maxAge,
       minAge,
-      session: (context as unknown as Context).session,
+      session: context.session,
     });
 
     if (
       !disableCheck(context) &&
-      (context as unknown as Context).body !== undefined &&
-      !csrf.isValid((context as unknown as Context).body!._csrf)
+      context.body !== undefined &&
+      !csrf.isValid((context.body as FormBody)._csrf!)
     ) {
       return onError(context);
     }
 
-    (context as unknown as Context).csrf = csrf;
+    context.csrf = csrf;
   };

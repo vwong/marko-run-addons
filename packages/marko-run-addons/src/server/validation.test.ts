@@ -1,19 +1,21 @@
-import { afterEach, beforeAll, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { validate } from "./validation";
 
 type CallableHandler = (
   context: MarkoRun.Context,
+  next?: () => Response,
 ) => Promise<Response | undefined>;
-
-const flash = {
-  error: vi.fn(),
-};
 
 const validator = {
   validate: vi.fn(),
   asJson: vi.fn(),
-  asHtml: vi.fn(),
 };
+
+const validationChecks = [{ name: "fieldName", message: "is invalid" }];
+const redirectResponse = new Response(null, {
+  status: 302,
+  headers: { location: "/some/path" },
+});
 
 describe("validate", () => {
   let validateMiddleware: CallableHandler;
@@ -24,7 +26,7 @@ describe("validate", () => {
   });
 
   describe("for validation only", () => {
-    beforeAll(() => {
+    beforeEach(() => {
       const url = new URL("http://foo/some/path");
       context = {
         meta: {
@@ -41,44 +43,54 @@ describe("validate", () => {
           }),
           method: "POST",
         }),
+        session: {},
+        url,
       } as MarkoRun.Context;
       validateMiddleware = validate({ validator }) as CallableHandler;
     });
 
-    it("validates correctly", async () => {
-      validator.validate.mockResolvedValue([]);
+    it("validates with no errors", async () => {
+      validator.asJson.mockReturnValueOnce([]);
+      validator.asJson.mockReturnValueOnce([]);
 
       const response = await validateMiddleware(context);
-
-      expect(validator.validate).toHaveBeenCalled();
-      expect(validator.asJson).not.toHaveBeenCalled();
-      expect(validator.asHtml).not.toHaveBeenCalled();
       expect(response!.status).toEqual(204);
     });
 
-    it("validates with error", async () => {
-      validator.validate.mockReturnValueOnce(["error1", "error2"]); // query
-      validator.validate.mockReturnValueOnce(["error3", "error4"]); // body
+    it("validates with errors in query params", async () => {
+      validator.asJson.mockReturnValueOnce(validationChecks);
 
       const response = await validateMiddleware(context);
 
-      expect(validator.validate).toHaveBeenCalled();
-      expect(validator.asJson).toHaveBeenCalledWith([
-        "error1",
-        "error2",
-        "error3",
-        "error4",
-      ]);
-      expect(validator.asHtml).not.toHaveBeenCalled();
+      expect(validator.validate).toHaveBeenCalledWith(
+        context,
+        "querySchema",
+        context.query,
+      );
       expect(response!.status).toEqual(400);
+      expect(await response!.json()).toEqual(validationChecks);
+    });
+
+    it("validates with errors in body", async () => {
+      validator.asJson.mockReturnValueOnce([]);
+      validator.asJson.mockReturnValueOnce(validationChecks);
+
+      const response = await validateMiddleware(context);
+
+      expect(validator.validate).toHaveBeenCalledWith(
+        context,
+        "bodySchema",
+        context.body,
+      );
+      expect(response!.status).toEqual(400);
+      expect(await response!.json()).toEqual(validationChecks);
     });
   });
 
-  describe("native form submission", () => {
-    beforeAll(() => {
+  describe("full submission (html or XHR)", () => {
+    beforeEach(() => {
       const url = new URL("http://foo/some/path");
       context = {
-        flash,
         meta: {
           schema: {
             body: "bodySchema",
@@ -90,38 +102,84 @@ describe("validate", () => {
         request: new Request(url, {
           method: "POST",
         }),
+        session: {},
         url,
       } as unknown as MarkoRun.Context;
       validateMiddleware = validate({ validator }) as CallableHandler;
     });
 
-    it("validates correctly", async () => {
-      validator.validate.mockResolvedValue([]);
+    it("validates with no errors", async () => {
+      validator.asJson.mockReturnValueOnce([]);
+      validator.asJson.mockReturnValueOnce([]);
 
-      const response = await validateMiddleware(context);
+      const response = await validateMiddleware(
+        context,
+        () => redirectResponse,
+      );
 
-      expect(validator.validate).toHaveBeenCalled();
-      expect(validator.asJson).not.toHaveBeenCalled();
-      expect(validator.asHtml).not.toHaveBeenCalled();
-      expect(response).toBeUndefined();
+      expect(response).toBe(redirectResponse);
     });
 
-    it("validates with error", async () => {
-      validator.validate.mockReturnValueOnce(["error1", "error2"]); // query
-      validator.validate.mockReturnValueOnce(["error3", "error4"]); // body
+    it("validates with errors in query params", async () => {
+      validator.asJson.mockReturnValueOnce(validationChecks);
+      validator.asJson.mockReturnValueOnce([]);
 
       const response = await validateMiddleware(context);
 
-      expect(validator.validate).toHaveBeenCalled();
-      expect(validator.asHtml).toHaveBeenCalledWith([
-        "error1",
-        "error2",
-        "error3",
-        "error4",
-      ]);
-      expect(flash.error).toHaveBeenCalled();
       expect(response!.status).toEqual(302);
       expect(response!.headers.get("location")).toEqual("/some/path");
+      expect(context.queryErrors).toEqual(validationChecks);
+      expect(context.bodyErrors).toEqual([]);
+    });
+
+    it("validates with errors in body", async () => {
+      validator.asJson.mockReturnValueOnce([]);
+      validator.asJson.mockReturnValueOnce(validationChecks);
+
+      const response = await validateMiddleware(context);
+
+      expect(response!.status).toEqual(302);
+      expect(response!.headers.get("location")).toEqual("/some/path");
+      expect(context.queryErrors).toEqual([]);
+      expect(context.bodyErrors).toEqual(validationChecks);
+    });
+
+    it("stores body and bodyError for use in next GET", async () => {
+      validator.asJson.mockReturnValueOnce([]);
+      validator.asJson.mockReturnValueOnce([]);
+
+      await validateMiddleware(context, () => redirectResponse);
+
+      expect(context.session._redirectTo).toEqual("/some/path");
+      expect(context.session._lastBody).toEqual("body");
+      expect(context.session._lastBodyErrors).toEqual([]);
+    });
+  });
+
+  describe("redirected page after a POST", () => {
+    beforeEach(() => {
+      const url = new URL("http://foo/some/path");
+      context = {
+        request: new Request(url),
+        session: {
+          _redirectTo: "/some/path",
+          _lastBody: "body",
+          _lastBodyErrors: validationChecks,
+        },
+        url,
+      } as unknown as MarkoRun.Context;
+      validateMiddleware = validate({ validator }) as CallableHandler;
+    });
+
+    it("restores previous body and errors", async () => {
+      await validateMiddleware(context);
+
+      expect(context.body).toEqual("body");
+      expect(context.bodyErrors).toEqual(validationChecks);
+
+      expect(context.session._isRedirect).toBeUndefined();
+      expect(context.session._lastBody).toBeUndefined();
+      expect(context.session._lastErrors).toBeUndefined();
     });
   });
 });

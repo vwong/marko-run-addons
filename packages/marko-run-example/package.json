@@ -11,15 +11,15 @@
     "@marko/run": "^0.4.8",
     "@marko/run-adapter-node": "^0.1.13",
     "@marko/tags-api-preview": "^0.7.8",
-    "@sinclair/typebox": "^0.33.16",
+    "@micro-frame/marko": "^1.10.1",
+    "@sinclair/typebox": "^0.33.17",
     "@vwong/marko-run-addons": "^1.0.0",
     "ajv": "^8.17.1",
     "ajv-errors": "^3.0.0",
     "ajv-formats": "^3.0.1",
     "compression": "^1.7.4",
-    "express": "^4.21.1",
-    "lodash-es": "^4.17.21",
-    "makeup-switch": "^0.3.1"
+    "express": "^5.0.1",
+    "lodash-es": "^4.17.21"
   },
   "devDependencies": {
     "@types/compression": "^1.7.5",
@@ -30,6 +30,10 @@
     "dev": "marko-run dev src/index.ts",
     "preview": "marko-run preview src/index.ts",
     "start": "NODE_ENV=production node dist/index.mjs"
+  },
+  "imports": {
+    "#lib/*": "./src/lib/*.ts",
+    "#middleware/*": "./src/middleware/*.ts"
   },
   "type": "module"
 }

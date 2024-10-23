@@ -1,3 +1,4 @@
+import { randomBytes } from "node:crypto";
 import {
   csrf,
   flash,
@@ -5,8 +6,9 @@ import {
   session,
   validate,
 } from "@vwong/marko-run-addons/server";
-import { MemorySessionStore } from "../lib/memorySessionStore";
-import { AjvValidator } from "../lib/ajvValidator";
+import { AjvValidator } from "#lib/ajvValidator";
+import { MemorySessionStore } from "#lib/memorySessionStore";
+import { badRequest, redirect } from "#lib/responses";
 
 export default [
   session({
@@ -21,7 +23,7 @@ export default [
     maxAge: 86_400,
     minAge: 36_000,
     secrets: ["secret"],
-    store: new MemorySessionStore({ maxAge: 86_400 }),
+    store: new MemorySessionStore({ maxAge: 86_400_000 }),
   }),
   flash(),
   requestParser(),
@@ -29,14 +31,30 @@ export default [
     maxAge: 3_600,
     minAge: 1_800,
     onError: (context: MarkoRun.Context) => {
-      context.flash.error("Missing or expired CSRF Token");
-      return new Response(null, {
-        status: 302,
-        headers: {
-          location: context.request.headers.get("referer") as string,
-        },
-      });
+      const message = "Missing or expired CSRF Token";
+      if (context.isXHR) {
+        return badRequest({ error: message });
+      } else {
+        context.flash.error(message);
+        return redirect(context.request.headers.get("referer")!);
+      }
     },
   }),
   validate({ validator: new AjvValidator() }),
+  async (context, next) => {
+    context.cspNonce = randomBytes(16).toString("base64");
+    context.isXHR =
+      context.request.headers.get("X-Requested-With") === "XMLHttpRequest";
+
+    // TODO: this will be renamed to "renderId" in Marko 6
+    if (context.isXHR) {
+      context.componentIdPrefix = `c-${Math.random()}`;
+    }
+
+    const response = await next();
+
+    response.headers.set("Cache-Control", "no-store");
+
+    return response;
+  },
 ] as MarkoRun.Handler[];

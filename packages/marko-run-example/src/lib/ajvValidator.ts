@@ -56,8 +56,4 @@ export class AjvValidator implements Validator<ErrorObject, SchemaObject> {
       };
     });
   }
-
-  asHtml(errors: ErrorObject[]): string {
-    return `<code><pre>${JSON.stringify(errors, null, 2)}</pre></code>`;
-  }
 }

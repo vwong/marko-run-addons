@@ -10,27 +10,29 @@ export interface Input {
       name="viewport"
     >
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <if(process.env.NODE_ENV === "production")>
+      <speculation-rules/>
+    </if>
   </head>
   <body>
-    <navigation/>
     <flash-notice/>
-    <main>
+    <navigation-sidebar/>
+    <main class="doc">
       <${input.renderBody}/>
     </main>
+    <footer>
+      <navigation-footer/>
+    </footer>
+    <style-base/>
   </body>
 </html>
 style.scss {
-  html {
-    font-family: $font-family-sans-serif;
-  }
+  .doc {
+    padding: $v-10 $s-16;
 
-  input:invalid {
-    border: 2px dashed red;
-  }
-
-  .visually-hidden {
-    overflow: hidden;
-    position: absolute;
-    width: 0;
+    h2,
+    p {
+      margin-top: $v-10;
+    }
   }
 }

@@ -4,8 +4,9 @@ import { cloneDeep, isEqual } from "lodash-es";
 import { randomBytes } from "node:crypto";
 import { CsrfSession } from "./csrf";
 import { FlashSession } from "./flash";
+import { ValidationSession } from "./validation";
 
-export interface Session extends CsrfSession, FlashSession {}
+export interface Session extends CsrfSession, FlashSession, ValidationSession {}
 
 export abstract class SessionStore {
   abstract get(sessionId: string): Promise<Session | undefined>;

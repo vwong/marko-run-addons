@@ -1,39 +1,52 @@
 import { debounce } from "lodash-es";
-import type { ValidationChecks } from "../server/validation";
+import type { ValidationCheck } from "../server/validation";
 
-// assumptions:
-// * all inputs are nested inside top-level <form> element
+export interface FormValidatorOptions {
+  formEl: HTMLFormElement;
+  onInputError: (el: HTMLInputElement, message: string) => void;
+  onInvalid: () => void;
+  onPending: () => void;
+  onValid: () => void;
+}
 
 export class FormValidator {
-  formEl: HTMLFormElement;
-  abortController?: AbortController;
+  #abortController?: AbortController;
+  #formEl: HTMLFormElement;
+  #onInputError: (el: HTMLInputElement, message: string) => void;
+  #onInvalid: () => void;
+  #onPending: () => void;
+  #onValid: () => void;
 
-  constructor(formEl: HTMLFormElement) {
-    this.formEl = formEl;
+  constructor(options: FormValidatorOptions) {
+    this.#formEl = options.formEl;
+    this.#onInputError = options.onInputError;
+    this.#onInvalid = options.onInvalid;
+    this.#onPending = options.onPending;
+    this.#onValid = options.onValid;
 
     const debouncedValidate = debounce(
       (event: Event) => this.validate(event),
       300,
     );
-    this.formEl.addEventListener("input", debouncedValidate);
-    this.formEl.addEventListener("change", debouncedValidate);
-    this.formEl.addEventListener("submit", () => {
+    this.#formEl.addEventListener("input", debouncedValidate);
+    this.#formEl.addEventListener("change", debouncedValidate);
+    this.#formEl.addEventListener("submit", () => {
       for (const el of this.inputElements) {
         el.dataset.touched = "1";
       }
     });
-    this.formEl.addEventListener("focusin", (event: Event) => {
+    this.#formEl.addEventListener("focusin", (event: Event) => {
       const el = event.target as HTMLInputElement;
       if (el.validationMessage && el.dataset.touched) {
         el.reportValidity();
       }
     });
-    this.formEl.addEventListener("focusout", (event: Event) => {
+    this.#formEl.addEventListener("focusout", (event: Event) => {
       const el = event.target as HTMLInputElement;
       el.dataset.touched = "1";
       if (el.dataset.deferredError) {
         el.setAttribute("aria-invalid", "true");
-        el.setCustomValidity(el.dataset.deferredError as string);
+        this.#onInputError(el, el.dataset.deferredError);
         delete el.dataset.deferredError;
       }
     });
@@ -41,7 +54,7 @@ export class FormValidator {
 
   validate(event: Event) {
     event.preventDefault();
-    this.abortController?.abort();
+    this.#abortController?.abort();
 
     // allow abort error handlers to happen first, so use setTimeout
     setTimeout(() => {
@@ -49,18 +62,18 @@ export class FormValidator {
       if (this.submitElement) {
         this.submitElement.disabled = true;
       }
-      this.abortController = new AbortController();
+      this.#abortController = new AbortController();
 
-      const method = (this.formEl.method || "GET").toUpperCase();
+      const method = (this.#formEl.method || "GET").toUpperCase();
       const params = new URLSearchParams(
-        new FormData(this.formEl) as unknown as URLSearchParams,
+        new FormData(this.#formEl) as unknown as URLSearchParams,
       );
       const query = method === "POST" ? "" : `?${params.toString()}`;
       const body = method === "POST" ? params : undefined;
       const path =
-        this.formEl.getAttribute("action") || window.location.pathname;
+        this.#formEl.getAttribute("action") || window.location.pathname;
 
-      this.formEl.dispatchEvent(new Event("pending"));
+      this.#onPending();
       fetch(path + query, {
         body,
         credentials: "same-origin",
@@ -74,50 +87,50 @@ export class FormValidator {
           "X-Validate-Only": "true",
         },
         method,
-        signal: this.abortController.signal,
+        signal: this.#abortController.signal,
       } as RequestInit)
         .then((response) => {
           if (response.status === 400) {
             response.json().then((errors) => {
               this.clearValidity();
               this.setValidity(errors);
-              this.formEl.dispatchEvent(new Event("invalid"));
+              this.#onInvalid();
             });
           } else {
             this.clearValidity();
-            this.formEl.dispatchEvent(new Event("valid"));
+            this.#onValid();
           }
         })
         .catch((error) => {
-          if (!this.abortController!.signal.aborted) {
+          if (!this.#abortController!.signal.aborted) {
             throw error;
           }
-          this.formEl.dispatchEvent(new Event("invalid"));
+          this.#onInvalid();
         })
         .finally(() => {
           window.onbeforeunload = null;
           if (this.submitElement) {
             this.submitElement.disabled = false;
           }
-          this.abortController = undefined;
+          this.#abortController = undefined;
         });
     }, 0);
   }
 
   clearValidity() {
     for (const el of this.inputElements) {
-      el.setCustomValidity("");
+      this.#onInputError(el, "");
       el.setAttribute("aria-invalid", "false");
     }
   }
 
-  setValidity(errors: ValidationChecks[]) {
+  setValidity(errors: ValidationCheck[]) {
     errors.forEach(({ name, message }) => {
       const el = this.inputElements.find((i) => i.name === name);
       if (el) {
         if (el.dataset.touched) {
           el.setAttribute("aria-invalid", "true");
-          el.setCustomValidity(message as string);
+          this.#onInputError(el, message);
 
           if (el.dataset.touched && el === document.activeElement) {
             el.reportValidity();
@@ -131,13 +144,13 @@ export class FormValidator {
 
   get inputElements(): HTMLInputElement[] {
     return [
-      ...Array.from(this.formEl.querySelectorAll("input")),
-      ...Array.from(this.formEl.querySelectorAll("select")),
-      ...Array.from(this.formEl.querySelectorAll("textarea")),
+      ...Array.from(this.#formEl.querySelectorAll("input")),
+      ...Array.from(this.#formEl.querySelectorAll("select")),
+      ...Array.from(this.#formEl.querySelectorAll("textarea")),
     ] as HTMLInputElement[];
   }
 
   get submitElement(): HTMLButtonElement {
-    return this.formEl.querySelector(`[type="submit"]`) as HTMLButtonElement;
+    return this.#formEl.querySelector(`[type="submit"]`) as HTMLButtonElement;
   }
 }

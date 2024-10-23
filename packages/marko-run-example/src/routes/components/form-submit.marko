@@ -1,0 +1,42 @@
+<!-- use tags -->
+import { FormValidator } from "@vwong/marko-run-addons/client";
+export interface Input {
+  for: string;
+  renderBody: Marko.Body;
+}
+
+<let/isPending=false/>
+<let/isError=false/>
+<button
+  class="button"
+  disabled=isError || isPending
+  form=input.for
+  type="submit"
+>
+  <${input.renderBody}/>
+</button>
+<lifecycle onMount() {
+  const el = document.getElementById(input.for) as HTMLFormElement;
+  new FormValidator({
+    formEl: el,
+    onInputError(el: HTMLInputElement, message: string) {
+      const errorElementId = el.getAttribute("aria-describedby");
+      if (errorElementId) {
+        const errorElement = document.getElementById(errorElementId);
+        errorElement!.innerText = message;
+      }
+    },
+    onInvalid: () => {
+      isPending = false;
+      isError = true;
+    },
+    onPending: () => {
+      isPending = true;
+      isError = false;
+    },
+    onValid: () => {
+      isPending = false;
+      isError = false;
+    },
+  });
+}/>

@@ -1,0 +1,48 @@
+import { flatContents as contents } from "../../contents";
+$ const current = contents.findIndex((c) => c.href === $global.url.pathname);
+$ const previous = Math.max(0, current - 1);
+$ const next = Math.min(contents.length - 1, current + 1);
+
+<div class="navigation-footer">
+  <if(current)>
+    <a
+      class="tile navigation-footer__link navigation-footer__link--prev"
+      href=(contents[previous].href)
+    >
+      ‹ ${contents[previous].text}
+    </a>
+  </if>
+
+  <if(current < contents.length - 1)>
+    <a
+      class="tile navigation-footer__link navigation-footer__link--next"
+      href=(contents[next].href)
+    >
+      ${contents[next].text} ›
+    </a>
+  </if>
+</div>
+
+<style-tile/>
+
+style.scss {
+  .navigation-footer {
+    display: grid;
+    grid-gap: $s-8;
+    grid-template-columns: 1fr 1fr;
+    margin-inline: $s-16;
+
+    &__link {
+      padding: $v-10 $s-16;
+
+      &--prev {
+        grid-column: 1/2;
+      }
+
+      &--next {
+        grid-column: 2/3;
+        text-align: right;
+      }
+    }
+  }
+}

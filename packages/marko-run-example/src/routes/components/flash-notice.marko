@@ -3,8 +3,12 @@
     <div class="visually-hidden" id:scoped="flash">
       Notices
     </div>
-    <for|{ message }| of=($global.flash.current)>
-      <div>$!{message}</div>
-    </for>
+    <ul>
+      <for|{ message }| of=($global.flash.current)>
+        <li>$!{message}</li>
+      </for>
+    </ul>
   </section>
 </if>
+
+<style-visually-hidden/>

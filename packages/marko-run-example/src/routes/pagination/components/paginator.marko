@@ -1,0 +1,80 @@
+// @ts-nocheck
+
+<!-- use tags -->
+export interface Input {
+  current: number;
+  frame: string;
+  src: string;
+}
+
+<let/isBrowser=false/>
+<let/page=input.current/>
+<const/prevPage=Math.max(1, page - 1)/>
+<const/nextPage=page + 1/>
+
+<nav>
+  <ul>
+    <li>
+      <a
+        class="link"
+        href=`${input.src}?page=${prevPage}`
+        onClick(event: Event) {
+          event.preventDefault();
+          page = prevPage;
+          history.pushState(
+            { page: prevPage },
+            "",
+            `${input.src}?page=${prevPage}`,
+          );
+        }
+      >
+        Previous
+      </a>
+    </li>
+    <li>
+      <a
+        class="link"
+        href=`${input.src}?page=${nextPage}`
+        onClick(event: Event) {
+          event.preventDefault();
+          page = nextPage;
+          history.pushState(
+            { page: nextPage },
+            "",
+            `${input.src}?page=${nextPage}`,
+          );
+        }
+      >
+        Next
+      </a>
+    </li>
+  </ul>
+</nav>
+
+<div>
+  <micro-frame src=`${input.src}/frame/${input.frame}?page=${page}`>
+    <if=isBrowser>
+      <@loading>...</@loading>
+      <@catch|err: Error|>
+        ${JSON.stringify(err)}
+      </@catch>
+    </if>
+  </micro-frame>
+</div>
+
+<effect() {
+  isBrowser = true;
+}/>
+
+<effect() {
+  const updatePage = (event: PopStateEvent) => {
+    page = event.state?.page || input.current;
+  };
+  window.addEventListener("popstate", updatePage);
+
+  return () => {
+    window.removeEventListener("popstate", updatePage);
+  };
+}/>
+
+<style-link/>

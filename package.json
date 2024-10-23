@@ -2,12 +2,12 @@
   "name": "@marko/run-addons",
   "private": true,
   "devDependencies": {
-    "@eslint/js": "^9.12.0",
+    "@eslint/js": "^9.13.0",
     "@marko/testing-library": "^6.2.0",
-    "@marko/type-check": "^1.1.8",
+    "@marko/type-check": "^1.2.0",
     "@vitest/coverage-v8": "^2.1.3",
     "autoprefixer": "^10.4.20",
-    "eslint": "^9.12.0",
+    "eslint": "^9.13.0",
     "eslint-config-prettier": "^9.1.0",
     "globals": "^15.11.0",
     "htmljs-parser": "^5.5.2",
@@ -16,14 +16,14 @@
     "prettier": "^3.3.3",
     "prettier-plugin-marko": "^3.1.4",
     "rollup-plugin-visualizer": "^5.12.0",
-    "sass": "^1.79.5",
+    "sass": "^1.80.3",
     "stylelint": "^16.10.0",
     "stylelint-config-recommended-scss": "^14.1.0",
     "stylelint-config-standard-scss": "^13.1.0",
     "stylelint-order": "^6.0.4",
-    "stylelint-scss": "^6.7.0",
-    "typescript-eslint": "^8.9.0",
-    "vite": "^5.4.9",
+    "stylelint-scss": "^6.8.1",
+    "typescript-eslint": "^8.11.0",
+    "vite": "^5.4.10",
     "vitest": "^2.1.3"
   },
   "scripts": {
@@ -34,7 +34,7 @@
     "prettier:fix": "prettier --cache --list-different --write --plugin=prettier-plugin-marko .",
     "test": "vitest",
     "test:coverage": "vitest run --coverage",
-    "typecheck": "mtc"
+    "typecheck": "mtc --project packages/marko-run-example/tsconfig.json"
   },
   "workspaces": [
     "packages/marko-run-addons",

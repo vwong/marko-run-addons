@@ -1,0 +1,13 @@
+<!-- use tags -->
+export interface Input {
+  by: string;
+  renderBody: Marko.Body;
+}
+<for
+  of=[input.by]
+  by(key: string) {
+    return key;
+  }
+>
+  <${input.renderBody}/>
+</for>
