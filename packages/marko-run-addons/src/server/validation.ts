@@ -22,6 +22,8 @@ export abstract class Validator<E, S> {
 }
 
 export interface ValidateOptions<E, S> {
+  onBodyErrors?: (context: MarkoRun.Context) => void;
+  onQueryErrors?: (context: MarkoRun.Context) => void;
   validator: Validator<E, S>;
 }
 
@@ -33,7 +35,11 @@ interface Meta {
 }
 
 export const validate =
-  <E, S>({ validator }: ValidateOptions<E, S>): MarkoRun.Handler =>
+  <E, S>({
+    onBodyErrors,
+    onQueryErrors,
+    validator,
+  }: ValidateOptions<E, S>): MarkoRun.Handler =>
   async (context, next) => {
     const meta = context.meta as Meta;
     context.queryErrors = validator.asJson(
@@ -81,16 +87,19 @@ export const validate =
     }
 
     let response;
-    if (
-      context.request.method === "POST" &&
-      (context.queryErrors.length || context.bodyErrors.length)
-    ) {
+    if (context.queryErrors.length || context.bodyErrors.length) {
+      if (context.queryErrors.length && onQueryErrors) {
+        onQueryErrors(context);
+      }
+      if (context.bodyErrors.length && onBodyErrors) {
+        onBodyErrors(context);
+      }
       response = redirect(context.url.pathname);
     } else {
       response = await next();
     }
 
-    if (context.body && response.status === 302) {
+    if (response.status === 302) {
       context.session._redirectTo = response.headers.get("location")!;
       context.session._lastBody = cloneDeep(context.body);
       context.session._lastBodyErrors = context.bodyErrors;

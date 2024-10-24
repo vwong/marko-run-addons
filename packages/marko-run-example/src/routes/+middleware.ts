@@ -30,7 +30,7 @@ export default [
   csrf({
     maxAge: 3_600,
     minAge: 1_800,
-    onError: (context: MarkoRun.Context) => {
+    onError: (context) => {
       const message = "Missing or expired CSRF Token";
       if (context.isXHR) {
         return badRequest({ error: message });
@@ -40,7 +40,16 @@ export default [
       }
     },
   }),
-  validate({ validator: new AjvValidator() }),
+  validate({
+    onQueryErrors: (context) => {
+      context.flash.error(
+        context.queryErrors
+          .map(({ name, message }) => `${name} ${message}`)
+          .join(", "),
+      );
+    },
+    validator: new AjvValidator(),
+  }),
   async (context, next) => {
     context.cspNonce = randomBytes(16).toString("base64");
     context.isXHR =

@@ -1,9 +1,7 @@
-static const rules = `{
-  "prerender": [{
-    "where": { "href_matches": "/*" },
-    "eagerness": "moderate"
-  }]
-}`;
 <script nonce=$global.cspNonce type="speculationrules">
-  $!{rules}
+  {
+    "prerender": [
+      { "where": { "href_matches": "/*" }, "eagerness": "moderate" }
+    ]
+  }
 </script>
