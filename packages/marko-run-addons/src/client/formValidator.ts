@@ -121,6 +121,7 @@ export class FormValidator {
     for (const el of this.inputElements) {
       this.#onInputError(el, "");
       el.setAttribute("aria-invalid", "false");
+      delete el.dataset.deferredError;
     }
   }
 
