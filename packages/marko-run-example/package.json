@@ -23,7 +23,8 @@
   },
   "devDependencies": {
     "@types/compression": "^1.7.5",
-    "@types/express": "^5.0.0"
+    "@types/express": "^5.0.0",
+    "sass": "^1.80.5"
   },
   "scripts": {
     "build": "NODE_ENV=production marko-run build src/index.ts",
@@ -33,7 +34,8 @@
   },
   "imports": {
     "#lib/*": "./src/lib/*.ts",
-    "#middleware/*": "./src/middleware/*.ts"
+    "#middleware/*": "./src/middleware/*.ts",
+    "#styles/*": "./src/styles/*"
   },
   "type": "module"
 }

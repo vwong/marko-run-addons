@@ -6,7 +6,8 @@ export default defineConfig(() =>
     css: {
       preprocessorOptions: {
         scss: {
-          additionalData: `@use "sass:math"; @import "./src/styles/variables.scss";`,
+          additionalData: `@use "#styles/variables.scss" as *;`,
+          api: "modern-compiler",
         },
       },
     },
