@@ -8,21 +8,13 @@ export interface Input {
 <let/key=0/>
 <let/isPending=false/>
 <let/isError=false/>
+<let/isBrowser=false/>
+
 <div class="random">
   <if=key>
-    <micro-frame
-      fetch(url, options, fetch) {
-        return fetch(url, {
-          ...options,
-          credentials: "same-origin",
-        })
-          .catch(() => {
-            isError = true;
-          })
-          .finally(() => {
-            isPending = false;
-          });
-      }
+    <micro-frame-client
+      isError:=isError
+      isPending:=isPending
       src=`${input.src}#${key}`
     >
       <@loading>
@@ -31,23 +23,28 @@ export interface Input {
       <@catch|err: Error|>
         ${JSON.stringify(err)}
       </@catch>
-    </micro-frame>
+    </micro-frame-client>
   </if>
   <else>
-    <micro-frame src=input.src/>
+    <micro-frame-server src=input.src/>
   </else>
-  <button
-    class="button"
-    disabled=isPending
-    onClick() {
-      isPending = true;
-      isError = false;
-      key++;
-    }
-  >
-    Regenerate
-  </button>
+
+  <if=isBrowser>
+    <button
+      class="button"
+      disabled=isPending
+      onClick() {
+        key++;
+      }
+    >
+      Regenerate
+    </button>
+  </if>
 </div>
+
+<effect() {
+  isBrowser = true;
+}/>
 
 <style-button/>
 <style.scss>

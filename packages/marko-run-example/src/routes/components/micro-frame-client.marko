@@ -1,0 +1,49 @@
+// @ts-nocheck
+
+<!-- use tags -->
+export interface Input {
+  fetch: (url: string, opts: RequestInit) => Promise<Response>;
+  isError: boolean;
+  isErrorChange: (value: boolean) => void;
+  isPending: boolean;
+  isPendingChange: (value: boolean) => void;
+  src: MarkoRun.GetPaths;
+}
+
+<micro-frame
+  fetch(url, options) {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        input.isPendingChange(true);
+        input.isErrorChange(false);
+
+        const xhrOptions = {
+          ...options,
+          headers: {
+            ...options.headers,
+            "X-Requested-With": "XMLHttpRequest",
+          },
+        };
+        if (input.fetch) {
+          resolve(input.fetch(url, xhrOptions, globalThis.fetch));
+        } else {
+          resolve(globalThis.fetch(url, xhrOptions));
+        }
+      }, 0);
+    })
+      .catch(() => {
+        input.isErrorChange(true);
+      })
+      .finally(() => {
+        input.isPendingChange(false);
+      });
+  }
+  src=input.src
+>
+  <@loading>
+    <${input.loading}/>
+  </@loading>
+  <@error|err|>
+    <${input.error}=err/>
+  </@error>
+</micro-frame>

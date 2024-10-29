@@ -145,14 +145,16 @@ describe("validate", () => {
     });
 
     it("stores body and bodyError for use in next GET", async () => {
-      validator.asJson.mockReturnValueOnce([]);
-      validator.asJson.mockReturnValueOnce([]);
+      validator.asJson.mockReturnValueOnce(["queryErrors"]);
+      validator.asJson.mockReturnValueOnce(["bodyErrors"]);
 
       await validateMiddleware(context, () => redirectResponse);
 
       expect(context.session._redirectTo).toEqual("/some/path");
       expect(context.session._lastBody).toEqual("body");
-      expect(context.session._lastBodyErrors).toEqual([]);
+      expect(context.session._lastBodyErrors).toEqual(["bodyErrors"]);
+      expect(context.session._lastQuery).toEqual("query");
+      expect(context.session._lastQueryErrors).toEqual(["queryErrors"]);
     });
   });
 
@@ -164,7 +166,9 @@ describe("validate", () => {
         session: {
           _redirectTo: "/some/path",
           _lastBody: "body",
-          _lastBodyErrors: validationChecks,
+          _lastBodyErrors: ["bodyErrors"],
+          _lastQuery: "query",
+          _lastQueryErrors: ["queryErrors"],
         },
         url,
       } as unknown as MarkoRun.Context;
@@ -175,11 +179,15 @@ describe("validate", () => {
       await validateMiddleware(context);
 
       expect(context.body).toEqual("body");
-      expect(context.bodyErrors).toEqual(validationChecks);
+      expect(context.bodyErrors).toEqual(["bodyErrors"]);
+      expect(context.query).toEqual("query");
+      expect(context.queryErrors).toEqual(["queryErrors"]);
 
-      expect(context.session._isRedirect).toBeUndefined();
+      expect(context.session._redirectTo).toBeUndefined();
       expect(context.session._lastBody).toBeUndefined();
-      expect(context.session._lastErrors).toBeUndefined();
+      expect(context.session._lastBodyErrors).toBeUndefined();
+      expect(context.session._lastQuery).toBeUndefined();
+      expect(context.session._lastQueryErrors).toBeUndefined();
     });
   });
 });

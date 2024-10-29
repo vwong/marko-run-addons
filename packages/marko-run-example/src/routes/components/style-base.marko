@@ -23,8 +23,8 @@ style.scss {
   }
 
   html {
-    background-color: $color-background;
-    color: $color-foreground;
+    background-color: light-dark($color-neutral-00, $color-neutral-98);
+    color: light-dark($color-neutral-98, $color-neutral-00);
     font-family: $font-family-sans-serif;
     line-height: 1.25;
   }
@@ -75,8 +75,8 @@ style.scss {
 
     &[disabled],
     &[readonly] {
-      background-color: light-dark($color-neutral-05, $color-neutral-95);
-      color: light-dark($color-neutral-50, $color-neutral-60);
+      background-color: $background-color-disabled;
+      color: $color-disabled;
       cursor: not-allowed;
     }
 

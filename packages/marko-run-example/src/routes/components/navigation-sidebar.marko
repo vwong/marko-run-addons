@@ -1,7 +1,7 @@
 import { contents } from "../../contents";
 
 <div class="navigation">
-  <button popovertarget:scoped="nav">
+  <button class="button" popovertarget:scoped="nav">
     Menu
   </button>
   <nav aria-labelledby:scoped="heading" id:scoped="nav" popover>
@@ -50,13 +50,12 @@ import { contents } from "../../contents";
   </nav>
 </div>
 
+<style-button/>
 <style-link/>
 <style-visually-hidden/>
 style.scss {
   .navigation {
-    & button:focus-visible {
-      outline-offset: -5px;
-    }
+    position: relative;
 
     & [popover] {
       border: 1px solid $color-line;
@@ -64,9 +63,9 @@ style.scss {
     }
 
     & :popover-open {
-      left: $s-4;
+      left: $s-16;
       position: absolute;
-      top: calc($v-30 + $s-4);
+      top: $v-50;
     }
   }
 }

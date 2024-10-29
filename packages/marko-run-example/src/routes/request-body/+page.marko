@@ -11,28 +11,24 @@ $ const errors = Object.fromEntries(
   </p>
   <form id:scoped="form" method="POST">
     <csrf-token/>
-    <p>
-      <input-field
-        error=errors.count
-        label="Count"
-        name="count"
-        required
-        title=" "
-        type="number"
-        value=(($global.body as BodySchema)?.count || 0)
-      />
-    </p>
+    <input-field
+      error=errors.count
+      label="Count"
+      name="count"
+      required
+      title=" "
+      type="number"
+      value=(($global.body as BodySchema)?.count || 0)
+    />
 
-    <p>
-      <input-field
-        error=errors.count2
-        label="Count2"
-        name="count2"
-        required
-        type="number"
-        value=(($global.body as BodySchema)?.count2 || 0)
-      />
-    </p>
+    <input-field
+      error=errors.count2
+      label="Count2"
+      name="count2"
+      required
+      type="number"
+      value=(($global.body as BodySchema)?.count2 || 0)
+    />
   </form>
   <p>
     <form-submit for:scoped="form">

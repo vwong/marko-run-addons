@@ -1,0 +1,16 @@
+// @ts-nocheck
+
+export interface Input {
+  fetch: (url: string, opts: RequestInit) => Promise<Response>;
+  src: MarkoRun.GetPaths;
+}
+
+<micro-frame
+  fetch(url, options) {
+    return globalThis.__marko_run__.fetch(
+      new Request(url, options),
+      $global.platform,
+    );
+  }
+  src=input.src
+/>

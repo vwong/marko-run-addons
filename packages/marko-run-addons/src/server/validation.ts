@@ -10,6 +10,8 @@ export interface ValidationSession {
   _redirectTo?: string;
   _lastBody?: unknown;
   _lastBodyErrors?: ValidationCheck[];
+  _lastQuery?: unknown;
+  _lastQueryErrors?: ValidationCheck[];
 }
 
 export abstract class Validator<E, S> {
@@ -42,6 +44,25 @@ export const validate =
   }: ValidateOptions<E, S>): MarkoRun.Handler =>
   async (context, next) => {
     const meta = context.meta as Meta;
+
+    if (
+      context.request.method === "GET" &&
+      (context.session._redirectTo === context.url.href || // full path
+        context.session._redirectTo === context.url.pathname) // relative path
+    ) {
+      context.body = context.session._lastBody;
+      context.bodyErrors = context.session._lastBodyErrors || [];
+      context.query = context.session._lastQuery;
+      context.queryErrors = context.session._lastQueryErrors || [];
+
+      delete context.session._redirectTo;
+      delete context.session._lastBody;
+      delete context.session._lastBodyErrors;
+      delete context.session._lastQuery;
+      delete context.session._lastQueryErrors;
+      return;
+    }
+
     context.queryErrors = validator.asJson(
       (context.query && meta.schema?.query
         ? await validator.validate(
@@ -57,19 +78,6 @@ export const validate =
       context.queryErrors.length
     ) {
       return badRequest(context.queryErrors);
-    }
-
-    if (
-      context.request.method === "GET" &&
-      (context.session._redirectTo === context.url.href || // full path
-        context.session._redirectTo === context.url.pathname) // relative path
-    ) {
-      context.body = context.session._lastBody;
-      context.bodyErrors = context.session._lastBodyErrors || [];
-      delete context.session._redirectTo;
-      delete context.session._lastBody;
-      delete context.session._lastBodyErrors;
-      return;
     }
 
     context.bodyErrors = validator.asJson(
@@ -103,6 +111,8 @@ export const validate =
       context.session._redirectTo = response.headers.get("location")!;
       context.session._lastBody = cloneDeep(context.body);
       context.session._lastBodyErrors = context.bodyErrors;
+      context.session._lastQuery = cloneDeep(context.query);
+      context.session._lastQueryErrors = context.queryErrors;
     }
 
     return response;

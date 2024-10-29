@@ -41,13 +41,6 @@ export default [
     },
   }),
   validate({
-    onQueryErrors: (context) => {
-      context.flash.error(
-        context.queryErrors
-          .map(({ name, message }) => `${name} ${message}`)
-          .join(", "),
-      );
-    },
     validator: new AjvValidator(),
   }),
   async (context, next) => {

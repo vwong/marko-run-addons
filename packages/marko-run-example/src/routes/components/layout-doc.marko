@@ -16,23 +16,30 @@ export interface Input {
   </head>
   <body>
     <flash-notice/>
-    <navigation-sidebar/>
-    <main class="doc">
-      <${input.renderBody}/>
-    </main>
-    <footer>
-      <navigation-footer/>
-    </footer>
-    <style-base/>
+    <div class="layout">
+      <navigation-sidebar/>
+      <main class="doc">
+        <${input.renderBody}/>
+      </main>
+      <footer>
+        <navigation-footer/>
+      </footer>
+    </div>
   </body>
+  <prevent-multiple-submits/>
 </html>
+
+<style-base/>
 style.scss {
   .doc {
-    padding: $v-10 $s-16;
-
     h2,
     p {
       margin-top: $v-10;
     }
+  }
+
+  .layout {
+    position: relative;
+    padding: $v-10 $s-16;
   }
 }

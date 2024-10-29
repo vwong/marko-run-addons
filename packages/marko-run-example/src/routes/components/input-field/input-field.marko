@@ -8,7 +8,7 @@ $ const { error, label, ...others } = input;
   ${label}
 </label>
 <input
-  aria-describedby:scoped="description"
+  aria-errormessage:scoped="description"
   aria-invalid=(!!input.error?.length && "true")
   id:scoped="input"
   ...others
@@ -22,7 +22,12 @@ $ const { error, label, ...others } = input;
 style.scss {
   .input-error {
     color: $color-error;
+    display: none;
     font-size: 0.8em;
     line-height: $v-20;
+  }
+
+  input[aria-invalid="true"] + .input-error {
+    display: block;
   }
 }

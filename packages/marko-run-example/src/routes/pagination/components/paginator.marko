@@ -1,32 +1,39 @@
 // @ts-nocheck
 
 <!-- use tags -->
+import { PageNavigator } from "@vwong/marko-run-addons/client";
 export interface Input {
   current: number;
   frame: string;
   src: string;
 }
 
-<let/isBrowser=false/>
-<let/page=input.current/>
-<const/prevPage=Math.max(1, page - 1)/>
-<const/nextPage=page + 1/>
+<let/key=0/>
+<let/isPending=false/>
+<let/isError=false/>
+
+<const/buildUrl=((page: number) => `${input.src}?page=${page}`)/>
+
+<let/currentPage=input.current/>
+<const/prevPage=Math.max(1, currentPage - 1)/>
+<const/nextPage=currentPage + 1/>
+<const/frameSrc=`${input.src}/frame/${input.frame}?page=${currentPage}`/>
+
+<let/navigator=new PageNavigator({
+  page: input.current,
+  pageChange(page) {
+    key++;
+    currentPage = page;
+  },
+})/>
 
 <nav>
   <ul>
     <li>
       <a
         class="link"
-        href=`${input.src}?page=${prevPage}`
-        onClick(event: Event) {
-          event.preventDefault();
-          page = prevPage;
-          history.pushState(
-            { page: prevPage },
-            "",
-            `${input.src}?page=${prevPage}`,
-          );
-        }
+        href=buildUrl(prevPage)
+        onClick=navigator.gotoPage(prevPage)
       >
         Previous
       </a>
@@ -34,16 +41,8 @@ export interface Input {
     <li>
       <a
         class="link"
-        href=`${input.src}?page=${nextPage}`
-        onClick(event: Event) {
-          event.preventDefault();
-          page = nextPage;
-          history.pushState(
-            { page: nextPage },
-            "",
-            `${input.src}?page=${nextPage}`,
-          );
-        }
+        href=buildUrl(nextPage)
+        onClick=navigator.gotoPage(nextPage)
       >
         Next
       </a>
@@ -52,29 +51,19 @@ export interface Input {
 </nav>
 
 <div>
-  <micro-frame src=`${input.src}/frame/${input.frame}?page=${page}`>
-    <if=isBrowser>
-      <@loading>...</@loading>
+  <if=key>
+    <micro-frame-client isError:=isError isPending:=isPending src=frameSrc>
+      <@loading>
+        <div>...</div>
+      </@loading>
       <@catch|err: Error|>
         ${JSON.stringify(err)}
       </@catch>
-    </if>
-  </micro-frame>
+    </micro-frame-client>
+  </if>
+  <else>
+    <micro-frame-server src=frameSrc/>
+  </else>
 </div>
-
-<effect() {
-  isBrowser = true;
-}/>
-
-<effect() {
-  const updatePage = (event: PopStateEvent) => {
-    page = event.state?.page || input.current;
-  };
-  window.addEventListener("popstate", updatePage);
-
-  return () => {
-    window.removeEventListener("popstate", updatePage);
-  };
-}/>
 
 <style-link/>

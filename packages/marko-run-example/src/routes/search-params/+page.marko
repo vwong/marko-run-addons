@@ -10,16 +10,14 @@ $ const errors = Object.fromEntries(
     This page validates search parameters. Try negative values to see an error.
   </p>
   <form id:scoped="form">
-    <p>
-      <input-field
-        data-touched="1"
-        error=errors.page
-        label="Page"
-        name="page"
-        type="number"
-        value=(($global.query as QuerySchema)?.page || 1)
-      />
-    </p>
+    <input-field
+      data-touched="1"
+      error=errors.page
+      label="Page"
+      name="page"
+      type="number"
+      value=(($global.query as QuerySchema)?.page)
+    />
   </form>
   <p>
     <form-submit for:scoped="form">

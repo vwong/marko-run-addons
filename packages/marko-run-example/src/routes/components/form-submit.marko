@@ -20,7 +20,7 @@ export interface Input {
   new FormValidator({
     formEl: el,
     onInputError(el: HTMLInputElement, message: string) {
-      const errorElementId = el.getAttribute("aria-describedby");
+      const errorElementId = el.getAttribute("aria-errormessage");
       if (errorElementId) {
         const errorElement = document.getElementById(errorElementId);
         errorElement!.innerText = message;
