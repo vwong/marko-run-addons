@@ -1,6 +1,3 @@
-// FIXME: the import is used to stop a typescript error
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { Context } from "@marko/run";
 import { CsrfService } from "./csrf";
 import { FlashService } from "./flash";
 import { Session } from "./session";
