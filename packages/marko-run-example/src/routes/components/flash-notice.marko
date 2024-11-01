@@ -3,12 +3,21 @@
     <div class="visually-hidden" id:scoped="flash">
       Notices
     </div>
-    <ul>
-      <for|{ message }| of=($global.flash.current)>
-        <li>$!{message}</li>
+    <div class="flash-notice">
+      <for|{ message, status }| of=($global.flash.current)>
+        <notification level=status>
+          ${message}
+        </notification>
       </for>
-    </ul>
+    </div>
   </section>
 </if>
 
 <style-visually-hidden/>
+style.scss {
+  .flash-notice {
+    display: grid;
+    gap: $v-05;
+    padding: $v-10 $s-16;
+  }
+}

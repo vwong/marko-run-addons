@@ -1,0 +1,48 @@
+export interface Input {
+  level: "error" | "information" | "success" | "warning";
+  renderBody: Marko.Body;
+}
+
+<div class=`notification notification--${input.level}`>
+  <${input.renderBody}/>
+</div>
+
+style.scss {
+  .notification {
+    border: 1px solid;
+    border-radius: $radius-m;
+    padding: $v-05 $s-8;
+
+    &--error {
+      background-color: light-dark($color-status-error-05, $color-neutral-95);
+      border-color: light-dark($color-status-error-40, $color-status-error-30);
+    }
+
+    &--information {
+      background-color: light-dark(
+        $color-status-information-05,
+        $color-neutral-95
+      );
+      border-color: light-dark(
+        $color-status-information-40,
+        $color-status-information-30
+      );
+    }
+
+    &--success {
+      background-color: light-dark($color-status-success-05, $color-neutral-95);
+      border-color: light-dark(
+        $color-status-success-40,
+        $color-status-success-30
+      );
+    }
+
+    &--warning {
+      background-color: light-dark($color-status-warning-05, $color-neutral-95);
+      border-color: light-dark(
+        $color-status-warning-40,
+        $color-status-warning-30
+      );
+    }
+  }
+}

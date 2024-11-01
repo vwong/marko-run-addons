@@ -1,0 +1,15 @@
+<div class="search-param-errors">
+  <for|{ name, message }| of=$global.queryErrors>
+    <notification level="error">
+      ${name} ${message}
+    </notification>
+  </for>
+</div>
+
+style.scss {
+  .search-param-errors {
+    position: fixed;
+    right: $s-16;
+    top: $v-20;
+  }
+}
