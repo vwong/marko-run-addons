@@ -16,6 +16,9 @@ const redirectResponse = new Response(null, {
   status: 302,
   headers: { location: "/some/path" },
 });
+const okResponse = new Response(null, {
+  status: 204,
+});
 
 describe("validate", () => {
   let validateMiddleware: CallableHandler;
@@ -176,12 +179,15 @@ describe("validate", () => {
     });
 
     it("restores previous body and errors", async () => {
-      await validateMiddleware(context);
+      validator.asJson.mockReturnValueOnce([]);
+      validator.asJson.mockReturnValueOnce([]);
 
-      expect(context.body).toEqual("body");
-      expect(context.bodyErrors).toEqual(["bodyErrors"]);
-      expect(context.query).toEqual("query");
-      expect(context.queryErrors).toEqual(["queryErrors"]);
+      await validateMiddleware(context, () => okResponse);
+
+      expect(context.lastBody).toEqual("body");
+      expect(context.lastBodyErrors).toEqual(["bodyErrors"]);
+      expect(context.lastQuery).toEqual("query");
+      expect(context.lastQueryErrors).toEqual(["queryErrors"]);
 
       expect(context.session._redirectTo).toBeUndefined();
       expect(context.session._lastBody).toBeUndefined();
