@@ -1,6 +1,6 @@
 import type { BodySchema } from "./+meta";
 $ const errors = Object.fromEntries(
-  $global.bodyErrors.map(({ name, message }) => [name, message]),
+  $global.lastBodyErrors.map(({ name, message }) => [name, message]),
 );
 <layout-doc>
   <h1>Request Body</h1>
@@ -18,7 +18,7 @@ $ const errors = Object.fromEntries(
       required
       title=" "
       type="number"
-      value=(($global.body as BodySchema)?.count || 0)
+      value=(($global.lastBody as BodySchema)?.count || 0)
     />
 
     <input-field
@@ -27,7 +27,7 @@ $ const errors = Object.fromEntries(
       name="count2"
       required
       type="number"
-      value=(($global.body as BodySchema)?.count2 || 0)
+      value=(($global.lastBody as BodySchema)?.count2 || 0)
     />
   </form>
   <p>

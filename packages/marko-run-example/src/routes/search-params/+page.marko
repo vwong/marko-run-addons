@@ -1,6 +1,6 @@
 import type { QuerySchema } from "./+meta";
 $ const errors = Object.fromEntries(
-  $global.queryErrors.map(({ name, message }) => [name, message]),
+  $global.lastQueryErrors.map(({ name, message }) => [name, message]),
 );
 <layout-doc>
   <h1>Search Params</h1>

@@ -20,6 +20,10 @@ declare module "@marko/run" {
     csrf: CsrfService;
     flash: FlashService;
     form?: string;
+    lastBody?: unknown;
+    lastBodyErrors: ValidationCheck[];
+    lastQuery?: unknown;
+    lastQueryErrors: ValidationCheck[];
     query?: unknown;
     queryErrors: ValidationCheck[];
     session: Session;

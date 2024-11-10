@@ -24,8 +24,6 @@ export abstract class Validator<E, S> {
 }
 
 export interface ValidateOptions<E, S> {
-  onBodyErrors?: (context: MarkoRun.Context) => void;
-  onQueryErrors?: (context: MarkoRun.Context) => void;
   validator: Validator<E, S>;
 }
 
@@ -37,11 +35,7 @@ interface Meta {
 }
 
 export const validate =
-  <E, S>({
-    onBodyErrors,
-    onQueryErrors,
-    validator,
-  }: ValidateOptions<E, S>): MarkoRun.Handler =>
+  <E, S>({ validator }: ValidateOptions<E, S>): MarkoRun.Handler =>
   async (context, next) => {
     const meta = context.meta as Meta;
 
@@ -50,17 +44,19 @@ export const validate =
       (context.session._redirectTo === context.url.href || // full path
         context.session._redirectTo === context.url.pathname) // relative path
     ) {
-      context.body = context.session._lastBody;
-      context.bodyErrors = context.session._lastBodyErrors || [];
-      context.query = context.session._lastQuery;
-      context.queryErrors = context.session._lastQueryErrors || [];
+      context.lastBody = context.session._lastBody;
+      context.lastBodyErrors = context.session._lastBodyErrors || [];
+      context.lastQuery = context.session._lastQuery;
+      context.lastQueryErrors = context.session._lastQueryErrors || [];
 
       delete context.session._redirectTo;
       delete context.session._lastBody;
       delete context.session._lastBodyErrors;
       delete context.session._lastQuery;
       delete context.session._lastQueryErrors;
-      return;
+    } else {
+      context.lastBodyErrors = [];
+      context.lastQueryErrors = [];
     }
 
     context.queryErrors = validator.asJson(
@@ -96,12 +92,6 @@ export const validate =
 
     let response;
     if (context.queryErrors.length || context.bodyErrors.length) {
-      if (context.queryErrors.length && onQueryErrors) {
-        onQueryErrors(context);
-      }
-      if (context.bodyErrors.length && onBodyErrors) {
-        onBodyErrors(context);
-      }
       response = redirect(context.url.pathname);
     } else {
       response = await next();

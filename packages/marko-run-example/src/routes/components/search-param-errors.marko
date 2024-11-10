@@ -1,5 +1,5 @@
 <div class="search-param-errors">
-  <for|{ name, message }| of=$global.queryErrors>
+  <for|{ name, message }| of=$global.lastQueryErrors>
     <notification level="error">
       ${name} ${message}
     </notification>
