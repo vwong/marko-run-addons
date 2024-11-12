@@ -1,4 +1,3 @@
-import globals from "globals";
 import prettier from "eslint-config-prettier";
 import eslint from "@eslint/js";
 import tseslint from "typescript-eslint";
@@ -18,14 +17,6 @@ export default [
     ...tseslint.configs.recommended,
     prettier,
   ),
-  {
-    languageOptions: {
-      globals: {
-        ...globals.browser,
-        ...globals.node,
-      },
-    },
-  },
   {
     rules: {
       "no-unused-vars": "off",

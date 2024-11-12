@@ -1,10 +1,10 @@
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
-import { csrf, type Context } from "./csrf";
+import { csrf } from "./csrf";
 
 const MAX_AGE = 3600; /* 1 hour */
 const MIN_AGE = 1800; /* 0.5 hours */
 
-type CallableHandler = (context: Context) => Promise<void>;
+type CallableHandler = (context: MarkoRun.Context) => Promise<void>;
 
 const { randomBytes } = vi.hoisted(() => ({
   randomBytes: vi.fn(),
@@ -20,7 +20,7 @@ const onError = vi.fn();
 
 describe("csrf", () => {
   let csrfMiddleware: CallableHandler;
-  let context: Context;
+  let context: MarkoRun.Context;
   let now: number;
 
   beforeAll(() => {
@@ -45,7 +45,7 @@ describe("csrf", () => {
               { value: "old-token", iat: now - MAX_AGE },
             ],
           },
-        } as unknown as Context;
+        } as unknown as MarkoRun.Context;
         randomBytes.mockReturnValue("new-token");
 
         csrfMiddleware(context);
@@ -84,7 +84,7 @@ describe("csrf", () => {
           session: {
             _csrfTokens: [],
           },
-        } as unknown as Context;
+        } as unknown as MarkoRun.Context;
         randomBytes.mockReturnValue("new-token");
 
         csrfMiddleware(context);
@@ -100,7 +100,7 @@ describe("csrf", () => {
     beforeEach(() => {
       context = {
         session: {},
-      } as unknown as Context;
+      } as unknown as MarkoRun.Context;
       randomBytes.mockReturnValue("new-token");
 
       csrfMiddleware(context);

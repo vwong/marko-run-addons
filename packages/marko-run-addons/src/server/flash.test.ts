@@ -1,11 +1,11 @@
 import { beforeEach, describe, expect, it } from "vitest";
-import { flash, type Context } from "./flash";
+import { flash } from "./flash";
 
-type CallableHandler = (context: Context) => Promise<void>;
+type CallableHandler = (context: MarkoRun.Context) => Promise<void>;
 
 describe("flash", () => {
   let flashMiddleware: CallableHandler;
-  let context: Context;
+  let context: MarkoRun.Context;
 
   describe("initialised session", () => {
     beforeEach(() => {
@@ -13,7 +13,7 @@ describe("flash", () => {
         session: {
           _flash: [{ status: "success", message: "previous" }],
         },
-      } as Context;
+      } as MarkoRun.Context;
       flashMiddleware = flash() as unknown as CallableHandler;
     });
 
@@ -61,7 +61,7 @@ describe("flash", () => {
     beforeEach(() => {
       context = {
         session: {},
-      } as Context;
+      } as MarkoRun.Context;
       flashMiddleware = flash() as unknown as CallableHandler;
     });
 
