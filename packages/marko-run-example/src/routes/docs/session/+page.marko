@@ -15,4 +15,9 @@
     <code>minAge</code>
      value to reduce the risk of loosing the session.
   </p>
+
+  <h2>Note about CSRF Tokens life</h2>
+  <p>
+    CSRF Tokens have short lives (about a typical session), and are rotated frequently to avoid replay attacks. If the user has been idle for a while, they may encounter an expired CSRF token. This will get regenerated on the next visit.
+  </p>
 </layout-doc>

@@ -16,9 +16,9 @@ export interface Input {
   </head>
   <body>
     <flash-notice/>
-    <query-errors/>
     <div class="layout">
       <navigation-sidebar/>
+      <theme-switcher/>
       <main class="doc">
         <${input.renderBody}/>
       </main>
@@ -33,6 +33,8 @@ export interface Input {
 <style-base/>
 style.scss {
   .doc {
+    padding-bottom: $v-10;
+
     h2,
     p {
       margin-top: $v-10;

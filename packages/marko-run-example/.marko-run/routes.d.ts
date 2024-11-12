@@ -13,24 +13,27 @@ declare module "@marko/run" {
 	interface AppData extends Run.DefineApp<{
 		routes: {
 			"/": Routes["/"];
-			"/modifying-subpage-frames": Routes["/modifying-subpage-frames"];
-			"/modifying-subpage-frames/frame/random": Routes["/modifying-subpage-frames/frame/random"];
-			"/pagination": Routes["/pagination"];
-			"/pagination/frame/search": Routes["/pagination/frame/search"];
-			"/reading-subpage-frames": Routes["/reading-subpage-frames"];
-			"/reading-subpage-frames/frame/random": Routes["/reading-subpage-frames/frame/random"];
-			"/request-body": Routes["/request-body"];
-			"/search-params": Routes["/search-params"];
-			"/session": Routes["/session"];
-			"/subpage-frames": Routes["/subpage-frames"];
+			"/docs": Routes["/docs"];
+			"/docs/hosting": Routes["/docs/hosting"];
+			"/docs/session": Routes["/docs/session"];
+			"/docs/subpages": Routes["/docs/subpages"];
+			"/docs/subpages/history-api": Routes["/docs/subpages/history-api"];
+			"/docs/subpages/history-api/%5fsearch": Routes["/docs/subpages/history-api/%5fsearch"];
+			"/docs/subpages/read": Routes["/docs/subpages/read"];
+			"/docs/subpages/read/%5frandom": Routes["/docs/subpages/read/%5frandom"];
+			"/docs/subpages/write": Routes["/docs/subpages/write"];
+			"/docs/subpages/write/%5frandom": Routes["/docs/subpages/write/%5frandom"];
+			"/docs/validation": Routes["/docs/validation"];
+			"/docs/validation/request-body": Routes["/docs/validation/request-body"];
+			"/docs/validation/search-params": Routes["/docs/validation/search-params"];
 		}
 	}> {}
 }
 
-declare module "../src/routes/modifying-subpage-frames/frame.random+handler" {
+declare module "../src/routes/+handler" {
   namespace MarkoRun {
     export { NotHandled, NotMatched, GetPaths, PostPaths, GetablePath, GetableHref, PostablePath, PostableHref, Platform };
-    export type Route = Run.Routes["/modifying-subpage-frames/frame/random"];
+    export type Route = Run.Routes["/"];
     export type Context = Run.MultiRouteContext<Route>;
     export type Handler = Run.HandlerLike<Route>;
     /** @deprecated use `((context, next) => { ... }) satisfies MarkoRun.Handler` instead */
@@ -38,10 +41,10 @@ declare module "../src/routes/modifying-subpage-frames/frame.random+handler" {
   }
 }
 
-declare module "../src/routes/request-body/+handler" {
+declare module "../src/routes/docs/session/+handler" {
   namespace MarkoRun {
     export { NotHandled, NotMatched, GetPaths, PostPaths, GetablePath, GetableHref, PostablePath, PostableHref, Platform };
-    export type Route = Run.Routes["/request-body"];
+    export type Route = Run.Routes["/docs/session"];
     export type Context = Run.MultiRouteContext<Route>;
     export type Handler = Run.HandlerLike<Route>;
     /** @deprecated use `((context, next) => { ... }) satisfies MarkoRun.Handler` instead */
@@ -49,10 +52,21 @@ declare module "../src/routes/request-body/+handler" {
   }
 }
 
-declare module "../src/routes/session/+handler" {
+declare module "../src/routes/docs/subpages/write/%5frandom+handler" {
   namespace MarkoRun {
     export { NotHandled, NotMatched, GetPaths, PostPaths, GetablePath, GetableHref, PostablePath, PostableHref, Platform };
-    export type Route = Run.Routes["/session"];
+    export type Route = Run.Routes["/docs/subpages/write/%5frandom"];
+    export type Context = Run.MultiRouteContext<Route>;
+    export type Handler = Run.HandlerLike<Route>;
+    /** @deprecated use `((context, next) => { ... }) satisfies MarkoRun.Handler` instead */
+    export const route: Run.HandlerTypeFn<Route>;
+  }
+}
+
+declare module "../src/routes/docs/validation/request-body+handler" {
+  namespace MarkoRun {
+    export { NotHandled, NotMatched, GetPaths, PostPaths, GetablePath, GetableHref, PostablePath, PostableHref, Platform };
+    export type Route = Run.Routes["/docs/validation/request-body"];
     export type Context = Run.MultiRouteContext<Route>;
     export type Handler = Run.HandlerLike<Route>;
     /** @deprecated use `((context, next) => { ... }) satisfies MarkoRun.Handler` instead */
@@ -63,7 +77,7 @@ declare module "../src/routes/session/+handler" {
 declare module "../src/routes/+middleware" {
   namespace MarkoRun {
     export { NotHandled, NotMatched, GetPaths, PostPaths, GetablePath, GetableHref, PostablePath, PostableHref, Platform };
-    export type Route = Run.Routes["/" | "/modifying-subpage-frames" | "/modifying-subpage-frames/frame/random" | "/pagination" | "/pagination/frame/search" | "/reading-subpage-frames" | "/reading-subpage-frames/frame/random" | "/request-body" | "/search-params" | "/session" | "/subpage-frames"];
+    export type Route = Run.Routes["/" | "/docs" | "/docs/hosting" | "/docs/session" | "/docs/subpages" | "/docs/subpages/history-api" | "/docs/subpages/history-api/%5fsearch" | "/docs/subpages/read" | "/docs/subpages/read/%5frandom" | "/docs/subpages/write" | "/docs/subpages/write/%5frandom" | "/docs/validation" | "/docs/validation/request-body" | "/docs/validation/search-params"];
     export type Context = Run.MultiRouteContext<Route>;
     export type Handler = Run.HandlerLike<Route>;
     /** @deprecated use `((context, next) => { ... }) satisfies MarkoRun.Handler` instead */
@@ -71,10 +85,10 @@ declare module "../src/routes/+middleware" {
   }
 }
 
-declare module "../src/routes/+page.marko" {
+declare module "../src/routes/docs/+page.marko" {
   namespace MarkoRun {
     export { NotHandled, NotMatched, GetPaths, PostPaths, GetablePath, GetableHref, PostablePath, PostableHref, Platform };
-    export type Route = Run.Routes["/"];
+    export type Route = Run.Routes["/docs"];
     export type Context = Run.MultiRouteContext<Route> & Marko.Global;
     export type Handler = Run.HandlerLike<Route>;
     /** @deprecated use `((context, next) => { ... }) satisfies MarkoRun.Handler` instead */
@@ -82,10 +96,10 @@ declare module "../src/routes/+page.marko" {
   }
 }
 
-declare module "../src/routes/modifying-subpage-frames/+page.marko" {
+declare module "../src/routes/docs/hosting/+page.marko" {
   namespace MarkoRun {
     export { NotHandled, NotMatched, GetPaths, PostPaths, GetablePath, GetableHref, PostablePath, PostableHref, Platform };
-    export type Route = Run.Routes["/modifying-subpage-frames"];
+    export type Route = Run.Routes["/docs/hosting"];
     export type Context = Run.MultiRouteContext<Route> & Marko.Global;
     export type Handler = Run.HandlerLike<Route>;
     /** @deprecated use `((context, next) => { ... }) satisfies MarkoRun.Handler` instead */
@@ -93,10 +107,10 @@ declare module "../src/routes/modifying-subpage-frames/+page.marko" {
   }
 }
 
-declare module "../src/routes/modifying-subpage-frames/frame.random+page.marko" {
+declare module "../src/routes/docs/session/+page.marko" {
   namespace MarkoRun {
     export { NotHandled, NotMatched, GetPaths, PostPaths, GetablePath, GetableHref, PostablePath, PostableHref, Platform };
-    export type Route = Run.Routes["/modifying-subpage-frames/frame/random"];
+    export type Route = Run.Routes["/docs/session"];
     export type Context = Run.MultiRouteContext<Route> & Marko.Global;
     export type Handler = Run.HandlerLike<Route>;
     /** @deprecated use `((context, next) => { ... }) satisfies MarkoRun.Handler` instead */
@@ -104,10 +118,10 @@ declare module "../src/routes/modifying-subpage-frames/frame.random+page.marko" 
   }
 }
 
-declare module "../src/routes/pagination/+page.marko" {
+declare module "../src/routes/docs/subpages/+page.marko" {
   namespace MarkoRun {
     export { NotHandled, NotMatched, GetPaths, PostPaths, GetablePath, GetableHref, PostablePath, PostableHref, Platform };
-    export type Route = Run.Routes["/pagination"];
+    export type Route = Run.Routes["/docs/subpages"];
     export type Context = Run.MultiRouteContext<Route> & Marko.Global;
     export type Handler = Run.HandlerLike<Route>;
     /** @deprecated use `((context, next) => { ... }) satisfies MarkoRun.Handler` instead */
@@ -115,10 +129,10 @@ declare module "../src/routes/pagination/+page.marko" {
   }
 }
 
-declare module "../src/routes/pagination/frame.search+page.marko" {
+declare module "../src/routes/docs/subpages/history-api/+page.marko" {
   namespace MarkoRun {
     export { NotHandled, NotMatched, GetPaths, PostPaths, GetablePath, GetableHref, PostablePath, PostableHref, Platform };
-    export type Route = Run.Routes["/pagination/frame/search"];
+    export type Route = Run.Routes["/docs/subpages/history-api"];
     export type Context = Run.MultiRouteContext<Route> & Marko.Global;
     export type Handler = Run.HandlerLike<Route>;
     /** @deprecated use `((context, next) => { ... }) satisfies MarkoRun.Handler` instead */
@@ -126,10 +140,10 @@ declare module "../src/routes/pagination/frame.search+page.marko" {
   }
 }
 
-declare module "../src/routes/reading-subpage-frames/+page.marko" {
+declare module "../src/routes/docs/subpages/history-api/%5fsearch+page.marko" {
   namespace MarkoRun {
     export { NotHandled, NotMatched, GetPaths, PostPaths, GetablePath, GetableHref, PostablePath, PostableHref, Platform };
-    export type Route = Run.Routes["/reading-subpage-frames"];
+    export type Route = Run.Routes["/docs/subpages/history-api/%5fsearch"];
     export type Context = Run.MultiRouteContext<Route> & Marko.Global;
     export type Handler = Run.HandlerLike<Route>;
     /** @deprecated use `((context, next) => { ... }) satisfies MarkoRun.Handler` instead */
@@ -137,10 +151,10 @@ declare module "../src/routes/reading-subpage-frames/+page.marko" {
   }
 }
 
-declare module "../src/routes/reading-subpage-frames/frame.random+page.marko" {
+declare module "../src/routes/docs/subpages/read/+page.marko" {
   namespace MarkoRun {
     export { NotHandled, NotMatched, GetPaths, PostPaths, GetablePath, GetableHref, PostablePath, PostableHref, Platform };
-    export type Route = Run.Routes["/reading-subpage-frames/frame/random"];
+    export type Route = Run.Routes["/docs/subpages/read"];
     export type Context = Run.MultiRouteContext<Route> & Marko.Global;
     export type Handler = Run.HandlerLike<Route>;
     /** @deprecated use `((context, next) => { ... }) satisfies MarkoRun.Handler` instead */
@@ -148,10 +162,10 @@ declare module "../src/routes/reading-subpage-frames/frame.random+page.marko" {
   }
 }
 
-declare module "../src/routes/request-body/+page.marko" {
+declare module "../src/routes/docs/subpages/read/%5frandom+page.marko" {
   namespace MarkoRun {
     export { NotHandled, NotMatched, GetPaths, PostPaths, GetablePath, GetableHref, PostablePath, PostableHref, Platform };
-    export type Route = Run.Routes["/request-body"];
+    export type Route = Run.Routes["/docs/subpages/read/%5frandom"];
     export type Context = Run.MultiRouteContext<Route> & Marko.Global;
     export type Handler = Run.HandlerLike<Route>;
     /** @deprecated use `((context, next) => { ... }) satisfies MarkoRun.Handler` instead */
@@ -159,10 +173,10 @@ declare module "../src/routes/request-body/+page.marko" {
   }
 }
 
-declare module "../src/routes/search-params/+page.marko" {
+declare module "../src/routes/docs/subpages/write/+page.marko" {
   namespace MarkoRun {
     export { NotHandled, NotMatched, GetPaths, PostPaths, GetablePath, GetableHref, PostablePath, PostableHref, Platform };
-    export type Route = Run.Routes["/search-params"];
+    export type Route = Run.Routes["/docs/subpages/write"];
     export type Context = Run.MultiRouteContext<Route> & Marko.Global;
     export type Handler = Run.HandlerLike<Route>;
     /** @deprecated use `((context, next) => { ... }) satisfies MarkoRun.Handler` instead */
@@ -170,10 +184,10 @@ declare module "../src/routes/search-params/+page.marko" {
   }
 }
 
-declare module "../src/routes/session/+page.marko" {
+declare module "../src/routes/docs/subpages/write/%5frandom+page.marko" {
   namespace MarkoRun {
     export { NotHandled, NotMatched, GetPaths, PostPaths, GetablePath, GetableHref, PostablePath, PostableHref, Platform };
-    export type Route = Run.Routes["/session"];
+    export type Route = Run.Routes["/docs/subpages/write/%5frandom"];
     export type Context = Run.MultiRouteContext<Route> & Marko.Global;
     export type Handler = Run.HandlerLike<Route>;
     /** @deprecated use `((context, next) => { ... }) satisfies MarkoRun.Handler` instead */
@@ -181,10 +195,32 @@ declare module "../src/routes/session/+page.marko" {
   }
 }
 
-declare module "../src/routes/subpage-frames/+page.marko" {
+declare module "../src/routes/docs/validation/+page.marko" {
   namespace MarkoRun {
     export { NotHandled, NotMatched, GetPaths, PostPaths, GetablePath, GetableHref, PostablePath, PostableHref, Platform };
-    export type Route = Run.Routes["/subpage-frames"];
+    export type Route = Run.Routes["/docs/validation"];
+    export type Context = Run.MultiRouteContext<Route> & Marko.Global;
+    export type Handler = Run.HandlerLike<Route>;
+    /** @deprecated use `((context, next) => { ... }) satisfies MarkoRun.Handler` instead */
+    export const route: Run.HandlerTypeFn<Route>;
+  }
+}
+
+declare module "../src/routes/docs/validation/request-body+page.marko" {
+  namespace MarkoRun {
+    export { NotHandled, NotMatched, GetPaths, PostPaths, GetablePath, GetableHref, PostablePath, PostableHref, Platform };
+    export type Route = Run.Routes["/docs/validation/request-body"];
+    export type Context = Run.MultiRouteContext<Route> & Marko.Global;
+    export type Handler = Run.HandlerLike<Route>;
+    /** @deprecated use `((context, next) => { ... }) satisfies MarkoRun.Handler` instead */
+    export const route: Run.HandlerTypeFn<Route>;
+  }
+}
+
+declare module "../src/routes/docs/validation/search-params+page.marko" {
+  namespace MarkoRun {
+    export { NotHandled, NotMatched, GetPaths, PostPaths, GetablePath, GetableHref, PostablePath, PostableHref, Platform };
+    export type Route = Run.Routes["/docs/validation/search-params"];
     export type Context = Run.MultiRouteContext<Route> & Marko.Global;
     export type Handler = Run.HandlerLike<Route>;
     /** @deprecated use `((context, next) => { ... }) satisfies MarkoRun.Handler` instead */
@@ -194,14 +230,17 @@ declare module "../src/routes/subpage-frames/+page.marko" {
 
 type Routes = {
 	"/": { verb: "get"; };
-	"/modifying-subpage-frames": { verb: "get"; };
-	"/modifying-subpage-frames/frame/random": { verb: "get" | "post"; };
-	"/pagination": { verb: "get"; meta: typeof import("../src/routes/pagination/+meta")["default"]; };
-	"/pagination/frame/search": { verb: "get"; meta: typeof import("../src/routes/pagination/frame.search+meta")["default"]; };
-	"/reading-subpage-frames": { verb: "get"; };
-	"/reading-subpage-frames/frame/random": { verb: "get"; };
-	"/request-body": { verb: "get" | "post"; meta: typeof import("../src/routes/request-body/+meta")["default"]; };
-	"/search-params": { verb: "get"; meta: typeof import("../src/routes/search-params/+meta")["default"]; };
-	"/session": { verb: "get"; };
-	"/subpage-frames": { verb: "get"; };
+	"/docs": { verb: "get"; };
+	"/docs/hosting": { verb: "get"; };
+	"/docs/session": { verb: "get"; };
+	"/docs/subpages": { verb: "get"; };
+	"/docs/subpages/history-api": { verb: "get"; meta: typeof import("../src/routes/docs/subpages/history-api/+meta")["default"]; };
+	"/docs/subpages/history-api/%5fsearch": { verb: "get"; meta: typeof import("../src/routes/docs/subpages/history-api/%5fsearch+meta")["default"]; };
+	"/docs/subpages/read": { verb: "get"; };
+	"/docs/subpages/read/%5frandom": { verb: "get"; };
+	"/docs/subpages/write": { verb: "get"; };
+	"/docs/subpages/write/%5frandom": { verb: "get" | "post"; };
+	"/docs/validation": { verb: "get"; };
+	"/docs/validation/request-body": { verb: "get" | "post"; meta: typeof import("../src/routes/docs/validation/request-body+meta")["default"]; };
+	"/docs/validation/search-params": { verb: "get"; meta: typeof import("../src/routes/docs/validation/search-params+meta")["default"]; };
 }

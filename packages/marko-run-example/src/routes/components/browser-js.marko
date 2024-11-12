@@ -1,0 +1,21 @@
+<!-- use tags -->
+export interface Input {
+  placeholder?: Marko.AttrTag<{
+    renderBody: Marko.Body;
+  }>;
+  then: Marko.AttrTag<{
+    renderBody: Marko.Body;
+  }>;
+}
+
+<let/isBrowser=false/>
+<effect() {
+  isBrowser = true;
+}/>
+
+<if=isBrowser>
+  <${input.then}/>
+</if>
+<else>
+  <${input.placeholder}/>
+</else>

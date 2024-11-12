@@ -1,0 +1,33 @@
+export const contents = [
+  { href: "/docs", text: "Introduction" },
+  { href: "/docs/session", text: "Session Management" },
+  {
+    href: "/docs/validation",
+    text: "Validation",
+    contents: [
+      { href: "/docs/validation/search-params", text: "Search Params" },
+      { href: "/docs/validation/request-body", text: "Request Body" },
+    ],
+  },
+  {
+    href: "/docs/subpages",
+    text: "Subpage navigation",
+    contents: [
+      {
+        href: "/docs/subpages/write",
+        text: "Modifying Subpage Frames",
+      },
+      { href: "/docs/subpages/read", text: "Reading Subpage Frames" },
+      { href: "/docs/subpages/history-api", text: "Pagination" },
+    ],
+  },
+  { href: "/docs/hosting", text: "Hosting" },
+];
+
+export const flatContents = contents
+  .map((c) => {
+    const { contents, ...others } = c;
+    return contents ? [others, ...contents] : c;
+  })
+  .flat()
+  .filter((c) => c.href);

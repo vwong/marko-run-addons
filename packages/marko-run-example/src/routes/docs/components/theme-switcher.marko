@@ -1,0 +1,103 @@
+<!-- use tags -->
+<id/switcher/>
+<let/theme=globalThis.localStorage?.getItem("theme") || ""/>
+<lifecycle onMount() {
+  if (theme) {
+    document.documentElement.classList.add(theme);
+  }
+}/>
+<browser-js>
+  <@then>
+    <div class="theme-switcher">
+      <label for=switcher>
+        Theme
+      </label>
+      <ul class="theme-switcher__buttons" id=switcher>
+        <li>
+          <button
+            aria-pressed=(theme === "light" ? "true" : "false")
+            class="button theme-switcher__button theme-switcher__button--first"
+            onClick() {
+              const { classList } = document.documentElement;
+              classList.add("light");
+              classList.remove("dark");
+              localStorage.setItem("theme", "light");
+              theme = "light";
+            }
+          >
+            Light
+          </button>
+        </li>
+        <li>
+          <button
+            aria-pressed=(theme === "dark" ? "true" : "false")
+            class="button theme-switcher__button"
+            onClick() {
+              const { classList } = document.documentElement;
+              classList.remove("light");
+              classList.add("dark");
+              localStorage.setItem("theme", "dark");
+              theme = "dark";
+            }
+          >
+            Dark
+          </button>
+        </li>
+        <li>
+          <button
+            aria-pressed=(theme === "" ? "true" : "false")
+            class="button theme-switcher__button theme-switcher__button--last"
+            onClick() {
+              const { classList } = document.documentElement;
+              classList.remove("light");
+              classList.remove("dark");
+              localStorage.removeItem("theme");
+              theme = "";
+            }
+          >
+            Auto
+          </button>
+        </li>
+      </ul>
+    </div>
+  </@then>
+</browser-js>
+
+<style-button/>
+
+<style.scss>
+  .theme-switcher {
+    position: absolute;
+    right: $s-16;
+    top: $v-10;
+
+    .button {
+      border-radius: 0;
+    }
+
+    &__label {
+      font-size: $font-size-down-1;
+    }
+
+    &__buttons {
+      display: flex;
+      list-style: none;
+      padding: 0;
+    }
+
+    &__button {
+      border-left: 1px solid $color-line;
+
+      &--first {
+        border-bottom-left-radius: $radius-m !important;
+        border-left: none;
+        border-top-left-radius: $radius-m !important;
+      }
+
+      &--last {
+        border-bottom-right-radius: $radius-m !important;
+        border-top-right-radius: $radius-m !important;
+      }
+    }
+  }
+</style>

@@ -1,4 +1,4 @@
-<if($global.flash.current.length)>
+<if($global.flash.current.length || $global.lastQueryErrors.length)>
   <section aria-labelledby:scoped="flash" class="flash">
     <div class="visually-hidden" id:scoped="flash">
       Notices
@@ -7,6 +7,11 @@
       <for|{ message, status }| of=($global.flash.current)>
         <notification level=status>
           ${message}
+        </notification>
+      </for>
+      <for|{ name, message }| of=$global.lastQueryErrors>
+        <notification level="error">
+          ${name} ${message}
         </notification>
       </for>
     </div>

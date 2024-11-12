@@ -1,0 +1,47 @@
+<layout-doc>
+  <h1>Hosting</h1>
+  <p>
+    Server-rendered UIs are sensitive to network latency because there is no opportunity to show spinners to distract the users when transitioning from one page to another. Instead, it relies on browser capabilities like${" "}
+    <a class="link" href="https://developer.chrome.com/blog/paint-holding">
+      paint holding
+    </a>
+     and
+    <a
+      class="link"
+      href="https://developer.mozilla.org/en-US/docs/Web/Performance/Speculative_loading"
+    >
+      speculative loading
+    </a>
+     to mask the latency.
+  </p>
+  <p>
+    When serving a global audience, a multi-region architecture as shown in Figure 1 is necessary.
+  </p>
+
+  <figure>
+    <multi-region/>
+    <figcaption>Figure 1: Multi-region architecture</figcaption>
+  </figure>
+
+  <p>
+    The TTFB (Time To First Byte), is determined by the closest geographically located server to the client. With region-local caching, perhaps with a stale-while-revalidate strategy, most top-matter of pages can be delivered very quickly as these are often repeated.
+  </p>
+  <p>
+    The TTLB (Time To Last Byte), is limited by the distance to the database, and the database response time. If there is sufficient content above-the-fold, users should perceive inter-page navigation as instantaneous.
+  </p>
+  <p>
+    Naturally, the best performing region will be the one where the source-of-truth is physically located. So be sure to locate this where the majority of your users are located.
+  </p>
+  <p>
+    Due to region-local caching, it is important that clients are pinned to specific UI servers. For example, AWS Lambda@Edge can${" "}
+    <a
+      class="link"
+      href="https://aws.amazon.com/blogs/networking-and-content-delivery/dynamically-route-viewer-requests-to-any-origin-using-lambdaedge/"
+    >
+      pin the origin through session cookies
+    </a>
+    .
+  </p>
+</layout-doc>
+
+<style-link/>

@@ -14,7 +14,8 @@ style.scss {
       background: light-dark($color-accent-70, $color-accent-40);
     }
 
-    &:active {
+    &:active,
+    &[aria-pressed="true"] {
       background: light-dark($color-accent-80, $color-accent-40);
       box-shadow: $shadow-inset;
     }

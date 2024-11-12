@@ -1,7 +1,8 @@
-import type { QuerySchema } from "./+meta";
+import type { QuerySchema } from "./search-params+meta";
 $ const errors = Object.fromEntries(
   $global.lastQueryErrors.map(({ name, message }) => [name, message]),
 );
+
 <layout-doc>
   <h1>Search Params</h1>
 

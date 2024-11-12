@@ -1,4 +1,4 @@
-import { flatContents as contents } from "../../contents";
+import { flatContents as contents } from "#lib/contents";
 $ const current = contents.findIndex((c) => c.href === $global.url.pathname);
 $ const previous = Math.max(0, current - 1);
 $ const next = Math.min(contents.length - 1, current + 1);
