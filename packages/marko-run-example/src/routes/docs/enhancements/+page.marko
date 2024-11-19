@@ -1,0 +1,35 @@
+<layout-doc>
+  <h1>Enhancements</h1>
+
+  <p>
+    For progressively enhanced functionality, we should only render the affordance when JS is available to avoid being visible when the Javascript feature itself is not working yet.
+  </p>
+
+  <p>
+    In the case of optional features, such as a
+    <em>copy to clipboard</em>
+    ${" "}functionality, we can simply omit it. But for others, we may want to put a notice to inform users that JS is required to enable that feature.
+  </p>
+
+  <figure>
+    <code-example>${JSON.stringify({ foo: "foo" }, null, 2)}</code-example>
+    <figcaption>Example. 1 - Foo</figcaption>
+  </figure>
+
+  <figure>
+    <code-example>${JSON.stringify({ bar: "bar" }, null, 2)}</code-example>
+    <figcaption>Example. 2 - Bar</figcaption>
+  </figure>
+
+  <h2>Infotips</h2>
+  <div>
+    Lorem ipsum
+    <infotip title="More about lorem ipsum">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+    </infotip>
+  </div>
+
+  <h2>Modals</h2>
+  <div>Modal Example</div>
+  <modal-example/>
+</layout-doc>

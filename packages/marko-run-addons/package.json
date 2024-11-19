@@ -16,7 +16,6 @@
     "qs": "^6.13.0"
   },
   "devDependencies": {
-    "@types/cookie": "^1.0.0",
     "@types/jsonwebtoken": "^9.0.7",
     "@types/lodash-es": "^4.17.12",
     "@types/qs": "^6.9.17"

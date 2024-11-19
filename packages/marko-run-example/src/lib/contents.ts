@@ -1,4 +1,10 @@
-export const contents = [
+interface Page {
+  href: string;
+  text: string;
+  contents?: Page[];
+}
+
+export const contents: Page[] = [
   { href: "/docs", text: "Introduction" },
   { href: "/docs/session", text: "Session Management" },
   {
@@ -22,6 +28,7 @@ export const contents = [
     ],
   },
   { href: "/docs/hosting", text: "Hosting" },
+  { href: "/docs/enhancements", text: "Enhancements" },
 ];
 
 export const flatContents = contents

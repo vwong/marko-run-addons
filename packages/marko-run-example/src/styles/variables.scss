@@ -14,16 +14,17 @@ $font-size-base: 1rem;
 $font-size-down-1: 0.833rem;
 
 // ensure vertical rhythm
-$v-01: math.div(1rem, 16);
-$v-05: 5 * $v-01;
-$v-10: 10 * $v-01;
-$v-20: 20 * $v-01;
-$v-30: 30 * $v-01;
-$v-40: 40 * $v-01;
-$v-50: 50 * $v-01;
+$v-1: math.div(1rem, 16);
+$v-5: 5 * $v-1;
+$v-10: 10 * $v-1;
+$v-20: 20 * $v-1;
+$v-30: 30 * $v-1;
+$v-40: 40 * $v-1;
+$v-50: 50 * $v-1;
 
 // general spacing
 $s-1: math.div(1rem, 16);
+$s-2: 2 * $s-1;
 $s-4: 4 * $s-1;
 $s-8: 8 * $s-1;
 $s-16: 16 * $s-1;
@@ -112,3 +113,11 @@ $color-line: light-dark($color-neutral-40, $color-neutral-60);
 $color-disabled: light-dark($color-neutral-50, $color-neutral-60);
 $background-color-disabled: light-dark($color-neutral-05, $color-neutral-95);
 $background-color-neutral: light-dark($color-neutral-00, $color-neutral-98);
+$background-color-overlay: light-dark(
+  rgba($color-neutral-80, 0.5),
+  rgba($color-neutral-60, 0.5)
+);
+
+// time
+$time-fast: 0.15s;
+$time-standard: 0.3s;

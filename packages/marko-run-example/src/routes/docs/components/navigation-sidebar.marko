@@ -1,17 +1,18 @@
+<!-- use tags -->
 import { contents } from "#lib/contents";
 
-<div class="navigation">
-  <button aria-label="Menu" class="button" popovertarget:scoped="nav">
-    ☰
-  </button>
-  <nav aria-labelledby:scoped="heading" id:scoped="nav" popover>
-    <h1 class="visually-hidden" id:scoped="heading">
-      Topics
-    </h1>
+<id/navigation/>
+<id/heading/>
+<details/details class="navigation" id=navigation>
+  <summary id=heading>
+    <icon="menu" title="Menu"/>
+     Topics
+  </summary>
+  <nav aria-labelledby=heading>
     <ul>
       <for|{ contents: innerContents, href, text }| of=contents>
         <li>
-          <if(innerContents)>
+          <if=innerContents>
             <${href ? "a" : "span"}
               aria-current=(href === $global.url.pathname ? "page" : undefined)
               class=(href ? "link" : undefined)
@@ -48,24 +49,41 @@ import { contents } from "#lib/contents";
       </for>
     </ul>
   </nav>
-</div>
+</details>
+<outside-focus
+  for=navigation
+  onOutside() {
+    details().open = false;
+  }
+/>
+<escape-key onEscape() {
+  details().open = false;
+}/>
 
 <style-button/>
 <style-link/>
 <style-visually-hidden/>
-style.scss {
+
+<style.scss>
   .navigation {
+    display: inline-flex;
     position: relative;
 
-    & [popover] {
-      border: 1px solid $color-line;
+    & summary {
       border-radius: $radius-m;
+      display: inline;
     }
 
-    & :popover-open {
-      left: $s-16;
+    & nav {
+      background: $background-color-neutral;
+      border: 1px solid $color-line;
+      border-radius: $radius-m;
+      left: 0;
+      padding: $v-10 $s-16;
       position: absolute;
-      top: $v-50;
+      top: calc(100% + $v-10);
+      width: 18rem;
+      z-index: 1;
     }
   }
-}
+</style>

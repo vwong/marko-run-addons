@@ -1,0 +1,22 @@
+<!-- use tags -->
+export interface Input {
+  value: number;
+}
+
+<let/timer=(0 as unknown as ReturnType<typeof setTimeout>)/>
+<let/isActive=false/>
+
+<const/startTimer=(
+  () => {
+    if (timer) {
+      clearTimeout(timer);
+    }
+
+    isActive = true;
+    timer = setTimeout(() => {
+      isActive = false;
+    }, input.value);
+  }
+)/>
+
+<return={ isActive, startTimer }/>

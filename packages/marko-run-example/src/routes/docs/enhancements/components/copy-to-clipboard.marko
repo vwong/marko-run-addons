@@ -1,0 +1,41 @@
+<!-- use tags -->
+export interface Input {
+  for: string;
+}
+
+<timer/{ isActive, startTimer }=2000/>
+<button
+  aria-live="polite"
+  class="copy-to-clipboard popup"
+  onClick(event: Event) {
+    event.preventDefault();
+
+    const { textContent } = document.getElementById(input.for)!;
+    window.navigator.clipboard.writeText(textContent!);
+    console.log(textContent);
+    startTimer();
+  }
+  type="button"
+>
+  <icon="copy" title="Copy to clipboard"/>
+  <if=isActive>
+    <div class="popup__overlay popup__overlay--left">
+      Copied!
+    </div>
+  </if>
+</button>
+
+<style-popup/>
+<style.scss>
+  .copy-to-clipboard {
+    background: none;
+    border: none;
+    border-radius: $radius-m;
+    font-size: 1em;
+    padding: $s-4;
+
+    @media (scripting: none) {
+      display: none !important;
+    }
+  }
+</style>

@@ -24,9 +24,16 @@ style.scss {
 
   html {
     background-color: $background-color-neutral;
+    box-sizing: border-box;
     color: $color-neutral;
     font-family: $font-family-sans-serif;
     line-height: 1.25;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: inherit;
   }
 
   h1 {
@@ -39,6 +46,12 @@ style.scss {
     font-size: $font-size-up-1;
     font-weight: $font-weight-medium;
     line-height: $v-30;
+  }
+
+  code {
+    font-family: $font-family-monospace;
+    font-size: 0.875em;
+    line-height: $v-20;
   }
 
   label {
@@ -55,7 +68,6 @@ style.scss {
     accent-color: $color-accent;
     border: 1px solid $color-line;
     border-radius: $radius-m;
-    box-sizing: border-box;
     font-family: inherit;
     font-size: 1em;
     height: $v-30;
@@ -102,9 +114,16 @@ style.scss {
     text-decoration: none;
   }
 
+  button {
+    font-family: $font-family-sans-serif;
+    font-size: 1em;
+    font-weight: $font-weight-normal;
+  }
+
   figcaption {
     font-size: $font-size-down-1;
     font-style: italic;
+    line-height: $v-20;
     text-align: center;
   }
 }
