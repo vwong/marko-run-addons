@@ -50,13 +50,7 @@ import { contents } from "#lib/contents";
     </ul>
   </nav>
 </details>
-<outside-focus
-  for=navigation
-  onOutside() {
-    details().open = false;
-  }
-/>
-<escape-key onEscape() {
+<on-blur=navigation handler() {
   details().open = false;
 }/>
 
@@ -70,18 +64,27 @@ import { contents } from "#lib/contents";
     position: relative;
 
     & summary {
-      border-radius: $radius-m;
       display: inline;
+      padding: $v-10 $s-16;
+
+      &:hover {
+        background: $background-color-neutral-10;
+      }
+
+      &:focus-visible {
+        outline-offset: -2px;
+      }
     }
 
     & nav {
-      background: $background-color-neutral;
-      border: 1px solid $color-line;
+      background: $background-color-neutral-00;
+      border: 1px solid $foreground-color-neutral-60;
       border-radius: $radius-m;
-      left: 0;
+      box-shadow: $shadow;
+      left: $s-8;
       padding: $v-10 $s-16;
       position: absolute;
-      top: calc(100% + $v-10);
+      top: calc(100% + $v-5);
       width: 18rem;
       z-index: 1;
     }

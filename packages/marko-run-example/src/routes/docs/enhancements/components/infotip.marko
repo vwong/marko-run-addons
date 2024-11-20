@@ -34,13 +34,7 @@ export interface Input {
     <${input.renderBody}/>
   </div>
 </details>
-<outside-focus
-  for=popupId
-  onOutside() {
-    details().open = false;
-  }
-/>
-<escape-key onEscape() {
+<on-blur=popupId handler() {
   details().open = false;
 }/>
 

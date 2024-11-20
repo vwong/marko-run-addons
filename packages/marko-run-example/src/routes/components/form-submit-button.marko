@@ -39,4 +39,8 @@ export interface Input {
       isError = false;
     },
   });
+
+  el.addEventListener("submit", () => {
+    isPending = true;
+  });
 }/>

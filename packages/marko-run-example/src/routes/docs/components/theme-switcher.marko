@@ -15,7 +15,7 @@
     <li>
       <button
         aria-pressed=(theme === "light" ? "true" : "false")
-        class="button theme-switcher__button theme-switcher__button--first"
+        class="theme-switcher__button theme-switcher__button--first"
         onClick() {
           const { classList } = document.documentElement;
           classList.add("light");
@@ -30,7 +30,7 @@
     <li>
       <button
         aria-pressed=(theme === "dark" ? "true" : "false")
-        class="button theme-switcher__button"
+        class="theme-switcher__button"
         onClick() {
           const { classList } = document.documentElement;
           classList.remove("light");
@@ -45,7 +45,7 @@
     <li>
       <button
         aria-pressed=(theme === "" ? "true" : "false")
-        class="button theme-switcher__button theme-switcher__button--last"
+        class="theme-switcher__button theme-switcher__button--last"
         onClick() {
           const { classList } = document.documentElement;
           classList.remove("light");
@@ -64,17 +64,10 @@
 
 <style.scss>
   .theme-switcher {
-    position: absolute;
-    right: $s-16;
-    top: $v-10;
-
-    .button {
-      border-radius: 0;
-    }
-
-    &__label {
-      font-size: $font-size-down-1;
-    }
+    align-items: center;
+    display: grid;
+    gap: $s-8;
+    grid-template-columns: auto auto;
 
     &__buttons {
       display: flex;
@@ -83,17 +76,27 @@
     }
 
     &__button {
-      border-left: 1px solid $color-line;
+      background: none;
+      border: 1px solid $foreground-color-neutral-60;
+      border-left: none;
 
       &--first {
-        border-bottom-left-radius: $radius-m !important;
-        border-left: none;
-        border-top-left-radius: $radius-m !important;
+        border: 1px solid $foreground-color-neutral-60;
+        border-bottom-left-radius: $radius-m;
+        border-top-left-radius: $radius-m;
       }
 
       &--last {
-        border-bottom-right-radius: $radius-m !important;
-        border-top-right-radius: $radius-m !important;
+        border-bottom-right-radius: $radius-m;
+        border-top-right-radius: $radius-m;
+      }
+
+      &:hover {
+        background: $background-color-neutral-10;
+      }
+
+      &[aria-pressed="true"] {
+        background: $background-color-neutral-20;
       }
     }
 

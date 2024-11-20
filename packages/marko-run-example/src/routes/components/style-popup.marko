@@ -6,9 +6,9 @@ style.scss {
     position: relative;
 
     &__overlay {
-      background: $color-neutral-90;
+      background: $background-color-neutral-90;
       border-radius: $radius-m;
-      color: $color-neutral-10;
+      color: $foreground-color-neutral-90;
       font-size: $font-size-down-1;
       max-width: 13rem;
       padding: $v-5 $s-8;
@@ -17,7 +17,7 @@ style.scss {
       width: max-content;
 
       &::after {
-        border: 0.4rem solid;
+        border: 0.4rem solid transparent;
         content: "";
         position: absolute;
       }
@@ -27,7 +27,7 @@ style.scss {
         top: 0;
 
         &::after {
-          border-color: transparent transparent transparent $color-neutral-90;
+          border-left-color: $background-color-neutral-90;
           left: 100%;
           top: 50%;
           transform: translateY(-50%);
@@ -40,7 +40,7 @@ style.scss {
         transform: translateX(-50%);
 
         &::after {
-          border-color: $color-neutral-90 transparent transparent transparent;
+          border-top-color: $background-color-neutral-90;
           left: calc(50%);
           top: 100%;
           transform: translateX(-50%);

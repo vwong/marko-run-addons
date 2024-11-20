@@ -14,36 +14,36 @@ export interface Input {
       <speculation-rules/>
     </if>
   </head>
-  <body>
-    <flash-notice/>
-    <div class="layout">
-      <navigation-sidebar/>
-      <theme-switcher/>
-      <main class="doc">
-        <${input.renderBody}/>
-      </main>
-      <footer>
-        <navigation-footer/>
-      </footer>
-    </div>
+  <body class="layout">
+    <header>
+      <top-banner/>
+      <flash-notice/>
+      <div class="layout__frame">
+        <contents-prev-next/>
+      </div>
+    </header>
+    <main class="layout__frame layout__doc">
+      <${input.renderBody}/>
+    </main>
+    <footer class="layout__frame">
+      <contents-prev-next/>
+    </footer>
   </body>
-  <prevent-multiple-submits/>
 </html>
 
 <style-base/>
 style.scss {
-  .doc {
-    padding-bottom: $v-10;
-
-    figure,
-    h2,
-    p {
-      margin-top: $v-10;
-    }
-  }
-
   .layout {
-    position: relative;
-    padding: $v-10 $s-16;
+    &__frame {
+      padding: $v-10 $s-16;
+    }
+
+    &__doc {
+      figure,
+      h2,
+      p {
+        margin-top: $v-10;
+      }
+    }
   }
 }

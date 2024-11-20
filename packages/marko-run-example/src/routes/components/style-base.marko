@@ -12,7 +12,7 @@ style.scss {
   }
 
   :focus-visible {
-    outline: 2px dashed $color-accent;
+    outline: 2px dashed $foreground-color-accent;
     outline-offset: 1px;
     position: relative;
     z-index: 1;
@@ -23,9 +23,9 @@ style.scss {
   }
 
   html {
-    background-color: $background-color-neutral;
+    background-color: $background-color-neutral-00;
     box-sizing: border-box;
-    color: $color-neutral;
+    color: $foreground-color-neutral-00;
     font-family: $font-family-sans-serif;
     line-height: 1.25;
   }
@@ -55,7 +55,7 @@ style.scss {
   }
 
   label {
-    color: light-dark($color-neutral-80, $color-neutral-30);
+    color: $foreground-color-neutral-30;
     display: block;
     font-size: $font-size-down-1;
     line-height: $v-20;
@@ -65,8 +65,8 @@ style.scss {
   input,
   select,
   textarea {
-    accent-color: $color-accent;
-    border: 1px solid $color-line;
+    accent-color: $foreground-color-accent;
+    border: 1px solid $foreground-color-neutral-60;
     border-radius: $radius-m;
     font-family: inherit;
     font-size: 1em;
@@ -82,13 +82,13 @@ style.scss {
     }
 
     &:hover {
-      border-color: $color-accent;
+      border-color: $foreground-color-accent;
     }
 
     &[disabled],
     &[readonly] {
-      background-color: $background-color-disabled;
-      color: $color-disabled;
+      background-color: $background-color-neutral-05;
+      color: $foreground-color-neutral-60;
       cursor: not-allowed;
     }
 
@@ -101,10 +101,10 @@ style.scss {
 
     &[aria-invalid="true"],
     &:invalid {
-      border-color: $color-error;
+      border-color: $foreground-color-error;
 
       &:focus-visible {
-        outline-color: $color-error;
+        outline-color: $foreground-color-error;
       }
     }
   }
