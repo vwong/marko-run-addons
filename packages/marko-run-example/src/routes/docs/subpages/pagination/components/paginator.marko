@@ -34,6 +34,7 @@ export interface Input {
         class="link"
         href=buildUrl(prevPage)
         onClick=navigator.gotoPage(prevPage)
+        rel="prev"
       >
         Previous
       </a>
@@ -43,6 +44,7 @@ export interface Input {
         class="link"
         href=buildUrl(nextPage)
         onClick=navigator.gotoPage(nextPage)
+        rel="next"
       >
         Next
       </a>
@@ -54,7 +56,7 @@ export interface Input {
   <if=key>
     <micro-frame-client isError:=isError isPending:=isPending src=frameSrc>
       <@loading>
-        <div>...</div>
+        <loader/>
       </@loading>
       <@catch|err: Error|>
         ${JSON.stringify(err)}

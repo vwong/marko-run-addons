@@ -17,7 +17,7 @@ export class PageNavigator {
     }
   }
 
-  gotoPage(page: number) {
+  gotoPage(page: number | string) {
     return (event: Event) => {
       event.preventDefault();
 

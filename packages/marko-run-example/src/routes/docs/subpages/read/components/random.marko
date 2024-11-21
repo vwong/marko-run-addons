@@ -8,7 +8,6 @@ export interface Input {
 <let/key=0/>
 <let/isPending=false/>
 <let/isError=false/>
-<let/isBrowser=false/>
 
 <div class="random">
   <if=key>
@@ -29,22 +28,16 @@ export interface Input {
     <micro-frame-server src=input.src/>
   </else>
 
-  <if=isBrowser>
-    <button
-      class="button"
-      disabled=isPending
-      onClick() {
-        key++;
-      }
-    >
-      Regenerate
-    </button>
-  </if>
+  <button
+    class="button random__refresh"
+    disabled=isPending
+    onClick() {
+      key++;
+    }
+  >
+    Regenerate
+  </button>
 </div>
-
-<effect() {
-  isBrowser = true;
-}/>
 
 <style-button/>
 <style.scss>
@@ -53,5 +46,11 @@ export interface Input {
     display: flex;
     justify-content: space-between;
     margin-top: $v-10;
+
+    &__refresh {
+      @media (scripting: none) {
+        display: none !important;
+      }
+    }
   }
 </style>
