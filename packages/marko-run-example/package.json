@@ -8,7 +8,6 @@
   "license": "ISC",
   "dependencies": {
     "@isaacs/ttlcache": "^1.4.1",
-    "@marko/run": "^0.5.1",
     "@marko/run-adapter-node": "^0.1.13",
     "@marko/tags-api-preview": "^0.7.8",
     "@micro-frame/marko": "^1.10.1",
@@ -22,6 +21,7 @@
     "lodash-es": "^4.17.21"
   },
   "devDependencies": {
+    "@marko/run": "^0.4.12",
     "@types/compression": "^1.7.5",
     "@types/express": "^5.0.0",
     "rollup-plugin-visualizer": "^5.12.0"

@@ -6,7 +6,13 @@ interface Page {
 
 export const contents: Page[] = [
   { href: "/docs", text: "Introduction" },
-  { href: "/docs/session", text: "Session Management" },
+  {
+    href: "/docs/session",
+    text: "Session Management",
+    contents: [
+      { href: "/docs/session/activity-stack", text: "Activity Stack" },
+    ],
+  },
   {
     href: "/docs/validation",
     text: "Validation",

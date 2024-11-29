@@ -1,8 +1,10 @@
+import { ActivityStackService } from "./activityStack";
 import { CsrfService } from "./csrf";
 import { FlashService } from "./flash";
 import { Session } from "./session";
 import type { ValidationCheck } from "./validation";
 
+export { activityStack } from "./activityStack";
 export { CsrfService, csrf } from "./csrf";
 export type { CsrfSession, CsrfOptions } from "./csrf";
 export { FlashService, flash } from "./flash";
@@ -15,6 +17,7 @@ export type { ValidationCheck, Validator, ValidateOptions } from "./validation";
 
 declare module "@marko/run" {
   interface Context {
+    activityStack: ActivityStackService;
     body?: unknown;
     bodyErrors: ValidationCheck[];
     csrf: CsrfService;

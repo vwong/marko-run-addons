@@ -1,27 +1,34 @@
-import { flatContents as contents } from "#lib/contents";
-$ const current = contents.findIndex((c) => c.href === $global.url.pathname);
-$ const previous = Math.max(0, current - 1);
-$ const next = Math.min(contents.length - 1, current + 1);
+import { flatContents } from "#lib/contents";
+$ const current = flatContents.findIndex(
+  (c) => c.href === $global.url.pathname,
+);
+$ const previous = current - 1;
+$ const next = current + 1;
 
-<div class="navigation-footer">
-  <if(current)>
-    <a
-      class="tile navigation-footer__link navigation-footer__link--prev"
-      href=(contents[previous].href)
-    >
-      ‹ ${contents[previous].text}
-    </a>
-  </if>
+<if(current >= 0)>
+  <div class="navigation-footer">
+    <if(previous >= 0)>
+      <a
+        class="tile navigation-footer__link navigation-footer__link--prev"
+        href=(flatContents[previous].href)
+      >
+        ‹ ${flatContents[previous].text}
+      </a>
+    </if>
+    <else>
+      <div/>
+    </else>
 
-  <if(current < contents.length - 1)>
-    <a
-      class="tile navigation-footer__link navigation-footer__link--next"
-      href=(contents[next].href)
-    >
-      ${contents[next].text} ›
-    </a>
-  </if>
-</div>
+    <if(next <= flatContents.length - 1)>
+      <a
+        class="tile navigation-footer__link navigation-footer__link--next"
+        href=(flatContents[next].href)
+      >
+        ${flatContents[next].text} ›
+      </a>
+    </if>
+  </div>
+</if>
 
 <style-tile/>
 

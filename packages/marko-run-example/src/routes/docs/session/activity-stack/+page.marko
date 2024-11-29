@@ -1,0 +1,49 @@
+<layout-doc>
+  <h1>Activity Stack</h1>
+  <p>
+    A common pattern for apps is to redirect users to prerequisite interstititals, perhaps to login, or show some terms & conditions, or maybe a welcome tutorial. Users only conditionally need to see such pages. To support such a pattern, it is useful to build an${" "}
+    <a
+      class="link"
+      href="https://developer.android.com/guide/components/activities/tasks-and-back-stack"
+    >
+      activity stack
+    </a>
+     that users gradually unwind to reach the desired page.
+  </p>
+  <p>
+    In the example pages below, we conditionally show some interstitials before reaching the final desired page.
+  </p>
+  <ul>
+    <li>
+      <a class="link" href="./activity-stack/desired/1?page=one">
+        desired page 1
+      </a>
+       - requires interstitial 1 to be seen
+    </li>
+    <li>
+      <a class="link" href="./activity-stack/desired/2?page=two">
+        desired page 2
+      </a>
+       - requires interstitial 1 & 2 to be seen
+    </li>
+    <li>
+      <a class="link" href="./activity-stack/desired/3?page=three">
+        desired page 3
+      </a>
+       - requires interstitial 1, 2, & 3 to be seen
+    </li>
+  </ul>
+  <p>
+    Once the interstitial is seen, it does not need to be revisited, and you are shown the desired page immediately.
+  </p>
+
+  <form method="POST">
+    <csrf-token/>
+    <button class="button" type="submit">
+      Show all interstitials again
+    </button>
+  </form>
+</layout-doc>
+
+<style-button/>
+<style-link/>

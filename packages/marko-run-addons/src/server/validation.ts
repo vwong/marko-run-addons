@@ -90,7 +90,7 @@ export const validate =
       }
     }
 
-    let response;
+    let response: Response;
     if (context.queryErrors.length || context.bodyErrors.length) {
       response = redirect(context.url.pathname);
     } else {
