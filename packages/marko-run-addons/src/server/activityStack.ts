@@ -1,6 +1,5 @@
 export interface ActivityStackSession {
   _activityStack?: string[];
-  _lastActivity?: string;
 }
 
 interface ActivityStackServiceOptions {
@@ -15,11 +14,11 @@ export class ActivityStackService {
   constructor({ currentUrl, session }: ActivityStackServiceOptions) {
     this.#currentUrl = currentUrl;
     this.#session = session;
+    this.#session._activityStack ||= [];
   }
 
   reset() {
-    this.#session._activityStack = [this.#currentUrl];
-    this.#session._lastActivity = this.#currentUrl;
+    this.#session._activityStack = [];
   }
 
   push(activity: string) {
@@ -27,21 +26,22 @@ export class ActivityStackService {
   }
 
   pop(): Response | undefined {
-    if (this.#session._lastActivity !== this.#currentUrl) {
-      // protect against non-stack activity
-      return;
+    if (this.#currentUrl === this.top) {
+      this.#session._activityStack!.pop();
     }
 
-    const nextUrl = this.#session._activityStack!.pop() as string;
-    this.#session._lastActivity = nextUrl;
-    if (nextUrl === this.#currentUrl) {
-      return;
-    } else {
+    if (this.top) {
       return new Response(null, {
         status: 302,
-        headers: { location: nextUrl },
+        headers: { location: this.top },
       });
     }
+  }
+
+  get top(): string | undefined {
+    return this.#session._activityStack![
+      this.#session._activityStack!.length - 1
+    ];
   }
 }
 

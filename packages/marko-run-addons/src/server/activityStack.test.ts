@@ -10,48 +10,70 @@ describe("activityStack", () => {
   beforeEach(() => {
     context = {
       session: {},
-      url: new URL("http://example/current"),
+      url: new URL("http://example/zero"),
     } as MarkoRun.Context;
 
     activityStackMiddleware = activityStack() as unknown as CallableHandler;
   });
 
-  it("returns the current page", () => {
-    activityStackMiddleware(context);
+  describe("with an empty stack", () => {
+    it("returns no response", () => {
+      activityStackMiddleware(context);
 
-    context.activityStack.reset();
-    const response = context.activityStack.pop();
+      context.activityStack.reset();
+      const response = context.activityStack.pop();
 
-    expect(response).toBeUndefined();
+      expect(response).toBeUndefined();
+    });
   });
 
-  it("redirects to the top of the stack", () => {
-    activityStackMiddleware(context);
+  describe("with normal stack usage", () => {
+    it("pops the stack and redirects to it", () => {
+      activityStackMiddleware(context);
 
-    context.activityStack.reset();
-    context.activityStack.push("/one");
-    context.activityStack.push("/two");
-    const response = context.activityStack.pop();
+      context.activityStack.reset();
+      context.activityStack.push("/one");
+      context.activityStack.push("/two");
+      const response = context.activityStack.pop();
 
-    expect(response!.status).toBe(302);
-    expect(response!.headers.get("location")).toBe("/two");
+      expect(response!.status).toBe(302);
+      expect(response!.headers.get("location")).toBe("/two");
+
+      context = {
+        ...context,
+        url: new URL("http://example.com/two"),
+      };
+      activityStackMiddleware(context);
+
+      const response2 = context.activityStack.pop();
+
+      expect(response2!.status).toBe(302);
+      expect(response2!.headers.get("location")).toBe("/one");
+    });
   });
 
-  it("ignores requests outside of the activity stack", () => {
-    activityStackMiddleware(context);
+  describe("with out-of-order stack usage", () => {
+    it("returns the top of the stack without popping", () => {
+      activityStackMiddleware(context);
 
-    context.activityStack.reset();
-    context.activityStack.push("/one");
-    context.activityStack.push("/two");
+      context.activityStack.reset();
+      context.activityStack.push("/one");
+      context.activityStack.push("/two");
+      const response = context.activityStack.pop();
 
-    context = {
-      ...context,
-      url: new URL("http://example.com/not-in-stack"),
-    };
-    activityStackMiddleware(context);
+      expect(response!.status).toBe(302);
+      expect(response!.headers.get("location")).toBe("/two");
 
-    const response = context.activityStack.pop();
+      context = {
+        ...context,
+        url: new URL("http://example.com/not-in-stack"),
+      };
+      activityStackMiddleware(context);
 
-    expect(response!).toBeUndefined();
+      const response2 = context.activityStack.pop();
+
+      expect(response2!.status).toBe(302);
+      expect(response2!.headers.get("location")).toBe("/two");
+    });
   });
 });
