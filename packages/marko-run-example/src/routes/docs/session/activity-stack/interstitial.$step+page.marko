@@ -1,5 +1,9 @@
 <layout-doc>
-  <h1>Interstitial ${$global.params.step}</h1>
+  $ const step = Number($global.params.step);
+  <h1>Interstitial ${step}</h1>
+  <if(step === 100)>
+    <p>This is a dynamically added interstitital.</p>
+  </if>
   <form method="POST">
     <csrf-token/>
     <button class="button" type="submit">
