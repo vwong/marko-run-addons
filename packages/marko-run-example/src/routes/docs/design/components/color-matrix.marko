@@ -1,0 +1,107 @@
+<!-- use tags -->
+import { contrastRatio } from "./contrast";
+static const N = 16;
+
+<noscript>
+  <notification level="information">
+    You need Javascript enabled to view the contrast values in Figure 1
+  </notification>
+</noscript>
+
+<figure>
+  <div class="color-matrix">
+    <for|i: number| from=1 to=N>
+      <for|j: number| from=1 to=N>
+        <div
+          class=`color-matrix__cell color-matrix__cell--${i}-${j}`
+          onMouseenter() {
+            (
+              document.querySelector(
+                `.color-matrix__cell--${i}-${j}`,
+              ) as HTMLElement
+            ).style.transform = "scale(1.5)";
+            (
+              document.querySelector(
+                `.color-matrix__cell--${j}-${i}`,
+              ) as HTMLElement
+            ).style.transform = "scale(1.5)";
+          }
+          onMouseleave() {
+            (
+              document.querySelector(
+                `.color-matrix__cell--${i}-${j}`,
+              ) as HTMLElement
+            ).style.removeProperty("transform");
+            (
+              document.querySelector(
+                `.color-matrix__cell--${j}-${i}`,
+              ) as HTMLElement
+            ).style.removeProperty("transform");
+          }
+        >
+          Aa
+        </div>
+      </for>
+    </for>
+  </div>
+  <figcaption>
+    Figure 1: Contrast ratios of different color combinations. Rows vary by
+    <strong>background</strong>
+     color, columns vary by
+    <strong>foreground</strong>
+     color.
+  </figcaption>
+</figure>
+<effect() {
+  for (let i = 1; i < N + 1; i++) {
+    for (let j = 1; j < N + 1; j++) {
+      const el = document.querySelector(
+        `.color-matrix__cell--${i}-${j}`,
+      ) as HTMLElement;
+      const style = window.getComputedStyle(el!);
+      const ratio = contrastRatio(style.color, style.backgroundColor);
+      el.innerText = Math.floor((ratio + Number.EPSILON) * 100) / 100 + "";
+    }
+  }
+}/>
+
+<style.scss>
+  @use "sass:list";
+
+  $shades: $color-neutral-00, $color-neutral-05, $color-neutral-10,
+    $color-neutral-15, $color-neutral-20, $color-neutral-30, $color-neutral-40,
+    $color-neutral-50, $color-neutral-60, $color-neutral-70, $color-neutral-80,
+    $color-neutral-85, $color-neutral-90, $color-neutral-95, $color-neutral-98,
+    $color-neutral-100;
+  $n: list.length($shades);
+
+  .color-matrix {
+    cursor: default;
+    display: grid;
+    gap: 1px;
+    grid-template-columns: repeat($n, 1fr);
+    grid-template-rows: repeat($n, 1fr);
+    margin-inline: auto;
+    width: fit-content;
+
+    &__cell {
+      border: 1px solid $foreground-color-neutral-60;
+      border-radius: $radius-m;
+      font-size: min(1.6vw, 1.6vh);
+      height: min(5.2vw, 5.2vh);
+      place-content: center;
+      text-align: center;
+      transition: transform $time-fast;
+      width: min(5.2vw, 5.2vh);
+
+      @each $i in $shades {
+        @each $j in $shades {
+          &--#{list.index($shades, $i)}-#{list.index($shades, $j)} {
+            background: $i;
+            color: $j;
+          }
+        }
+      }
+    }
+  }
+</style>

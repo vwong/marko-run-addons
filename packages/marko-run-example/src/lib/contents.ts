@@ -36,6 +36,7 @@ export const contents: Page[] = [
   },
   { href: "/docs/hosting", text: "Hosting" },
   { href: "/docs/enhancements", text: "Enhancements" },
+  { href: "/docs/design", text: "Design" },
 ];
 
 export const flatContents = contents
