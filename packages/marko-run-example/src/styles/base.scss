@@ -1,0 +1,127 @@
+:root {
+  color-scheme: light dark;
+}
+
+.light {
+  color-scheme: light;
+}
+
+.dark {
+  color-scheme: dark;
+}
+
+:focus-visible {
+  outline: 2px dashed $foreground-color-accent;
+  outline-offset: 1px;
+  position: relative;
+  z-index: 1;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  background-color: $background-color-neutral-00;
+  box-sizing: border-box;
+  color: $foreground-color-neutral-00;
+  font-family: $font-family-sans-serif;
+  line-height: 1.25;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+h1 {
+  font-size: $font-size-up-2;
+  font-weight: $font-weight-medium;
+  line-height: $v-30;
+}
+
+h2 {
+  font-size: $font-size-up-1;
+  font-weight: $font-weight-medium;
+  line-height: $v-30;
+}
+
+code {
+  font-family: $font-family-monospace;
+  font-size: 0.875em;
+  line-height: $v-20;
+}
+
+label {
+  color: $foreground-color-neutral-30;
+  display: block;
+  font-size: $font-size-down-1;
+  line-height: $v-20;
+  text-transform: uppercase;
+}
+
+input,
+select,
+textarea {
+  accent-color: $foreground-color-accent;
+  border: 1px solid $foreground-color-neutral-60;
+  border-radius: $radius-m;
+  font-family: inherit;
+  font-size: 1em;
+  height: $v-30;
+  padding: $s-8;
+
+  &[type="email"],
+  &[type="number"],
+  &[type="password"],
+  &[type="search"],
+  &[type="text"] {
+    width: 100%;
+  }
+
+  &:hover {
+    border-color: $foreground-color-accent;
+  }
+
+  &[disabled],
+  &[readonly] {
+    background-color: $background-color-neutral-05;
+    color: $foreground-color-neutral-60;
+    cursor: not-allowed;
+  }
+
+  &[type="email"],
+  &[type="password"],
+  &[type="search"],
+  &[type="text"] {
+    width: 100%;
+  }
+
+  &[aria-invalid="true"],
+  &:invalid {
+    border-color: $foreground-color-error;
+
+    &:focus-visible {
+      outline-color: $foreground-color-error;
+    }
+  }
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: $font-family-sans-serif;
+  font-size: 1em;
+  font-weight: $font-weight-normal;
+}
+
+figcaption {
+  font-size: $font-size-down-1;
+  font-style: italic;
+  line-height: $v-20;
+  text-align: center;
+}

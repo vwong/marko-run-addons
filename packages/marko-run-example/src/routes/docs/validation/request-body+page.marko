@@ -1,3 +1,4 @@
+import "#styles/button.scss";
 import type { BodySchema } from "./request-body+meta";
 $ const errors = Object.fromEntries(
   $global.lastBodyErrors.map(({ name, message }) => [name, message]),
@@ -37,5 +38,3 @@ $ const errors = Object.fromEntries(
     </form-submit-button>
   </p>
 </layout-doc>
-
-<style-button/>

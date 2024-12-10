@@ -1,3 +1,4 @@
+import "#styles/tile.scss";
 import { flatContents } from "#lib/contents";
 $ const current = flatContents.findIndex(
   (c) => c.href === $global.url.pathname,
@@ -29,8 +30,6 @@ $ const next = current + 1;
     </if>
   </div>
 </if>
-
-<style-tile/>
 
 style.scss {
   .navigation-footer {

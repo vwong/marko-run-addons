@@ -1,4 +1,7 @@
 <!-- use tags -->
+import "#styles/button.scss";
+import "#styles/link.scss";
+import "#styles/visually-hidden.scss";
 import { contents } from "#lib/contents";
 
 <id/navigation/>
@@ -53,10 +56,6 @@ import { contents } from "#lib/contents";
 <on-blur=navigation handler() {
   details().open = false;
 }/>
-
-<style-button/>
-<style-link/>
-<style-visually-hidden/>
 
 <style.scss>
   .navigation {

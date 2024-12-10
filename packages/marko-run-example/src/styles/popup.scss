@@ -1,0 +1,49 @@
+$tip-distance: 0.6rem;
+
+.popup {
+  display: inline-flex;
+  position: relative;
+
+  &__overlay {
+    background: $background-color-neutral-90;
+    border-radius: $radius-m;
+    color: $foreground-color-neutral-90;
+    font-size: $font-size-down-1;
+    max-width: 13rem;
+    padding: $v-5 $s-8;
+    position: absolute;
+    text-align: center;
+    width: max-content;
+
+    &::after {
+      border: 0.4rem solid transparent;
+      content: "";
+      position: absolute;
+    }
+
+    &--left {
+      right: calc(100% + $tip-distance);
+      top: 0;
+
+      &::after {
+        border-left-color: $background-color-neutral-90;
+        left: 100%;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+    }
+
+    &--top {
+      bottom: calc(100% + $tip-distance);
+      left: calc(50%);
+      transform: translateX(-50%);
+
+      &::after {
+        border-top-color: $background-color-neutral-90;
+        left: calc(50%);
+        top: 100%;
+        transform: translateX(-50%);
+      }
+    }
+  }
+}

@@ -1,3 +1,4 @@
+import "#styles/visually-hidden.scss";
 <if($global.flash.current.length || $global.lastQueryErrors.length)>
   <section aria-labelledby:scoped="flash" class="flash">
     <div class="visually-hidden" id:scoped="flash">
@@ -18,7 +19,6 @@
   </section>
 </if>
 
-<style-visually-hidden/>
 style.scss {
   .flash-notice {
     display: grid;

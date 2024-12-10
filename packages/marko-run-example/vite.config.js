@@ -1,4 +1,5 @@
 import { defineConfig, mergeConfig } from "vite";
+import { fileURLToPath } from "url";
 import base from "../../vite.config";
 
 export default defineConfig(() =>
@@ -9,10 +10,18 @@ export default defineConfig(() =>
     css: {
       preprocessorOptions: {
         scss: {
-          additionalData: `@use "#styles/variables.scss" as *;`,
+          additionalData: `@use "@/styles/_variables.scss" as *;`,
           api: "modern-compiler",
         },
       },
+    },
+    resolve: {
+      alias: [
+        {
+          find: "@",
+          replacement: fileURLToPath(new URL("./src", import.meta.url)),
+        },
+      ],
     },
   }),
 );

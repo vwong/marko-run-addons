@@ -1,3 +1,5 @@
+import "#styles/button.scss";
+import "#styles/link.scss";
 import type { QuerySchema } from "./search-params+meta";
 $ const errors = Object.fromEntries(
   $global.lastQueryErrors.map(({ name, message }) => [name, message]),
@@ -41,6 +43,3 @@ $ const errors = Object.fromEntries(
     </li>
   </ul>
 </layout-doc>
-
-<style-button/>
-<style-link/>

@@ -1,0 +1,8 @@
+.link {
+  border-radius: $radius-m;
+  color: $foreground-color-accent;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
