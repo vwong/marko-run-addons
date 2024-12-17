@@ -5,30 +5,32 @@ export interface Input {
 }
 
 <let/isActive=false/>
-<on-timeout/{ reset }=2000 handler() {
-  isActive = false;
-}/>
-<button
-  aria-live="polite"
-  class="copy-to-clipboard popup"
-  onClick(event: Event) {
-    event.preventDefault();
+<div class="popup">
+  <button
+    aria-live="polite"
+    class="copy-to-clipboard"
+    onClick(event: Event) {
+      event.preventDefault();
 
-    isActive = true;
-    const { textContent } = document.getElementById(input.for)!;
-    window.navigator.clipboard.writeText(textContent!);
-    console.log(textContent);
-    reset();
-  }
-  type="button"
->
-  <icon="copy" title="Copy to clipboard"/>
+      isActive = true;
+      const { textContent } = document.getElementById(input.for)!;
+      window.navigator.clipboard.writeText(textContent!);
+      console.log(textContent);
+      reset();
+    }
+    type="button"
+  >
+    <icon="copy" title="Copy to clipboard"/>
+  </button>
   <if=isActive>
-    <div class="popup__overlay popup__overlay--left">
+    <div class="popup__overlay popup__overlay--force popup__overlay--left">
       Copied!
     </div>
   </if>
-</button>
+</div>
+<on-timeout/{ reset }=2000 handler() {
+  isActive = false;
+}/>
 
 <style.scss>
   .copy-to-clipboard {

@@ -6,11 +6,14 @@ import { contents } from "#lib/contents";
 
 <id/navigation/>
 <id/heading/>
-<details/details class="navigation" id=navigation>
-  <summary id=heading>
-    <icon="menu" title="Menu"/>
-     Topics
-  </summary>
+<div class="navigation" id=navigation>
+  <details/details>
+    <summary id=heading>
+      <icon="menu" title="Menu"/>
+       Topics
+    </summary>
+  </details>
+
   <nav aria-labelledby=heading>
     <ul>
       <for|{ contents: innerContents, href, text }| of=contents>
@@ -52,18 +55,18 @@ import { contents } from "#lib/contents";
       </for>
     </ul>
   </nav>
-</details>
+</div>
 <on-blur=navigation handler() {
   details().open = false;
 }/>
 
 <style.scss>
   .navigation {
-    display: inline-flex;
     position: relative;
 
-    & summary {
-      display: inline;
+    summary {
+      display: inline-block;
+      height: 100%;
       padding: $v-10 $s-16;
 
       &:hover {
@@ -75,17 +78,31 @@ import { contents } from "#lib/contents";
       }
     }
 
-    & nav {
+    nav {
       background: $background-color-neutral-00;
       border: 1px solid $foreground-color-neutral-60;
       border-radius: $radius-m;
       box-shadow: $shadow;
+      display: none;
       left: $s-8;
+      opacity: 0;
       padding: $v-10 $s-16;
       position: absolute;
       top: calc(100% + $v-5);
+      transition:
+        display $time-fast allow-discrete,
+        opacity ease-in-out $time-fast;
       width: 18rem;
       z-index: 1;
+    }
+
+    [open] + nav {
+      display: initial;
+      opacity: 1;
+
+      @starting-style {
+        opacity: 0;
+      }
     }
   }
 </style>

@@ -1,40 +1,44 @@
 <!-- use tags -->
 import "#styles/popup.scss";
+import "#styles/visually-hidden.scss";
 export interface Input {
   renderBody: Marko.Body;
-  title: string;
 }
 
 <id/popupId/>
 <let/isMouse=false/>
-<details/details aria-live="polite" class="popup" id=popupId>
-  <!-- progressively enhance mouse to auto-open on hover, all other input devices behave as per their defaults -->
-  <summary
-    class="popup-icon"
-    onPointerenter(event: PointerEvent) {
-      if (event.pointerType === "mouse") {
-        isMouse = true;
-        details().open = true;
+<div class="popup" id=popupId>
+  <details/details>
+    <summary
+      class="popup-icon"
+      onPointerenter(event: PointerEvent) {
+        if (event.pointerType === "mouse") {
+          isMouse = true;
+          details().open = true;
+        }
       }
-    }
-    onClick(event: PointerEvent) {
-      if (isMouse) {
-        event.preventDefault();
+      onClick(event: PointerEvent) {
+        if (isMouse) {
+          event.preventDefault();
+        }
       }
-    }
-    onPointerleave() {
-      if (isMouse) {
-        isMouse = false;
-        details().open = false;
+      onPointerleave() {
+        if (isMouse) {
+          isMouse = false;
+          details().open = false;
+        }
       }
-    }
-  >
-    <icon="info" title=input.title/>
-  </summary>
-  <div class="popup__overlay popup__overlay--top">
+    >
+      <icon="info" title=""/>
+      <div class="visually-hidden">
+        Help
+      </div>
+    </summary>
+  </details>
+  <div class="popup__overlay popup__overlay--top-right">
     <${input.renderBody}/>
   </div>
-</details>
+</div>
 <on-blur=popupId handler() {
   details().open = false;
 }/>
