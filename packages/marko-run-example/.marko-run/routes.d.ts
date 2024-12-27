@@ -23,15 +23,15 @@ declare module "@marko/run" {
 			"/docs/session/activity-stack/interstitial/:step": Routes["/docs/session/activity-stack/interstitial/$step"];
 			"/docs/subpages": Routes["/docs/subpages"];
 			"/docs/subpages/pagination": Routes["/docs/subpages/pagination"];
-			"/docs/subpages/pagination/%5fsearch": Routes["/docs/subpages/pagination/%5fsearch"];
+			"/docs/subpages/pagination/-search": Routes["/docs/subpages/pagination/-search"];
 			"/docs/subpages/read": Routes["/docs/subpages/read"];
-			"/docs/subpages/read/%5frandom": Routes["/docs/subpages/read/%5frandom"];
+			"/docs/subpages/read/-random": Routes["/docs/subpages/read/-random"];
 			"/docs/subpages/tabbed-interface": Routes["/docs/subpages/tabbed-interface"];
-			"/docs/subpages/tabbed-interface/%5ftab-1": Routes["/docs/subpages/tabbed-interface/%5ftab-1"];
-			"/docs/subpages/tabbed-interface/%5ftab-2": Routes["/docs/subpages/tabbed-interface/%5ftab-2"];
-			"/docs/subpages/tabbed-interface/%5ftab-3": Routes["/docs/subpages/tabbed-interface/%5ftab-3"];
+			"/docs/subpages/tabbed-interface/-tab-1": Routes["/docs/subpages/tabbed-interface/-tab-1"];
+			"/docs/subpages/tabbed-interface/-tab-2": Routes["/docs/subpages/tabbed-interface/-tab-2"];
+			"/docs/subpages/tabbed-interface/-tab-3": Routes["/docs/subpages/tabbed-interface/-tab-3"];
 			"/docs/subpages/write": Routes["/docs/subpages/write"];
-			"/docs/subpages/write/%5frandom": Routes["/docs/subpages/write/%5frandom"];
+			"/docs/subpages/write/-random": Routes["/docs/subpages/write/-random"];
 			"/docs/validation": Routes["/docs/validation"];
 			"/docs/validation/request-body": Routes["/docs/validation/request-body"];
 			"/docs/validation/search-params": Routes["/docs/validation/search-params"];
@@ -83,10 +83,10 @@ declare module "../src/routes/docs/session/activity-stack/interstitial.$step+han
   }
 }
 
-declare module "../src/routes/docs/subpages/write/%5frandom+handler" {
+declare module "../src/routes/docs/subpages/write/-random+handler" {
   namespace MarkoRun {
     export { NotHandled, NotMatched, GetPaths, PostPaths, GetablePath, GetableHref, PostablePath, PostableHref, Platform };
-    export type Route = Run.Routes["/docs/subpages/write/%5frandom"];
+    export type Route = Run.Routes["/docs/subpages/write/-random"];
     export type Context = Run.MultiRouteContext<Route>;
     export type Handler = Run.HandlerLike<Route>;
     /** @deprecated use `((context, next) => { ... }) satisfies MarkoRun.Handler` instead */
@@ -108,7 +108,7 @@ declare module "../src/routes/docs/validation/request-body+handler" {
 declare module "../src/routes/+middleware" {
   namespace MarkoRun {
     export { NotHandled, NotMatched, GetPaths, PostPaths, GetablePath, GetableHref, PostablePath, PostableHref, Platform };
-    export type Route = Run.Routes["/" | "/docs" | "/docs/design" | "/docs/enhancements" | "/docs/hosting" | "/docs/session" | "/docs/session/activity-stack" | "/docs/session/activity-stack/desired/:page" | "/docs/session/activity-stack/interstitial/:step" | "/docs/subpages" | "/docs/subpages/pagination" | "/docs/subpages/pagination/%5fsearch" | "/docs/subpages/read" | "/docs/subpages/read/%5frandom" | "/docs/subpages/tabbed-interface" | "/docs/subpages/tabbed-interface/%5ftab-1" | "/docs/subpages/tabbed-interface/%5ftab-2" | "/docs/subpages/tabbed-interface/%5ftab-3" | "/docs/subpages/write" | "/docs/subpages/write/%5frandom" | "/docs/validation" | "/docs/validation/request-body" | "/docs/validation/search-params"];
+    export type Route = Run.Routes["/" | "/docs" | "/docs/design" | "/docs/enhancements" | "/docs/hosting" | "/docs/session" | "/docs/session/activity-stack" | "/docs/session/activity-stack/desired/:page" | "/docs/session/activity-stack/interstitial/:step" | "/docs/subpages" | "/docs/subpages/pagination" | "/docs/subpages/pagination/-search" | "/docs/subpages/read" | "/docs/subpages/read/-random" | "/docs/subpages/tabbed-interface" | "/docs/subpages/tabbed-interface/-tab-1" | "/docs/subpages/tabbed-interface/-tab-2" | "/docs/subpages/tabbed-interface/-tab-3" | "/docs/subpages/write" | "/docs/subpages/write/-random" | "/docs/validation" | "/docs/validation/request-body" | "/docs/validation/search-params"];
     export type Context = Run.MultiRouteContext<Route>;
     export type Handler = Run.HandlerLike<Route>;
     /** @deprecated use `((context, next) => { ... }) satisfies MarkoRun.Handler` instead */
@@ -226,10 +226,10 @@ declare module "../src/routes/docs/subpages/pagination/+page.marko" {
   }
 }
 
-declare module "../src/routes/docs/subpages/pagination/%5fsearch+page.marko" {
+declare module "../src/routes/docs/subpages/pagination/-search+page.marko" {
   namespace MarkoRun {
     export { NotHandled, NotMatched, GetPaths, PostPaths, GetablePath, GetableHref, PostablePath, PostableHref, Platform };
-    export type Route = Run.Routes["/docs/subpages/pagination/%5fsearch"];
+    export type Route = Run.Routes["/docs/subpages/pagination/-search"];
     export type Context = Run.MultiRouteContext<Route> & Marko.Global;
     export type Handler = Run.HandlerLike<Route>;
     /** @deprecated use `((context, next) => { ... }) satisfies MarkoRun.Handler` instead */
@@ -248,10 +248,10 @@ declare module "../src/routes/docs/subpages/read/+page.marko" {
   }
 }
 
-declare module "../src/routes/docs/subpages/read/%5frandom+page.marko" {
+declare module "../src/routes/docs/subpages/read/-random+page.marko" {
   namespace MarkoRun {
     export { NotHandled, NotMatched, GetPaths, PostPaths, GetablePath, GetableHref, PostablePath, PostableHref, Platform };
-    export type Route = Run.Routes["/docs/subpages/read/%5frandom"];
+    export type Route = Run.Routes["/docs/subpages/read/-random"];
     export type Context = Run.MultiRouteContext<Route> & Marko.Global;
     export type Handler = Run.HandlerLike<Route>;
     /** @deprecated use `((context, next) => { ... }) satisfies MarkoRun.Handler` instead */
@@ -270,10 +270,10 @@ declare module "../src/routes/docs/subpages/tabbed-interface/+page.marko" {
   }
 }
 
-declare module "../src/routes/docs/subpages/tabbed-interface/%5ftab-1+page.marko" {
+declare module "../src/routes/docs/subpages/tabbed-interface/-tab-1+page.marko" {
   namespace MarkoRun {
     export { NotHandled, NotMatched, GetPaths, PostPaths, GetablePath, GetableHref, PostablePath, PostableHref, Platform };
-    export type Route = Run.Routes["/docs/subpages/tabbed-interface/%5ftab-1"];
+    export type Route = Run.Routes["/docs/subpages/tabbed-interface/-tab-1"];
     export type Context = Run.MultiRouteContext<Route> & Marko.Global;
     export type Handler = Run.HandlerLike<Route>;
     /** @deprecated use `((context, next) => { ... }) satisfies MarkoRun.Handler` instead */
@@ -281,10 +281,10 @@ declare module "../src/routes/docs/subpages/tabbed-interface/%5ftab-1+page.marko
   }
 }
 
-declare module "../src/routes/docs/subpages/tabbed-interface/%5ftab-2+page.marko" {
+declare module "../src/routes/docs/subpages/tabbed-interface/-tab-2+page.marko" {
   namespace MarkoRun {
     export { NotHandled, NotMatched, GetPaths, PostPaths, GetablePath, GetableHref, PostablePath, PostableHref, Platform };
-    export type Route = Run.Routes["/docs/subpages/tabbed-interface/%5ftab-2"];
+    export type Route = Run.Routes["/docs/subpages/tabbed-interface/-tab-2"];
     export type Context = Run.MultiRouteContext<Route> & Marko.Global;
     export type Handler = Run.HandlerLike<Route>;
     /** @deprecated use `((context, next) => { ... }) satisfies MarkoRun.Handler` instead */
@@ -292,10 +292,10 @@ declare module "../src/routes/docs/subpages/tabbed-interface/%5ftab-2+page.marko
   }
 }
 
-declare module "../src/routes/docs/subpages/tabbed-interface/%5ftab-3+page.marko" {
+declare module "../src/routes/docs/subpages/tabbed-interface/-tab-3+page.marko" {
   namespace MarkoRun {
     export { NotHandled, NotMatched, GetPaths, PostPaths, GetablePath, GetableHref, PostablePath, PostableHref, Platform };
-    export type Route = Run.Routes["/docs/subpages/tabbed-interface/%5ftab-3"];
+    export type Route = Run.Routes["/docs/subpages/tabbed-interface/-tab-3"];
     export type Context = Run.MultiRouteContext<Route> & Marko.Global;
     export type Handler = Run.HandlerLike<Route>;
     /** @deprecated use `((context, next) => { ... }) satisfies MarkoRun.Handler` instead */
@@ -314,10 +314,10 @@ declare module "../src/routes/docs/subpages/write/+page.marko" {
   }
 }
 
-declare module "../src/routes/docs/subpages/write/%5frandom+page.marko" {
+declare module "../src/routes/docs/subpages/write/-random+page.marko" {
   namespace MarkoRun {
     export { NotHandled, NotMatched, GetPaths, PostPaths, GetablePath, GetableHref, PostablePath, PostableHref, Platform };
-    export type Route = Run.Routes["/docs/subpages/write/%5frandom"];
+    export type Route = Run.Routes["/docs/subpages/write/-random"];
     export type Context = Run.MultiRouteContext<Route> & Marko.Global;
     export type Handler = Run.HandlerLike<Route>;
     /** @deprecated use `((context, next) => { ... }) satisfies MarkoRun.Handler` instead */
@@ -370,15 +370,15 @@ type Routes = {
 	"/docs/session/activity-stack/interstitial/$step": { verb: "get" | "post"; };
 	"/docs/subpages": { verb: "get"; };
 	"/docs/subpages/pagination": { verb: "get"; meta: typeof import("../src/routes/docs/subpages/pagination/+meta")["default"]; };
-	"/docs/subpages/pagination/%5fsearch": { verb: "get"; meta: typeof import("../src/routes/docs/subpages/pagination/%5fsearch+meta")["default"]; };
+	"/docs/subpages/pagination/-search": { verb: "get"; meta: typeof import("../src/routes/docs/subpages/pagination/-search+meta")["default"]; };
 	"/docs/subpages/read": { verb: "get"; };
-	"/docs/subpages/read/%5frandom": { verb: "get"; };
+	"/docs/subpages/read/-random": { verb: "get"; };
 	"/docs/subpages/tabbed-interface": { verb: "get"; meta: typeof import("../src/routes/docs/subpages/tabbed-interface/+meta")["default"]; };
-	"/docs/subpages/tabbed-interface/%5ftab-1": { verb: "get"; };
-	"/docs/subpages/tabbed-interface/%5ftab-2": { verb: "get"; };
-	"/docs/subpages/tabbed-interface/%5ftab-3": { verb: "get"; };
+	"/docs/subpages/tabbed-interface/-tab-1": { verb: "get"; };
+	"/docs/subpages/tabbed-interface/-tab-2": { verb: "get"; };
+	"/docs/subpages/tabbed-interface/-tab-3": { verb: "get"; };
 	"/docs/subpages/write": { verb: "get"; };
-	"/docs/subpages/write/%5frandom": { verb: "get" | "post"; };
+	"/docs/subpages/write/-random": { verb: "get" | "post"; };
 	"/docs/validation": { verb: "get"; };
 	"/docs/validation/request-body": { verb: "get" | "post"; meta: typeof import("../src/routes/docs/validation/request-body+meta")["default"]; };
 	"/docs/validation/search-params": { verb: "get"; meta: typeof import("../src/routes/docs/validation/search-params+meta")["default"]; };

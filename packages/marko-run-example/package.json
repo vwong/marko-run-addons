@@ -11,7 +11,7 @@
     "@marko/run-adapter-node": "^0.1.13",
     "@marko/tags-api-preview": "^0.7.8",
     "@micro-frame/marko": "^1.10.2",
-    "@sinclair/typebox": "^0.34.11",
+    "@sinclair/typebox": "^0.34.13",
     "@vwong/marko-run-addons": "^1.0.0",
     "ajv": "^8.17.1",
     "ajv-errors": "^3.0.0",
@@ -21,7 +21,8 @@
     "lodash-es": "^4.17.21"
   },
   "devDependencies": {
-    "@marko/run": "0.5.7",
+    "@marko/babel-utils": "^6.6.3",
+    "@marko/run": "^0.5.11",
     "@types/compression": "^1.7.5",
     "@types/express": "^5.0.0",
     "rollup-plugin-visualizer": "^5.12.0"

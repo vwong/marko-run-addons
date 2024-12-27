@@ -18,7 +18,7 @@ export interface Input {
 <let/currentPage=input.current/>
 <const/prevPage=Math.max(1, currentPage - 1)/>
 <const/nextPage=currentPage + 1/>
-<const/frameSrc=`${input.src}/_${input.frame}?page=${currentPage}`/>
+<const/frameSrc=`${input.src}/-${input.frame}?page=${currentPage}`/>
 
 <let/navigator=new PageNavigator({
   page: input.current,
