@@ -21,13 +21,14 @@
     "@types/qs": "^6.9.18"
   },
   "peerDependencies": {
-    "@marko/run": "^0.5.7"
+    "@marko/run": "^0.5.16"
   },
   "scripts": {},
   "exports": {
     "./client": "./src/client/index.ts",
     "./marko.json": "./marko.json",
-    "./server": "./src/server/index.ts"
+    "./server": "./src/server/index.ts",
+    "./src/components/client-js.marko": "./src/components/client-js.marko"
   },
   "type": "module"
 }

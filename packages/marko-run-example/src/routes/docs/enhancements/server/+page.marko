@@ -15,12 +15,6 @@ static const sleep = (
      doesn't actually change.
   </p>
 
-  <p>For example, the following 2 fragments take 3 and 5 seconds to generate</p>
-  <!-- FIXME: workaround Marko (Undici?) bug -->
-  <await(sleep(0))>
-    <@then|_|/>
-  </await>
-
   <await(sleep(3000)) client-reorder=$global.hasClientJs>
     <@placeholder>
       <p>
@@ -50,8 +44,12 @@ static const sleep = (
   <p>
     This enhancement can be used to accelerate
     <em>subsequent</em>
-    ${" "}pages beyond the first, as the first page has to be assumed to be requested by a client without JS.
+    ${" "}pages, as the first page has to be assumed to be requested by a client without JS.
   </p>
 
-  <p>Try loading this page with and without JS.</p>
+  <p>
+    With this enhancement, is important to consider any potential layout shift due to changing elements.
+  </p>
+
+  <p>Try loading this page with and without JS to experience the difference.</p>
 </layout-doc>
