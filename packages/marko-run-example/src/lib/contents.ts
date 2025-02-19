@@ -35,7 +35,13 @@ export const contents: Page[] = [
     ],
   },
   { href: "/docs/hosting", text: "Hosting" },
-  { href: "/docs/enhancements", text: "Enhancements" },
+  {
+    href: "/docs/enhancements",
+    text: "Enhancements",
+    contents: [
+      { href: "/docs/enhancements/server", text: "Server enhancements" },
+    ],
+  },
   { href: "/docs/design", text: "Design" },
 ];
 

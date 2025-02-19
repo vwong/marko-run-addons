@@ -5,6 +5,7 @@ import { Session } from "./session";
 import type { ValidationCheck } from "./validation";
 
 export { activityStack } from "./activityStack";
+export { clientJs } from "./clientJs";
 export { CsrfService, csrf } from "./csrf";
 export type { CsrfSession, CsrfOptions } from "./csrf";
 export { FlashService, flash } from "./flash";
@@ -23,6 +24,7 @@ declare module "@marko/run" {
     csrf: CsrfService;
     flash: FlashService;
     form?: string;
+    hasClientJs?: boolean;
     lastBody?: unknown;
     lastBodyErrors: ValidationCheck[];
     lastQuery?: unknown;

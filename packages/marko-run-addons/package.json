@@ -26,6 +26,7 @@
   "scripts": {},
   "exports": {
     "./client": "./src/client/index.ts",
+    "./marko.json": "./marko.json",
     "./server": "./src/server/index.ts"
   },
   "type": "module"

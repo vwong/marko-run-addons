@@ -1,0 +1,17 @@
+import cookie from "cookie";
+
+export const clientJs = (): MarkoRun.Handler => async (context, next) => {
+  const { clientJs } = cookie.parse(
+    (context.request.headers.get("Cookie") as string) || "",
+  );
+  context.hasClientJs = !!(clientJs && clientJs === "true");
+
+  const response = await next();
+
+  response.headers.set(
+    "Set-Cookie",
+    "clientJs=false; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT",
+  );
+
+  return response;
+};

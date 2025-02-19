@@ -11,7 +11,7 @@
     "@marko/run-adapter-node": "^0.1.13",
     "@marko/tags-api-preview": "^0.8.0",
     "@micro-frame/marko": "^1.10.2",
-    "@sinclair/typebox": "^0.34.20",
+    "@sinclair/typebox": "^0.34.25",
     "@vwong/marko-run-addons": "^1.0.0",
     "ajv": "^8.17.1",
     "ajv-errors": "^3.0.0",

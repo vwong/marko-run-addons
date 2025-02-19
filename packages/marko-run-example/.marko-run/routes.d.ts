@@ -16,6 +16,7 @@ declare module "@marko/run" {
 			"/docs": Routes["/docs"];
 			"/docs/design": Routes["/docs/design"];
 			"/docs/enhancements": Routes["/docs/enhancements"];
+			"/docs/enhancements/server": Routes["/docs/enhancements/server"];
 			"/docs/hosting": Routes["/docs/hosting"];
 			"/docs/session": Routes["/docs/session"];
 			"/docs/session/activity-stack": Routes["/docs/session/activity-stack"];
@@ -108,7 +109,7 @@ declare module "../src/routes/docs/validation/request-body+handler" {
 declare module "../src/routes/+middleware" {
   namespace MarkoRun {
     export { NotHandled, NotMatched, GetPaths, PostPaths, GetablePath, GetableHref, PostablePath, PostableHref, Platform };
-    export type Route = Run.Routes["/" | "/docs" | "/docs/design" | "/docs/enhancements" | "/docs/hosting" | "/docs/session" | "/docs/session/activity-stack" | "/docs/session/activity-stack/desired/:page" | "/docs/session/activity-stack/interstitial/:step" | "/docs/subpages" | "/docs/subpages/pagination" | "/docs/subpages/pagination/-search" | "/docs/subpages/read" | "/docs/subpages/read/-random" | "/docs/subpages/tabbed-interface" | "/docs/subpages/tabbed-interface/-tab-1" | "/docs/subpages/tabbed-interface/-tab-2" | "/docs/subpages/tabbed-interface/-tab-3" | "/docs/subpages/write" | "/docs/subpages/write/-random" | "/docs/validation" | "/docs/validation/request-body" | "/docs/validation/search-params"];
+    export type Route = Run.Routes["/" | "/docs" | "/docs/design" | "/docs/enhancements" | "/docs/enhancements/server" | "/docs/hosting" | "/docs/session" | "/docs/session/activity-stack" | "/docs/session/activity-stack/desired/:page" | "/docs/session/activity-stack/interstitial/:step" | "/docs/subpages" | "/docs/subpages/pagination" | "/docs/subpages/pagination/-search" | "/docs/subpages/read" | "/docs/subpages/read/-random" | "/docs/subpages/tabbed-interface" | "/docs/subpages/tabbed-interface/-tab-1" | "/docs/subpages/tabbed-interface/-tab-2" | "/docs/subpages/tabbed-interface/-tab-3" | "/docs/subpages/write" | "/docs/subpages/write/-random" | "/docs/validation" | "/docs/validation/request-body" | "/docs/validation/search-params"];
     export type Context = Run.MultiRouteContext<Route>;
     export type Handler = Run.HandlerLike<Route>;
     /** @deprecated use `((context, next) => { ... }) satisfies MarkoRun.Handler` instead */
@@ -142,6 +143,17 @@ declare module "../src/routes/docs/enhancements/+page.marko" {
   namespace MarkoRun {
     export { NotHandled, NotMatched, GetPaths, PostPaths, GetablePath, GetableHref, PostablePath, PostableHref, Platform };
     export type Route = Run.Routes["/docs/enhancements"];
+    export type Context = Run.MultiRouteContext<Route> & Marko.Global;
+    export type Handler = Run.HandlerLike<Route>;
+    /** @deprecated use `((context, next) => { ... }) satisfies MarkoRun.Handler` instead */
+    export const route: Run.HandlerTypeFn<Route>;
+  }
+}
+
+declare module "../src/routes/docs/enhancements/server/+page.marko" {
+  namespace MarkoRun {
+    export { NotHandled, NotMatched, GetPaths, PostPaths, GetablePath, GetableHref, PostablePath, PostableHref, Platform };
+    export type Route = Run.Routes["/docs/enhancements/server"];
     export type Context = Run.MultiRouteContext<Route> & Marko.Global;
     export type Handler = Run.HandlerLike<Route>;
     /** @deprecated use `((context, next) => { ... }) satisfies MarkoRun.Handler` instead */
@@ -363,6 +375,7 @@ type Routes = {
 	"/docs": { verb: "get"; };
 	"/docs/design": { verb: "get"; };
 	"/docs/enhancements": { verb: "get"; };
+	"/docs/enhancements/server": { verb: "get"; };
 	"/docs/hosting": { verb: "get"; };
 	"/docs/session": { verb: "get"; };
 	"/docs/session/activity-stack": { verb: "get" | "post"; };

@@ -1,6 +1,7 @@
 import { randomBytes } from "node:crypto";
 import {
   activityStack,
+  clientJs,
   csrf,
   flash,
   requestParser,
@@ -45,6 +46,7 @@ export default [
     validator: new AjvValidator(),
   }),
   activityStack(),
+  clientJs(),
   async (context, next) => {
     context.cspNonce = randomBytes(16).toString("base64");
     context.isXHR =

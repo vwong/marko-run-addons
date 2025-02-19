@@ -1,0 +1,57 @@
+static const sleep = (
+  (duration: number) => new Promise((resolve) => setTimeout(resolve, duration))
+);
+
+<layout-doc>
+  <h1>Server enhancements</h1>
+
+  <p>
+    The presence of client JS can be communicated via cookies to enable server-side enhancements that require client JS.
+  </p>
+
+  <p>
+    For example, without client JS, streaming HTML must be generated sequentially, even if intermediate dynamic fragments may block later static fragments. With client JS, the server can generate these fragments out-of-order, to be reassembled in the correct order by the client. This reduces the time to contentful paint, making the page feel faster, even if the time to the${" "}
+    <strong>last byte</strong>
+     doesn't actually change.
+  </p>
+
+  <p>For example, the following 2 fragments take 3 and 5 seconds to generate</p>
+  <!-- FIXME: workaround Marko (Undici?) bug -->
+  <await(sleep(0))>
+    <@then|_|/>
+  </await>
+
+  <await(sleep(3000)) client-reorder=$global.hasClientJs>
+    <@placeholder>
+      <p>
+        <loader/>
+      </p>
+    </@placeholder>
+    <@then|_|>
+      <p>Fragment that took 3 seconds to generate</p>
+    </@then>
+  </await>
+
+  <await(sleep(5000)) client-reorder=$global.hasClientJs>
+    <@placeholder>
+      <p>
+        <loader/>
+      </p>
+    </@placeholder>
+    <@then|_|>
+      <p>Fragment that took 5 seconds to generate</p>
+    </@then>
+  </await>
+
+  <p>
+    But content proceeding it may appear immediately if client JS is available.
+  </p>
+
+  <p>
+    This enhancement can be used to accelerate
+    <em>subsequent</em>
+    ${" "}pages beyond the first, as the first page has to be assumed to be requested by a client without JS.
+  </p>
+
+  <p>Try loading this page with and without JS.</p>
+</layout-doc>

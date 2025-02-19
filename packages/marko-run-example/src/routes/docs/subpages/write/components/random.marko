@@ -40,7 +40,9 @@ export interface Input {
       src=`${input.src}#${key}`
     >
       <@loading>
-        <div>...</div>
+        <div>
+          <loader/>
+        </div>
       </@loading>
       <@catch|err: Error|>
         ${JSON.stringify(err)}
