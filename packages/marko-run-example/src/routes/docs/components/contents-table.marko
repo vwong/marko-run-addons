@@ -10,7 +10,7 @@ import { contents } from "#lib/contents";
   <details/details>
     <summary id=heading>
       <icon="menu" title="Menu"/>
-       Topics
+       Menu
     </summary>
   </details>
 
@@ -85,23 +85,26 @@ import { contents } from "#lib/contents";
       box-shadow: $shadow;
       display: none;
       left: $s-8;
-      opacity: 0;
+      max-width: 18rem;
       padding: $v-10 $s-16;
       position: absolute;
+      right: $s-8;
       top: calc(100% + $v-5);
+      transform: translateX(calc(-100% - $s-8));
       transition:
         display $time-fast allow-discrete,
-        opacity ease-in-out $time-fast;
-      width: 18rem;
+        transform ease-in-out $time-fast;
+      view-transition-name: navigation;
+      width: calc(100vw - $s-64);
       z-index: 1;
     }
 
     [open] + nav {
       display: initial;
-      opacity: 1;
+      transform: translateX(0);
 
       @starting-style {
-        opacity: 0;
+        transform: translateX(calc(-100% - $s-8));
       }
     }
   }
