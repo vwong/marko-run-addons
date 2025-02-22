@@ -1,7 +1,7 @@
 import { ActivityStackService } from "./activityStack";
 import { CsrfService } from "./csrf";
 import { FlashService } from "./flash";
-import { Session } from "./session";
+import type { Session } from "./session";
 import type { ValidationCheck } from "./validation";
 
 export { activityStack } from "./activityStack";

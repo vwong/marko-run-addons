@@ -1,4 +1,9 @@
 {
   "extends": "../../tsconfig.json",
-  "include": ["src/**/*", "vite.config.ts", ".marko-run/*"]
+  "include": [
+    "src/**/*",
+    "vite.config.ts",
+    ".marko-run/*",
+    "../marko-run-addons/src/**/*"
+  ]
 }

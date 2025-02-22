@@ -1,11 +1,11 @@
-import cookie, { SerializeOptions } from "cookie";
-import jwt, { JwtPayload } from "jsonwebtoken";
+import cookie, { type SerializeOptions } from "cookie";
+import jwt, { type JwtPayload } from "jsonwebtoken";
 import { cloneDeep, isEqual } from "lodash-es";
 import { randomBytes } from "node:crypto";
-import { ActivityStackSession } from "./activityStack";
-import { CsrfSession } from "./csrf";
-import { FlashSession } from "./flash";
-import { ValidationSession } from "./validation";
+import type { ActivityStackSession } from "./activityStack";
+import type { CsrfSession } from "./csrf";
+import type { FlashSession } from "./flash";
+import type { ValidationSession } from "./validation";
 
 export interface Session
   extends ActivityStackSession,
