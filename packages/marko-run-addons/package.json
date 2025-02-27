@@ -27,6 +27,9 @@
   "scripts": {
     "typecheck": "marko-type-check"
   },
+  "files": [
+    "src"
+  ],
   "exports": {
     "./client": "./src/client/index.ts",
     "./server": "./src/server/index.ts",
