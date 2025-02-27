@@ -28,7 +28,9 @@
     "typecheck": "marko-type-check"
   },
   "files": [
-    "src"
+    "src",
+    "marko.json",
+    "!**/*.test.ts"
   ],
   "exports": {
     "./client": "./src/client/index.ts",
