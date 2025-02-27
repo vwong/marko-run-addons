@@ -29,8 +29,7 @@
   },
   "files": [
     "src",
-    "marko.json",
-    "!**/*.test.ts"
+    "marko.json"
   ],
   "exports": {
     "./client": "./src/client/index.ts",
