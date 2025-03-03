@@ -11,6 +11,7 @@ export const contents: Page[] = [
     text: "Session Management",
     contents: [
       { href: "/docs/session/activity-stack", text: "Activity Stack" },
+      { href: "/docs/session/frecency", text: "Frecency" },
     ],
   },
   {

@@ -277,7 +277,9 @@ describe("session", () => {
       );
 
       expect(store.set).toHaveBeenCalledWith("session-id", "new-session");
-      expect(response.headers.get("Set-Cookie")).toEqual("explicitly-set");
+      expect(response.headers.get("Set-Cookie")).toEqual(
+        `explicitly-set, ${COOKIE_NAME}=signed-jwt; Max-Age=${MAX_AGE}`,
+      );
     });
   });
 });

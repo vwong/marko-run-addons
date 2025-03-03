@@ -9,9 +9,9 @@
   "dependencies": {
     "@isaacs/ttlcache": "^1.4.1",
     "@marko/run-adapter-node": "^0.1.13",
-    "@marko/tags-api-preview": "^0.8.0",
+    "@marko/tags-api-preview": "^0.8.1",
     "@micro-frame/marko": "^1.10.2",
-    "@sinclair/typebox": "^0.34.26",
+    "@sinclair/typebox": "^0.34.28",
     "@vwong/marko-run-addons": "^1.0.0",
     "ajv": "^8.17.1",
     "ajv-errors": "^3.0.0",
@@ -19,12 +19,11 @@
     "compression": "^1.8.0",
     "express": "^5.0.1",
     "lodash-es": "^4.17.21",
-    "marko": "^5.37.15"
+    "marko": "^5.37.19"
   },
   "devDependencies": {
     "@marko/babel-utils": "^6.6.3",
     "@marko/run": "^0.5.16",
-    "@marko/type-check": "^1.3.18",
     "@types/compression": "^1.7.5",
     "@types/express": "^5.0.0",
     "rollup-plugin-visualizer": "^5.14.0"
@@ -33,8 +32,7 @@
     "build": "NODE_ENV=production marko-run build src/index.ts",
     "dev": "marko-run dev src/index.ts",
     "preview": "marko-run preview src/index.ts",
-    "start": "NODE_ENV=production node dist/index.mjs",
-    "typecheck": "marko-type-check"
+    "start": "NODE_ENV=production node dist/index.mjs"
   },
   "imports": {
     "#lib/*": "./src/lib/*.ts",

@@ -5,12 +5,14 @@ import { randomBytes } from "node:crypto";
 import type { ActivityStackSession } from "./activityStack";
 import type { CsrfSession } from "./csrf";
 import type { FlashSession } from "./flash";
+import type { FrecencySession } from "./frecency";
 import type { ValidationSession } from "./validation";
 
 export interface Session
   extends ActivityStackSession,
     CsrfSession,
     FlashSession,
+    FrecencySession,
     ValidationSession {}
 
 export abstract class SessionStore {
@@ -53,11 +55,7 @@ export const session = ({
     token: string,
     options: Partial<SerializeOptions>,
   ) => {
-    if (response.headers.has("Set-cookie")) {
-      /* don't clobber */
-      return;
-    }
-    response.headers.set(
+    response.headers.append(
       "Set-cookie",
       cookie.serialize(cookieName, token, {
         ...cookieOptions,

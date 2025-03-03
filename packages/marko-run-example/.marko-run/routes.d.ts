@@ -22,6 +22,7 @@ declare module "@marko/run" {
 			"/docs/session/activity-stack": Routes["/docs/session/activity-stack"];
 			"/docs/session/activity-stack/desired/:page": Routes["/docs/session/activity-stack/desired/$page"];
 			"/docs/session/activity-stack/interstitial/:step": Routes["/docs/session/activity-stack/interstitial/$step"];
+			"/docs/session/frecency": Routes["/docs/session/frecency"];
 			"/docs/subpages": Routes["/docs/subpages"];
 			"/docs/subpages/pagination": Routes["/docs/subpages/pagination"];
 			"/docs/subpages/pagination/-search": Routes["/docs/subpages/pagination/-search"];
@@ -109,7 +110,7 @@ declare module "../src/routes/docs/validation/request-body+handler" {
 declare module "../src/routes/+middleware" {
   namespace MarkoRun {
     export { NotHandled, NotMatched, GetPaths, PostPaths, GetablePath, GetableHref, PostablePath, PostableHref, Platform };
-    export type Route = Run.Routes["/" | "/docs" | "/docs/design" | "/docs/enhancements" | "/docs/enhancements/server" | "/docs/hosting" | "/docs/session" | "/docs/session/activity-stack" | "/docs/session/activity-stack/desired/:page" | "/docs/session/activity-stack/interstitial/:step" | "/docs/subpages" | "/docs/subpages/pagination" | "/docs/subpages/pagination/-search" | "/docs/subpages/read" | "/docs/subpages/read/-random" | "/docs/subpages/tabbed-interface" | "/docs/subpages/tabbed-interface/-tab-1" | "/docs/subpages/tabbed-interface/-tab-2" | "/docs/subpages/tabbed-interface/-tab-3" | "/docs/subpages/write" | "/docs/subpages/write/-random" | "/docs/validation" | "/docs/validation/request-body" | "/docs/validation/search-params"];
+    export type Route = Run.Routes["/" | "/docs" | "/docs/design" | "/docs/enhancements" | "/docs/enhancements/server" | "/docs/hosting" | "/docs/session" | "/docs/session/activity-stack" | "/docs/session/activity-stack/desired/:page" | "/docs/session/activity-stack/interstitial/:step" | "/docs/session/frecency" | "/docs/subpages" | "/docs/subpages/pagination" | "/docs/subpages/pagination/-search" | "/docs/subpages/read" | "/docs/subpages/read/-random" | "/docs/subpages/tabbed-interface" | "/docs/subpages/tabbed-interface/-tab-1" | "/docs/subpages/tabbed-interface/-tab-2" | "/docs/subpages/tabbed-interface/-tab-3" | "/docs/subpages/write" | "/docs/subpages/write/-random" | "/docs/validation" | "/docs/validation/request-body" | "/docs/validation/search-params"];
     export type Context = Run.MultiRouteContext<Route>;
     export type Handler = Run.HandlerLike<Route>;
     /** @deprecated use `((context, next) => { ... }) satisfies MarkoRun.Handler` instead */
@@ -209,6 +210,17 @@ declare module "../src/routes/docs/session/activity-stack/interstitial.$step+pag
   namespace MarkoRun {
     export { NotHandled, NotMatched, GetPaths, PostPaths, GetablePath, GetableHref, PostablePath, PostableHref, Platform };
     export type Route = Run.Routes["/docs/session/activity-stack/interstitial/:step"];
+    export type Context = Run.MultiRouteContext<Route> & Marko.Global;
+    export type Handler = Run.HandlerLike<Route>;
+    /** @deprecated use `((context, next) => { ... }) satisfies MarkoRun.Handler` instead */
+    export const route: Run.HandlerTypeFn<Route>;
+  }
+}
+
+declare module "../src/routes/docs/session/frecency/+page.marko" {
+  namespace MarkoRun {
+    export { NotHandled, NotMatched, GetPaths, PostPaths, GetablePath, GetableHref, PostablePath, PostableHref, Platform };
+    export type Route = Run.Routes["/docs/session/frecency"];
     export type Context = Run.MultiRouteContext<Route> & Marko.Global;
     export type Handler = Run.HandlerLike<Route>;
     /** @deprecated use `((context, next) => { ... }) satisfies MarkoRun.Handler` instead */
@@ -381,6 +393,7 @@ type Routes = {
 	"/docs/session/activity-stack": { verb: "get" | "post"; };
 	"/docs/session/activity-stack/desired/$page": { verb: "get"; };
 	"/docs/session/activity-stack/interstitial/$step": { verb: "get" | "post"; };
+	"/docs/session/frecency": { verb: "get"; };
 	"/docs/subpages": { verb: "get"; };
 	"/docs/subpages/pagination": { verb: "get"; meta: typeof import("../src/routes/docs/subpages/pagination/+meta")["default"]; };
 	"/docs/subpages/pagination/-search": { verb: "get"; meta: typeof import("../src/routes/docs/subpages/pagination/-search+meta")["default"]; };

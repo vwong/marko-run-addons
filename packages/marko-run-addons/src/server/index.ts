@@ -1,6 +1,7 @@
 import { ActivityStackService } from "./activityStack";
 import { CsrfService } from "./csrf";
 import { FlashService } from "./flash";
+import { FrecencyService } from "./frecency";
 import type { Session } from "./session";
 import type { ValidationCheck } from "./validation";
 
@@ -10,6 +11,8 @@ export { CsrfService, csrf } from "./csrf";
 export type { CsrfSession, CsrfOptions } from "./csrf";
 export { FlashService, flash } from "./flash";
 export type { FlashMessage, FlashSession } from "./flash";
+export type { FrecencyOptions } from "./frecency";
+export { frecency } from "./frecency";
 export { session } from "./session";
 export { requestParser } from "./requestParser";
 export type { Session, SessionStore, SessionOptions } from "./session";
@@ -24,6 +27,7 @@ declare module "@marko/run" {
     csrf: CsrfService;
     flash: FlashService;
     form?: string;
+    frecency: FrecencyService;
     hasClientJs?: boolean;
     lastBody?: unknown;
     lastBodyErrors: ValidationCheck[];

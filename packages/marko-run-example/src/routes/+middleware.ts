@@ -4,6 +4,7 @@ import {
   clientJs,
   csrf,
   flash,
+  frecency,
   requestParser,
   session,
   validate,
@@ -46,6 +47,7 @@ export default [
     validator: new AjvValidator(),
   }),
   activityStack(),
+  frecency({ decay: 0.99 }),
   clientJs(),
   async (context, next) => {
     context.cspNonce = randomBytes(16).toString("base64");

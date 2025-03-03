@@ -1,7 +1,15 @@
 <script nonce=$global.cspNonce type="speculationrules">
   {
     "prerender": [
-      { "where": { "href_matches": "/*" }, "eagerness": "moderate" }
+      {
+        "where": {
+          "and": [
+            { "href_matches": "/*" },
+            { "not": { "selector_matches": ".no-prerender" } }
+          ]
+        },
+        "eagerness": "moderate"
+      }
     ]
   }
 </script>
