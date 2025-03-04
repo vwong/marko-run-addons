@@ -1,14 +1,24 @@
 <!-- use tags -->
 import "#styles/popup.scss";
+import "#styles/visually-hidden.scss";
 export interface Input {
   for: string;
 }
 
 <let/isActive=false/>
+<let/isHover=false/>
 <div class="popup">
   <button
     aria-live="polite"
     class="copy-to-clipboard"
+    onPointerenter(event: PointerEvent) {
+      if (event.pointerType === "mouse") {
+        isHover = true;
+      }
+    }
+    onPointerleave() {
+      isHover = false;
+    }
     onClick(event: Event) {
       event.preventDefault();
 
@@ -20,13 +30,21 @@ export interface Input {
     }
     type="button"
   >
-    <icon="copy" title="Copy to clipboard"/>
+    <icon="copy"/>
+    <div class="visually-hidden">
+      Copy to clipboard
+    </div>
   </button>
   <if=isActive>
     <div class="popup__overlay popup__overlay--force popup__overlay--left">
       Copied!
     </div>
   </if>
+  <else-if=isHover>
+    <div class="popup__overlay popup__overlay--force popup__overlay--left">
+      Copy
+    </div>
+  </else-if>
 </div>
 <on-timeout/{ reset }=2000 handler() {
   isActive = false;

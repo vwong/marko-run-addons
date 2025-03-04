@@ -1,12 +1,8 @@
 import sprite from "./icons.svg";
 export interface Input {
-  title: string;
   value: string;
 }
-<svg aria-describedby:scoped="title" class="icon">
-  <title id:scoped="title">
-    ${input.title}
-  </title>
+<svg class="icon">
   <use href=`${sprite}#${input.value}`/>
 </svg>
 style.scss {

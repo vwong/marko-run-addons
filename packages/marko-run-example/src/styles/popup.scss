@@ -46,7 +46,7 @@ $tip-size: 0.4rem;
 
       &::after {
         border-top-color: $tip-background;
-        left: calc(4rem - 0.5 * $tip-size);
+        left: 4rem;
         top: 100%;
         transform: translateX(50%);
       }

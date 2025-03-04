@@ -1,5 +1,6 @@
 <!-- use tags -->
 import "#styles/button.scss";
+import "#styles/visually-hidden.scss";
 <id/switcher/>
 <let/theme=globalThis.localStorage?.getItem("theme") || ""/>
 <lifecycle onMount() {
@@ -25,7 +26,10 @@ import "#styles/button.scss";
           theme = "light";
         }
       >
-        <icon="sun" title="Light"/>
+        <icon="sun"/>
+        <div class="visually-hidden">
+          Light
+        </div>
       </button>
     </li>
     <li>
@@ -40,7 +44,10 @@ import "#styles/button.scss";
           theme = "dark";
         }
       >
-        <icon="moon" title="Dark"/>
+        <icon="moon"/>
+        <div class="visually-hidden">
+          Dark
+        </div>
       </button>
     </li>
     <li>
@@ -55,7 +62,10 @@ import "#styles/button.scss";
           theme = "";
         }
       >
-        <icon="monitor" title="System"/>
+        <icon="monitor"/>
+        <div class="visually-hidden">
+          System
+        </div>
       </button>
     </li>
   </ul>
