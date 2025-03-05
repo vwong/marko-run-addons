@@ -4,9 +4,8 @@
   border-radius: $radius-m;
   color: light-dark($color-neutral-00, $color-neutral-100);
   font-weight: $font-weight-medium;
-  height: $v-30;
-  padding-left: $s-8;
-  padding-right: $s-8;
+  line-height: $v-30;
+  padding-inline: $s-8;
 
   &:hover {
     background: light-dark($color-accent-70, $color-accent-40);
@@ -21,5 +20,15 @@
     background-color: light-dark($color-neutral-20, $color-neutral-90);
     color: light-dark($color-neutral-50, $color-neutral-60);
     cursor: not-allowed;
+  }
+
+  &--circle {
+    align-items: center;
+    border-radius: 50%;
+    display: inline-flex;
+    height: var(--button-size);
+    justify-content: center;
+    padding-inline: 0;
+    width: var(--button-size);
   }
 }

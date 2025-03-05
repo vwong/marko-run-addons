@@ -16,27 +16,47 @@ export interface Input {
       <speculation-rules/>
     </if>
   </head>
-  <body class="layout">
-    <header>
-      <top-banner/>
-      <flash-notice/>
-      <div class="layout__frame">
+  <body>
+    <contents-table/>
+    <div class="layout">
+      <div class="layout__head">
+        <theme-switcher/>
+      </div>
+      <div class="layout__body">
+        <flash-notice/>
+        <contents-prev-next/>
+        <div class="layout__doc">
+          <${input.renderBody}/>
+        </div>
         <contents-prev-next/>
       </div>
-    </header>
-    <main class="layout__frame layout__doc">
-      <${input.renderBody}/>
-    </main>
-    <footer class="layout__frame">
-      <contents-prev-next/>
-    </footer>
+    </div>
   </body>
 </html>
 
 style.scss {
   .layout {
-    &__frame {
-      padding: $v-10 $s-16;
+    $menu-height: $v-40;
+    $menu-width: $s-32;
+
+    &__head {
+      background: $background-color-neutral-00;
+      border-bottom: 1px solid $foreground-color-neutral-90;
+      left: 0;
+      padding: $v-5 $s-8;
+      position: sticky;
+      right: 0;
+      text-align: right;
+      top: 0;
+      z-index: $z-low;
+    }
+
+    &__body {
+      padding: $v-10 $s-16 ($v-10 + $menu-height) $s-16;
+
+      & > * + * {
+        margin-top: $v-10;
+      }
     }
 
     &__doc {
@@ -46,8 +66,7 @@ style.scss {
       noscript,
       ol,
       ul,
-      p,
-      .notification {
+      p {
         margin-top: $v-10;
       }
     }

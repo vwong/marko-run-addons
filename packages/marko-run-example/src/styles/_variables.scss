@@ -133,3 +133,10 @@ $background-color-overlay: light-dark(
 // time
 $time-fast: 0.15s;
 $time-standard: 0.3s;
+
+// z-index
+$z-maximum: 2147483647;
+$z-high: 3;
+$z-medium: 2;
+$z-low: 1;
+$z-minimum: 0;
