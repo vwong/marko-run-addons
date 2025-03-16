@@ -8,10 +8,10 @@
   "license": "ISC",
   "dependencies": {
     "@isaacs/ttlcache": "^1.4.1",
-    "@marko/run-adapter-node": "^0.1.13",
+    "@marko/run-adapter-node": "^1.0.1",
     "@marko/tags-api-preview": "^0.8.1",
-    "@micro-frame/marko": "^1.10.2",
-    "@sinclair/typebox": "^0.34.28",
+    "@micro-frame/marko": "^1.10.4",
+    "@sinclair/typebox": "^0.34.30",
     "@vwong/marko-run-addons": "^1.0.0",
     "ajv": "^8.17.1",
     "ajv-errors": "^3.0.0",
@@ -19,11 +19,11 @@
     "compression": "^1.8.0",
     "express": "^5.0.1",
     "lodash-es": "^4.17.21",
-    "marko": "^5.37.19"
+    "marko": "^5.37.20"
   },
   "devDependencies": {
     "@marko/babel-utils": "^6.6.3",
-    "@marko/run": "^0.5.16",
+    "@marko/run": "^0.6.1",
     "@types/compression": "^1.7.5",
     "@types/express": "^5.0.0",
     "rollup-plugin-visualizer": "^5.14.0"
