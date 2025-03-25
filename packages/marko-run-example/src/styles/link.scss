@@ -5,4 +5,8 @@
   &:hover {
     text-decoration: underline;
   }
+
+  &:focus-visible {
+    outline-offset: 1px;
+  }
 }

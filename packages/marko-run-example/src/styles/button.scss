@@ -16,6 +16,10 @@
     box-shadow: $shadow-inset;
   }
 
+  &:focus-visible {
+    outline-offset: 1px;
+  }
+
   &[disabled] {
     background-color: light-dark($color-neutral-20, $color-neutral-90);
     color: light-dark($color-neutral-50, $color-neutral-60);
