@@ -22,6 +22,11 @@ export class FrecencyService {
     this.#session._frecency ||= {};
   }
 
+  clear(type: string, name: string) {
+    const index = this.history[type].findIndex((h) => h.name === name);
+    this.history[type].splice(index, 1);
+  }
+
   list(type: string) {
     return (this.history[type] || []).sort((a, b) => b.score - a.score);
   }
