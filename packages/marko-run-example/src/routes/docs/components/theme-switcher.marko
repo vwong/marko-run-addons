@@ -1,103 +1,84 @@
 <!-- use tags -->
-import "#styles/button.scss";
-import "#styles/visually-hidden.scss";
-<id/switcher/>
-<let/theme=globalThis.localStorage?.getItem("theme") || ""/>
-<lifecycle onMount() {
-  if (theme) {
-    document.documentElement.classList.add(theme);
-  }
-}/>
+export interface Input {
+  theme?: string;
+}
+static interface Theme {
+  icon: string;
+  label: string;
+  value: string;
+}
+static const themes: Theme[] = [
+  { icon: "sun", label: "Light theme", value: "light" },
+  { icon: "moon", label: "Dark theme", value: "dark" },
+  { icon: "monitor", label: "System theme", value: "" },
+];
+<id/themeSwitcher/>
+<let/theme=input.theme || ""/>
+<const/switchTheme({ theme: newTheme }: { theme: string }) {
+  const update = () => {
+    const { classList } = document.documentElement;
+    classList.remove("dark");
+    classList.remove("light");
+    if (newTheme === "dark" || newTheme === "light") {
+      classList.add(newTheme);
+    }
+    theme = newTheme;
+  };
 
-<div class="theme-switcher">
-  <label for=switcher>
-    Theme
-  </label>
-  <ul class="theme-switcher__buttons" id=switcher>
-    <li>
-      <button
-        aria-pressed=(theme === "light" ? "true" : "false")
-        class="theme-switcher__button theme-switcher__button--first"
-        onClick() {
-          const { classList } = document.documentElement;
-          classList.add("light");
-          classList.remove("dark");
-          localStorage.setItem("theme", "light");
-          theme = "light";
-        }
-      >
-        <icon="sun"/>
-        <div class="visually-hidden">
-          Light
-        </div>
-      </button>
-    </li>
-    <li>
-      <button
-        aria-pressed=(theme === "dark" ? "true" : "false")
-        class="theme-switcher__button"
-        onClick() {
-          const { classList } = document.documentElement;
-          classList.remove("light");
-          classList.add("dark");
-          localStorage.setItem("theme", "dark");
-          theme = "dark";
-        }
-      >
-        <icon="moon"/>
-        <div class="visually-hidden">
-          Dark
-        </div>
-      </button>
-    </li>
-    <li>
-      <button
-        aria-pressed=(theme === "" ? "true" : "false")
-        class="theme-switcher__button theme-switcher__button--last"
-        onClick() {
-          const { classList } = document.documentElement;
-          classList.remove("light");
-          classList.remove("dark");
-          localStorage.removeItem("theme");
-          theme = "";
-        }
-      >
-        <icon="monitor"/>
-        <div class="visually-hidden">
-          System
-        </div>
-      </button>
-    </li>
-  </ul>
-</div>
+  document.startViewTransition?.(update) || update();
+}/>
+<form
+  action="/docs/-theme"
+  class="theme-switcher"
+  id=themeSwitcher
+  method="POST"
+>
+  <csrf-token/>
+  <label>Theme</label>
+  <for|{ icon, label, value }: Theme| of=themes>
+    <button
+      aria-label=label
+      aria-pressed=(theme === value ? "true" : "false")
+      name="theme"
+      type="submit"
+      value=value
+    >
+      <icon=icon/>
+    </button>
+  </for>
+</form>
+<on-keyboard-navigate
+  for=themeSwitcher
+  initialIndex=themes.findIndex((t) => t.value === theme)
+/>
+<on-submit for=themeSwitcher onSuccess=switchTheme/>
 
 <style.scss>
   .theme-switcher {
     align-items: center;
-    display: inline-grid;
-    gap: $s-8;
-    grid-template-columns: auto auto;
+    border: none;
+    display: inline-flex;
 
-    &__buttons {
-      display: flex;
-      list-style: none;
-      padding: 0;
+    & label {
+      margin-right: $s-8;
     }
 
-    &__button {
+    & button {
       background: none;
       border: 1px solid $foreground-color-neutral-60;
-      border-left: none;
+      margin-right: -1px;
+      padding-inline: $s-8;
 
-      &--first {
+      &:first-of-type {
         border: 1px solid $foreground-color-neutral-60;
         border-bottom-left-radius: $radius-m;
         border-top-left-radius: $radius-m;
       }
 
-      &--last {
+      &:last-of-type {
         border-bottom-right-radius: $radius-m;
         border-top-right-radius: $radius-m;
+        margin-right: initial;
       }
 
       &:hover {
@@ -107,10 +88,6 @@ import "#styles/visually-hidden.scss";
       &[aria-pressed="true"] {
         background: $background-color-neutral-20;
       }
-    }
-
-    @media (scripting: none) {
-      display: none !important;
     }
   }
 </style>

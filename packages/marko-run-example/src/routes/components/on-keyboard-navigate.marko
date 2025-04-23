@@ -1,0 +1,60 @@
+export type Input = KeyboardNavigateOptions;
+static interface KeyboardNavigateOptions {
+  for: string;
+  initialIndex?: number;
+}
+static class KeyboardNavigate {
+  #index = 0;
+  root: HTMLElement | null;
+
+  constructor(options: KeyboardNavigateOptions) {
+    this.root = document.getElementById(options.for);
+
+    this.root?.addEventListener("keydown", (event: KeyboardEvent) => {
+      switch (event.key) {
+        case "ArrowDown":
+        case "ArrowRight":
+          this.index = this.index + 1;
+          this.focus();
+          break;
+        case "ArrowUp":
+        case "ArrowLeft":
+          this.index = this.index - 1;
+          this.focus();
+          break;
+      }
+    });
+
+    this.index = options.initialIndex || 0;
+  }
+
+  set index(value: number) {
+    const N = this.items.length;
+    const next = (value + N) % N;
+
+    for (const el of this.items) {
+      el.setAttribute("tabindex", "-1");
+    }
+
+    const el = this.items[next];
+    el.setAttribute("tabindex", "0");
+
+    this.#index = next;
+  }
+
+  get index() {
+    return this.#index;
+  }
+
+  get items(): NodeListOf<HTMLElement> {
+    return this.root!.querySelectorAll("a, button");
+  }
+
+  focus() {
+    this.items[this.index].focus();
+  }
+}
+
+<effect() {
+  new KeyboardNavigate(input);
+}/>

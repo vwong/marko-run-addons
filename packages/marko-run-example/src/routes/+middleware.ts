@@ -51,6 +51,7 @@ export default [
   clientJs(),
   async (context, next) => {
     context.cspNonce = randomBytes(16).toString("base64");
+    context.csrfToken = context.csrf.current;
     context.isXHR =
       context.request.headers.get("X-Requested-With") === "XMLHttpRequest";
 
@@ -58,6 +59,8 @@ export default [
     if (context.isXHR) {
       context.componentIdPrefix = `c-${Math.random()}`;
     }
+
+    context.serializedGlobals.csrfToken = true;
 
     const response = await next();
 

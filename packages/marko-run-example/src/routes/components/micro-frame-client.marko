@@ -2,7 +2,6 @@
 
 <!-- use tags -->
 export interface Input {
-  fetch: (url: string, opts: RequestInit) => Promise<Response>;
   isError: boolean;
   isErrorChange: (value: boolean) => void;
   isPending: boolean;
@@ -16,27 +15,24 @@ export interface Input {
       setTimeout(() => {
         input.isPendingChange(true);
         input.isErrorChange(false);
-
-        const xhrOptions = {
-          ...options,
-          headers: {
-            ...options.headers,
-            "X-Requested-With": "XMLHttpRequest",
-          },
-        };
-        if (input.fetch) {
-          resolve(input.fetch(url, xhrOptions, globalThis.fetch));
-        } else {
-          resolve(globalThis.fetch(url, xhrOptions));
-        }
+        resolve(
+          globalThis
+            .fetch(url, {
+              ...options,
+              headers: {
+                ...options.headers,
+                "X-Requested-With": "XMLHttpRequest",
+              },
+            })
+            .catch(() => {
+              input.isErrorChange(true);
+            })
+            .finally(() => {
+              input.isPendingChange(false);
+            }),
+        );
       }, 0);
-    })
-      .catch(() => {
-        input.isErrorChange(true);
-      })
-      .finally(() => {
-        input.isPendingChange(false);
-      });
+    });
   }
   src=input.src
 >

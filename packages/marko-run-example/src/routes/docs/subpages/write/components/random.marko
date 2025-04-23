@@ -6,35 +6,13 @@ export interface Input {
   src: string;
 }
 
+<id/formId/>
 <let/key=0/>
-<let/body=new URLSearchParams()/>
 <let/isPending=false/>
 <let/isError=false/>
-<form/form
-  action=input.src
-  class="random"
-  method="POST"
-  onSubmit(event: Event) {
-    event.preventDefault();
-    body = new URLSearchParams(
-      new FormData(form()) as unknown as URLSearchParams,
-    );
-    key++;
-  }
->
+<form action=input.src class="random" id=formId method="POST">
   <if=key>
     <micro-frame-client
-      fetch(url, options, fetch) {
-        return fetch(url, {
-          ...options,
-          method: "POST",
-          headers: {
-            ...options.headers,
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-          body,
-        });
-      }
       isError:=isError
       isPending:=isPending
       src=`${input.src}#${key}`
@@ -56,6 +34,14 @@ export interface Input {
     Regenerate
   </button>
 </form>
+<on-submit
+  for=formId
+  isError:=isError
+  isPending:=isPending
+  onSuccess() {
+    key++;
+  }
+/>
 
 <style.scss>
   .random {

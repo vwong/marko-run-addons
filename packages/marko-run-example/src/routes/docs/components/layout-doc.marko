@@ -2,8 +2,9 @@ import "#styles/base.scss";
 export interface Input {
   renderBody: Marko.Body;
 }
+$ const { theme } = $global.session;
 <!doctype html>
-<html lang="en">
+<html class=theme lang="en">
   <head>
     <meta charset="utf-8">
     <meta
@@ -20,7 +21,7 @@ export interface Input {
     <contents-table/>
     <div class="layout">
       <div class="layout__head">
-        <theme-switcher/>
+        <theme-switcher theme=theme/>
       </div>
       <div class="layout__body">
         <flash-notice/>

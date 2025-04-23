@@ -1,0 +1,42 @@
+<!-- use tags -->
+export interface Input<T> {
+  for: string;
+  isError?: boolean;
+  isErrorChange?: (value: boolean) => void;
+  isPending?: boolean;
+  isPendingChange?: (value: boolean) => void;
+  onSuccess?: (payload: T) => void;
+}
+<effect() {
+  const formEl = document.getElementById(input.for) as HTMLFormElement;
+  formEl.addEventListener("submit", (event: SubmitEvent) => {
+    event.preventDefault();
+    input.isPendingChange?.(true);
+    input.isErrorChange?.(false);
+    const data = new FormData(formEl, event.submitter);
+    fetch(formEl.action, {
+      body: new URLSearchParams(data as unknown as URLSearchParams),
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "X-Requested-With": "XMLHttpRequest",
+      },
+      method: "POST",
+    })
+      .then((response) => {
+        if (response.ok) {
+          if (input.onSuccess) {
+            response.json().then(input.onSuccess);
+          }
+        } else {
+          input.isErrorChange?.(true);
+        }
+      })
+      .catch(() => {
+        input.isErrorChange?.(true);
+      })
+      .finally(() => {
+        input.isPendingChange?.(false);
+      });
+  });
+}/>
