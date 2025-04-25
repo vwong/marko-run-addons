@@ -1,4 +1,4 @@
-import { Static, Type } from "@sinclair/typebox";
+import { type Static, Type } from "@sinclair/typebox";
 
 export const BodySchema = Type.Object({
   count: Type.Number({ maximum: 5, errorMessage: "no more than 5 please" }),

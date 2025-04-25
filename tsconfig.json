@@ -10,6 +10,7 @@
     "skipLibCheck": true,
     "strict": true,
     "target": "esnext",
-    "types": ["vite/client"]
+    "types": ["vite/client"],
+    "verbatimModuleSyntax": true
   }
 }
