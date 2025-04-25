@@ -26,7 +26,6 @@ export const contents: Page[] = [
     href: "/docs/subpages",
     text: "Subpage navigation",
     contents: [
-      { href: "/docs/subpages/pagination", text: "Pagination" },
       { href: "/docs/subpages/tabbed-interface", text: "Tabbed interface" },
       { href: "/docs/subpages/read", text: "Reading Subpage Frames" },
       {
