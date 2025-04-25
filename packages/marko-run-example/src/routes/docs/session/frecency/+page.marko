@@ -51,14 +51,13 @@ static const TYPE = "category";
     </p>
     <ol class="frecency">
       <for|{ name, score }| of=$global.frecency.list(TYPE)>
-        <li>
+        <li id=`frecency-${name}`>
           <a
             aria-current=(
               ($global.query as QuerySchema).page === name ? "page" : undefined
             )
             class="link no-prerender"
             href=`?page=${name}`
-            id=`frecency-${name}`
           >
             ${name}
             <small>(${score.toFixed(2)})</small>

@@ -14,19 +14,8 @@ static const themes: Theme[] = [
 ];
 <id/themeSwitcher/>
 <let/theme=input.theme || ""/>
-<const/switchTheme({ theme: newTheme }: { theme: string }) {
-  const update = () => {
-    const { classList } = document.documentElement;
-    classList.remove("dark");
-    classList.remove("light");
-    if (newTheme === "dark" || newTheme === "light") {
-      classList.add(newTheme);
-    }
-    theme = newTheme;
-  };
+<let/index=themes.findIndex((t) => t.value === theme)/>
 
-  document.startViewTransition?.(update) || update();
-}/>
 <form
   action="/docs/-theme"
   class="theme-switcher"
@@ -47,11 +36,25 @@ static const themes: Theme[] = [
     </button>
   </for>
 </form>
-<on-keyboard-navigate
+
+<on-keyboard-tab for=themeSwitcher initialIndex=index/>
+<on-submit
   for=themeSwitcher
-  initialIndex=themes.findIndex((t) => t.value === theme)
+  onSuccess({ theme: newTheme }: { theme: string }) {
+    theme = newTheme;
+  }
 />
-<on-submit for=themeSwitcher onSuccess=switchTheme/>
+<effect() {
+  const update = () => {
+    const { classList } = document.documentElement;
+    classList.remove("dark");
+    classList.remove("light");
+    if (theme === "dark" || theme === "light") {
+      classList.add(theme);
+    }
+  };
+  document.startViewTransition?.(update) || update();
+}/>
 
 <style.scss>
   .theme-switcher {

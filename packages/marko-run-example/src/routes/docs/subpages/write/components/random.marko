@@ -1,6 +1,3 @@
-// @ts-nocheck
-
-<!-- use tags -->
 import "#styles/button.scss";
 export interface Input {
   src: string;
@@ -10,22 +7,15 @@ export interface Input {
 <let/key=0/>
 <let/isPending=false/>
 <let/isError=false/>
+
 <form action=input.src class="random" id=formId method="POST">
+  <csrf-token/>
   <if=key>
     <micro-frame-client
       isError:=isError
       isPending:=isPending
       src=`${input.src}#${key}`
-    >
-      <@loading>
-        <div>
-          <loader/>
-        </div>
-      </@loading>
-      <@catch|err: Error|>
-        ${JSON.stringify(err)}
-      </@catch>
-    </micro-frame-client>
+    />
   </if>
   <else>
     <micro-frame-server src=input.src/>

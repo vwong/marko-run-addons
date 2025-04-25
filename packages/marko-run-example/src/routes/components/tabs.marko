@@ -1,10 +1,9 @@
 // @ts-nocheck
 
 <!-- use tags -->
-import { PageNavigator } from "@vwong/marko-run-addons/client";
 export interface Input {
-  tab: Marko.AttrTag<{
-    current: boolean;
+  current: string;
+  tab?: Marko.AttrTag<{
     href: string;
     src: string;
     title: string;
@@ -14,35 +13,30 @@ export interface Input {
 <let/isBrowser=false/>
 <let/isPending=false/>
 <let/isError=false/>
-<let/currentTab=input.tab.find((t) => t.current)/>
+<let/page=input.current/>
 
-<let/navigator=new PageNavigator({
-  page: currentTab.href,
-  pageChange(page) {
+<on-navigation/gotoPage page:=page/>
+
+<ul
+  class="tabs"
+  onClick() {
     isBrowser = true;
-    currentTab = input.tab.find((t) => t.src === page);
-  },
-})/>
-
-<ul class="tabs">
-  <for|tab| of=input.tab>
+  }
+>
+  <for|{ href, src, title }| of=input.tab>
     <li class="tabs__tab">
-      <a
-        aria-current=currentTab.href === tab.href && "page"
-        href=tab.href
-        onClick=navigator.gotoPage(tab.src)
-      >
-        ${tab.title}
+      <a aria-current=page === src && "page" href=href onClick=gotoPage(src)>
+        ${title}
       </a>
     </li>
   </for>
 </ul>
 
 <if=isBrowser>
-  <micro-frame-client isError:=isError isPending:=isPending src=currentTab.src/>
+  <micro-frame-client isError:=isError isPending:=isPending src=page/>
 </if>
 <else>
-  <micro-frame-server src=currentTab.src/>
+  <micro-frame-server src=page/>
 </else>
 
 <if=isPending>
