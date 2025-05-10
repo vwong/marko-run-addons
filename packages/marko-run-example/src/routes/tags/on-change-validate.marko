@@ -1,0 +1,43 @@
+import { FormValidator } from "@vwong/marko-run-addons/client";
+export interface Input {
+  isError?: boolean;
+  isErrorChange?: (value: boolean) => void;
+  isPending?: boolean;
+  isPendingChange?: (value: boolean) => void;
+  ref: () => HTMLFormElement;
+}
+<const/{ ref }=input/>
+<script>
+  const formEl = ref();
+  new FormValidator({
+    formEl,
+    onInputError(el: HTMLInputElement, message: string) {
+      const errorElementId = el.getAttribute("aria-errormessage");
+      if (errorElementId) {
+        const errorElement = document.getElementById(errorElementId);
+        errorElement!.innerText = message;
+      }
+    },
+    onInvalid: () => {
+      input.isPendingChange?.(false);
+      input.isErrorChange?.(true);
+    },
+    onPending: () => {
+      input.isPendingChange?.(true);
+      input.isErrorChange?.(false);
+    },
+    onValid: () => {
+      input.isPendingChange?.(false);
+      input.isErrorChange?.(false);
+    },
+  });
+  formEl.addEventListener(
+    "submit",
+    () => {
+      input.isPendingChange?.(true);
+    },
+    {
+      signal: $signal,
+    },
+  );
+</script>

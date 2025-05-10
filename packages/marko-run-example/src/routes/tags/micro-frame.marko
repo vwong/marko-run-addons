@@ -1,0 +1,52 @@
+export interface Input {
+  isError: boolean;
+  isErrorChange: (value: boolean) => void;
+  isPending: boolean;
+  isPendingChange: (value: boolean) => void;
+  src: MarkoRun.GetPaths;
+}
+static const base = "http://ignored";
+
+<const/loader=(async function () {
+  const promise = globalThis.__marko_run__
+    ? globalThis.__marko_run__.fetch(
+        new Request(`${base}${input.src}`),
+        $global.platform,
+      )
+    : fetch(input.src, {
+        headers: {
+          "X-Requested-With": "XMLHttpRequest",
+        },
+        signal: $signal,
+      });
+  const response = await promise;
+  const html = await response!.text();
+  return html;
+})()/>
+
+<if=!input.isPending>
+  <try>
+    <await|html: string|=loader>
+      <div>$!{html}</div>
+    </await>
+  </try>
+</if>
+
+<let/isBrowser=false/>
+<lifecycle onMount() {
+  isBrowser = true;
+}/>
+
+<script>
+  if (isBrowser) {
+    input.isPendingChange(true);
+    input.isErrorChange(false);
+    loader
+      .catch(() => {
+        input.isErrorChange(true);
+      })
+      .finally(() => {
+        input.isPendingChange(false);
+      });
+  }
+</script>

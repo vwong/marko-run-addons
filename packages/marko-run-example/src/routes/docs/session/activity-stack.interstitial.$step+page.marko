@@ -1,0 +1,13 @@
+import "#styles/button.scss";
+<layout-doc>
+  <h1>Interstitial ${$global.params.step}</h1>
+  <if=Number($global.params.step) === 100>
+    <p>This is a dynamically added interstitital.</p>
+  </if>
+  <form method="POST">
+    <csrf-token/>
+    <button class="button" type="submit">
+      Next
+    </button>
+  </form>
+</layout-doc>

@@ -1,0 +1,49 @@
+export interface Input<T> {
+  isError?: boolean;
+  isErrorChange?: (value: boolean) => void;
+  isPending?: boolean;
+  isPendingChange?: (value: boolean) => void;
+  ref: () => HTMLFormElement;
+  value?: (payload: T) => void;
+}
+<const/{ ref }=input/>
+<script>
+  const formEl = ref();
+  formEl.addEventListener(
+    "submit",
+    (event: SubmitEvent) => {
+      event.preventDefault();
+      input.isPendingChange?.(true);
+      input.isErrorChange?.(false);
+      const data = new FormData(formEl, event.submitter);
+      fetch(formEl.action, {
+        body: new URLSearchParams(data as unknown as URLSearchParams),
+        credentials: "same-origin",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "X-Requested-With": "XMLHttpRequest",
+        },
+        method: "POST",
+        signal: $signal,
+      })
+        .then((response) => {
+          if (response.ok) {
+            if (input.value) {
+              response.json().then(input.value);
+            }
+          } else {
+            input.isErrorChange?.(true);
+          }
+        })
+        .catch(() => {
+          input.isErrorChange?.(true);
+        })
+        .finally(() => {
+          input.isPendingChange?.(false);
+        });
+    },
+    {
+      signal: $signal,
+    },
+  );
+</script>

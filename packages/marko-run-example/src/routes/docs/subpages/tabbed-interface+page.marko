@@ -1,0 +1,24 @@
+import type { QuerySchema } from "./+meta";
+static const tabsList = [
+  { name: "one", title: "Tab 1" },
+  { name: "two", title: "Tab 2" },
+  { name: "three", title: "Tab 3" },
+];
+static const buildUrl = (
+  (tab: string) => `/docs/subpages/tabbed-interface/-tab/${tab}`
+);
+
+<layout-doc>
+  <h1>Tabbed interface</h1>
+
+  <p>
+    When combined with the History API, we can paginate sub-pages, with graceful degradation back to full-page pagination.
+  </p>
+
+  <const/tab=(($global.query as QuerySchema).tab)/>
+  <tabs current=buildUrl(tab)>
+    <for|{ name, title }: { name: string; title: string }| of=tabsList>
+      <@tab href=`?tab=${name}` src=buildUrl(name) title=title/>
+    </for>
+  </tabs>
+</layout-doc>

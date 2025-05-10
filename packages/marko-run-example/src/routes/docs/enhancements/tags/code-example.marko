@@ -1,0 +1,29 @@
+export interface Input {
+  content: Marko.Body;
+}
+
+<div class="code-example">
+  <div/contents>
+    <pre><code><${input.content}/></code></pre>
+  </div>
+
+  <div class="code-example__copy">
+    <copy-to-clipboard ref=contents/>
+  </div>
+</div>
+
+<style.scss>
+  .code-example {
+    background: $background-color-neutral-05;
+    border-radius: $radius-m;
+    box-shadow: $shadow-inset;
+    padding: $v-20 $s-16;
+    position: relative;
+
+    &__copy {
+      position: absolute;
+      right: $s-4;
+      top: $v-5;
+    }
+  }
+</style>

@@ -1,0 +1,21 @@
+<!-- ise tags -->
+export interface Input {
+  duration: number;
+  value: () => void;
+}
+
+<let/timer=(0 as unknown as ReturnType<typeof setTimeout>)/>
+
+<const/reset=(
+  () => {
+    if (timer) {
+      clearTimeout(timer);
+    }
+
+    timer = setTimeout(() => {
+      input.value();
+    }, input.duration);
+  }
+)/>
+
+<return=reset/>

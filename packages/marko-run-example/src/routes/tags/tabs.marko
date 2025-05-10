@@ -1,0 +1,65 @@
+export interface Input {
+  current: string;
+  tab?: Marko.AttrTag<{
+    href: string;
+    src: string;
+    title: string;
+  }>;
+}
+
+<let/isPending=false/>
+<let/isError=false/>
+<let/page=input.current/>
+
+<on-navigation/gotoPage:=page/>
+
+<ul class="tabs">
+  <for|{ href, src, title }| of=input.tab>
+    <li class="tabs__tab">
+      <a
+        aria-current=page === src && "page"
+        class="no-prerender"
+        href=href
+        onClick=gotoPage(src)
+      >
+        ${title}
+      </a>
+    </li>
+  </for>
+</ul>
+
+<div class="tabs__contents">
+  <micro-frame isError:=isError isPending:=isPending src=page/>
+  <if=isPending>
+    <loader/>
+  </if>
+</div>
+
+<style.scss>
+  .tabs {
+    border-bottom: 1px solid $foreground-color-neutral-30;
+    display: flex;
+    padding: 0;
+
+    &__tab {
+      display: flex;
+    }
+
+    &__contents {
+      min-height: 5rem;
+    }
+
+    & a {
+      border-radius: $radius-m $radius-m 0 0;
+      padding: $v-5 $s-16;
+
+      &:hover {
+        border-bottom: 4px solid $foreground-color-neutral-60;
+      }
+    }
+
+    & [aria-current="page"] {
+      border-bottom: 4px solid $foreground-color-accent;
+    }
+  }
+</style>

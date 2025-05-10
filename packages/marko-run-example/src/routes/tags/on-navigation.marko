@@ -1,0 +1,34 @@
+export interface Input<T> {
+  value: T;
+  valueChange: (p: T) => void;
+}
+
+<script>
+  if (globalThis.history) {
+    globalThis.history.replaceState(
+      {
+        page: input.value,
+      },
+      "",
+    );
+    globalThis.addEventListener(
+      "popstate",
+      (event: PopStateEvent) => {
+        input.valueChange(event.state!.page);
+      },
+      {
+        signal: $signal,
+      },
+    );
+  }
+</script>
+
+<return=(
+  (page: T) => (event: Event) => {
+    event.preventDefault();
+
+    const { href } = event.target as HTMLLinkElement;
+    globalThis.history.pushState({ page }, "", href);
+    input.valueChange(page);
+  }
+)/>

@@ -1,0 +1,26 @@
+import sprite from "./icons.svg";
+export interface Input {
+  title?: string;
+  value: string;
+}
+<svg class="icon">
+  <if=input.title>
+    <title>${input.title}</title>
+  </if>
+  <use href=`${sprite}#${input.value}`/>
+</svg>
+<style.scss>
+  .icon {
+    display: inline;
+    fill: none;
+    height: 1em;
+    line-height: inherit;
+    position: relative;
+    stroke: currentcolor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 2;
+    vertical-align: -0.125em;
+    width: 1em;
+  }
+</style>

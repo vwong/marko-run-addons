@@ -1,0 +1,40 @@
+import "#styles/button.scss";
+export interface Input {
+  src: string;
+}
+
+<let/key=0/>
+<let/isPending=false/>
+<let/isError=false/>
+
+<div class="random">
+  <div>
+    <micro-frame
+      isError:=isError
+      isPending:=isPending
+      src=`${input.src}#${key}`
+    />
+    <if=isPending>
+      <loader/>
+    </if>
+  </div>
+
+  <button
+    class="button"
+    disabled=isPending
+    onClick() {
+      key++;
+    }
+  >
+    Regenerate
+  </button>
+</div>
+
+<style.scss>
+  .random {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    margin-top: $v-10;
+  }
+</style>

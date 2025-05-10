@@ -1,0 +1,86 @@
+import "#styles/link.scss";
+import type { QuerySchema } from "./+meta";
+static const names = [
+  "alpha",
+  "bravo",
+  "charlie",
+  "delta",
+  "echo",
+  "foxtrot",
+  "golf",
+  "hotel",
+];
+static const TYPE = "category";
+
+<layout-doc>
+  <h1>Frecency</h1>
+
+  <p>
+    While the browser has a recommendation engine to auto-complete URLs in the address bar, suggesting frequently and recently used URLs, we can build a similar engine server-side to enhance the user experience.
+  </p>
+
+  <p>
+    Click on one of the links from the fixed list, and observe how the list of frecent items change with the selection. Frequent and recent items bubble up the top of the list, while lesser used ones will eventually decay off the list.
+  </p>
+
+  <h2>Fixed list of items</h2>
+
+  <ul class="frecency">
+    <for|name| of=names>
+      <li>
+        <a
+          aria-current=(
+            ($global.query as QuerySchema).page === name ? "page" : undefined
+          )
+          class="link no-prerender"
+          href=`?page=${name}`
+        >
+          ${name}
+        </a>
+      </li>
+    </for>
+  </ul>
+
+  <h2>List of frecent items</h2>
+  <if=(!$global.frecency.list(TYPE).length)>
+    <p>Click on above categories to add items to frecency list</p>
+  </if>
+  <else>
+    <p>
+      The numbers in the parenthesis shows the frecency score. Under normal circumstances, this might be omitted to hide the implementation detail.
+    </p>
+    <ol class="frecency">
+      <for|{ name, score }| of=$global.frecency.list(TYPE)>
+        <li id=`frecency-${name}`>
+          <a
+            aria-current=(
+              ($global.query as QuerySchema).page === name ? "page" : undefined
+            )
+            class="link no-prerender"
+            href=`?page=${name}`
+          >
+            ${name}
+            <small>(${score.toFixed(2)})</small>
+          </a>
+        </li>
+      </for>
+    </ol>
+  </else>
+</layout-doc>
+<html-style nonce=$global.cspNonce>
+  ${$global.frecency
+    .list(TYPE)
+    .map(
+      ({ name }) =>
+        `#frecency-${name} { view-transition-name: frecency-${name}; }`,
+    )
+    .join("")}
+</html-style>
+
+<style.scss>
+  .frecency {
+    a[aria-current] {
+      font-weight: $font-weight-bold;
+    }
+  }
+</style>

@@ -1,5 +1,5 @@
 {
   "script-lang": "ts",
   "taglibId": "@vwong/marko-run-addons",
-  "tagsDir": "./src/components"
+  "tagsDir": "./src/tags"
 }

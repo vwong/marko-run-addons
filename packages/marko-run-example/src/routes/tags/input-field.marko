@@ -1,0 +1,33 @@
+export interface Input extends Marko.Input<"input"> {
+  error?: string;
+  label: string;
+}
+<const/{ error, label, ...others }=input/>
+<id/inputId/>
+<id/descriptionId/>
+
+<label for=inputId>
+  ${input.label}
+</label>
+<input
+  aria-errormessage=descriptionId
+  aria-invalid=(!!input.error?.length && "true")
+  id=inputId
+  ...others
+>
+<div aria-live="polite" class="input-error" id=descriptionId role="status">
+  ${input.error}
+</div>
+
+<style.scss>
+  .input-error {
+    color: $foreground-color-error;
+    display: none;
+    font-size: $font-size-down-1;
+    line-height: $v-20;
+  }
+
+  input[aria-invalid="true"] + .input-error {
+    display: block;
+  }
+</style>

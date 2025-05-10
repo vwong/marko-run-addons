@@ -1,0 +1,51 @@
+import "#styles/tile.scss";
+import { flatContents } from "#lib/contents";
+<let/current=flatContents.findIndex((c) => c.href === $global.url.pathname)/>
+<const/previous=current - 1/>
+<const/next=current + 1/>
+
+<if=(current >= 0)>
+  <div class="navigation-footer">
+    <if=(previous >= 0)>
+      <a
+        class="tile navigation-footer__link navigation-footer__link--prev"
+        href=(flatContents[previous].href)
+      >
+        ‹ ${flatContents[previous].text}
+      </a>
+    </if>
+    <else>
+      <div/>
+    </else>
+
+    <if=(next <= flatContents.length - 1)>
+      <a
+        class="tile navigation-footer__link navigation-footer__link--next"
+        href=(flatContents[next].href)
+      >
+        ${flatContents[next].text} ›
+      </a>
+    </if>
+  </div>
+</if>
+
+<style.scss>
+  .navigation-footer {
+    display: grid;
+    grid-gap: $s-8;
+    grid-template-columns: 1fr 1fr;
+
+    &__link {
+      padding: $v-10 $s-16;
+
+      &--prev {
+        grid-column: 1/2;
+      }
+
+      &--next {
+        grid-column: 2/3;
+        text-align: right;
+      }
+    }
+  }
+</style>

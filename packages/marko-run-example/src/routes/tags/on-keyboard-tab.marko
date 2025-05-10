@@ -1,0 +1,40 @@
+export interface Input {
+  index?: number;
+  ref: () => HTMLElement;
+}
+
+<const/{ ref }=input/>
+<let/index=input.index || 0/>
+<script>
+  const root = ref();
+  const items = root.querySelectorAll("a, button");
+  const N = items.length;
+  root.addEventListener(
+    "keydown",
+    (event: KeyboardEvent) => {
+      switch (event.key) {
+        case "ArrowDown":
+        case "ArrowRight":
+          index = (index + 1) % N;
+          break;
+        case "ArrowUp":
+        case "ArrowLeft":
+          index = (index + N - 1) % N;
+          break;
+      }
+    },
+    {
+      signal: $signal,
+    },
+  );
+</script>
+<script>
+  const root = ref();
+  const items = root.querySelectorAll("a, button") as NodeListOf<HTMLElement>;
+  for (const el of items) {
+    el.setAttribute("tabindex", "-1");
+  }
+  const el = items[index];
+  el.setAttribute("tabindex", "0");
+  el.focus();
+</script>

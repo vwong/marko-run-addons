@@ -1,0 +1,74 @@
+import "#styles/base.scss";
+export interface Input {
+  content: Marko.Body;
+}
+<!doctype html>
+<html class=($global.session.theme) lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta
+      content="width=device-width,initial-scale=1,viewport-fit=cover"
+      name="viewport"
+    >
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <client-js/>
+    <if=(process.env.NODE_ENV === "production")>
+      <speculation-rules/>
+    </if>
+  </head>
+  <body>
+    <contents-table/>
+    <div class="layout">
+      <div class="layout__head">
+        <theme-switcher theme=($global.session.theme)/>
+      </div>
+      <div class="layout__body">
+        <flash-notice/>
+        <contents-prev-next/>
+        <div class="layout__doc">
+          <${input.content}/>
+        </div>
+        <contents-prev-next/>
+      </div>
+    </div>
+  </body>
+</html>
+
+<style.scss>
+  .layout {
+    $menu-height: $v-40;
+    $menu-width: $s-32;
+
+    &__head {
+      background: $background-color-neutral-00;
+      border-bottom: 1px solid $foreground-color-neutral-90;
+      left: 0;
+      padding: $v-5 $s-8;
+      position: sticky;
+      right: 0;
+      text-align: right;
+      top: 0;
+      z-index: $z-low;
+    }
+
+    &__body {
+      padding: $v-10 $s-16 ($v-10 + $menu-height) $s-16;
+
+      & > * + * {
+        margin-top: $v-10;
+      }
+    }
+
+    &__doc {
+      figure,
+      form,
+      h2,
+      noscript,
+      ol,
+      ul,
+      p {
+        margin-top: $v-10;
+      }
+    }
+  }
+</style>

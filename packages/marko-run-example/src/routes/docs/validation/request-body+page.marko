@@ -1,8 +1,10 @@
-import "#styles/button.scss";
 import type { BodySchema } from "./request-body+meta";
-$ const errors = Object.fromEntries(
+
+<let/errors=Object.fromEntries(
   $global.lastBodyErrors.map(({ name, message }) => [name, message]),
-);
+)/>
+<let/isPending=false/>
+<let/isError=false/>
 
 <layout-doc>
   <h1>Request Body</h1>
@@ -11,7 +13,7 @@ $ const errors = Object.fromEntries(
   <p>
     This uses native form POST submissions. It will fail server-side validation when the count is greater than 5.
   </p>
-  <form id:scoped="form" method="POST">
+  <form/form method="POST">
     <csrf-token/>
     <input-field
       error=errors.count
@@ -33,8 +35,9 @@ $ const errors = Object.fromEntries(
     />
   </form>
   <p>
-    <form-submit-button for:scoped="form">
+    <button class="button" disabled=isPending || isError type="submit">
       Submit
-    </form-submit-button>
+    </button>
+    <on-change-validate isError:=isError isPending:=isPending ref=form/>
   </p>
 </layout-doc>

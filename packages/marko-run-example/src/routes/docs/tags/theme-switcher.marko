@@ -1,0 +1,86 @@
+export interface Input {
+  theme?: string;
+}
+static interface Theme {
+  icon: string;
+  label: string;
+  value: string;
+}
+static const themes: Theme[] = [
+  { icon: "sun", label: "Light theme", value: "light" },
+  { icon: "moon", label: "Dark theme", value: "dark" },
+  { icon: "monitor", label: "System theme", value: "" },
+];
+<let/theme=input.theme || ""/>
+<let/index=themes.findIndex((t) => t.value === theme)/>
+
+<form/form action="/docs/-theme" class="theme-switcher" method="POST">
+  <csrf-token/>
+  <label>Theme</label>
+  <for|{ icon, label, value }: Theme| of=themes>
+    <button
+      aria-label=label
+      aria-pressed=(theme === value ? "true" : "false")
+      name="theme"
+      type="submit"
+      value=value
+    >
+      <icon=icon/>
+    </button>
+  </for>
+</form>
+
+<on-keyboard-tab index=index ref=form/>
+<on-submit({ theme: newTheme }: { theme: string }) {
+  theme = newTheme;
+} ref=form/>
+<script>
+  const update = () => {
+    const { classList } = document.documentElement;
+    classList.remove("dark");
+    classList.remove("light");
+    if (theme === "dark" || theme === "light") {
+      classList.add(theme);
+    }
+  };
+  document.startViewTransition?.(update) || update();
+</script>
+
+<style.scss>
+  .theme-switcher {
+    align-items: center;
+    border: none;
+    display: inline-flex;
+
+    & label {
+      margin-right: $s-8;
+    }
+
+    & button {
+      background: none;
+      border: 1px solid $foreground-color-neutral-60;
+      margin-right: -1px;
+      padding-inline: $s-8;
+
+      &:first-of-type {
+        border: 1px solid $foreground-color-neutral-60;
+        border-bottom-left-radius: $radius-m;
+        border-top-left-radius: $radius-m;
+      }
+
+      &:last-of-type {
+        border-bottom-right-radius: $radius-m;
+        border-top-right-radius: $radius-m;
+        margin-right: initial;
+      }
+
+      &:hover {
+        background: $background-color-neutral-10;
+      }
+
+      &[aria-pressed="true"] {
+        background: $background-color-neutral-20;
+      }
+    }
+  }
+</style>

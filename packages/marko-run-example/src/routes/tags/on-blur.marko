@@ -1,0 +1,31 @@
+export interface Input {
+  ref: () => HTMLElement;
+  value: () => void;
+}
+
+<const/{ ref }=input/>
+<script>
+  const handler = (event: KeyboardEvent) => {
+    if (event.key === "Escape") {
+      input.value();
+    }
+  };
+  document.addEventListener("keydown", handler, {
+    signal: $signal,
+  });
+</script>
+
+<script>
+  const el = ref();
+  const handler = (event: MouseEvent | FocusEvent) => {
+    if (!el.contains(event.target as Node)) {
+      input.value();
+    }
+  };
+  document.addEventListener("click", handler, {
+    signal: $signal,
+  });
+  document.addEventListener("focusin", handler, {
+    signal: $signal,
+  });
+</script>

@@ -1,0 +1,65 @@
+import "#styles/popup.scss";
+export interface Input {
+  ref: () => HTMLElement;
+}
+
+<const/{ ref }=input/>
+<let/isActive=false/>
+<let/isHover=false/>
+<let/isPending=false/>
+<div class="popup">
+  <button
+    class="copy-to-clipboard"
+    onPointerEnter(event: PointerEvent) {
+      if (event.pointerType === "mouse") {
+        isHover = true;
+      }
+    }
+    onPointerLeave() {
+      isHover = false;
+    }
+    onClick(event: Event) {
+      event.preventDefault();
+
+      isActive = true;
+      isPending = true;
+      const { textContent } = ref();
+      window.navigator.clipboard.writeText(textContent!);
+      console.log(textContent);
+      reset();
+    }
+    type="button"
+  >
+    <icon="copy" title="Copy to clipboard"/>
+  </button>
+
+  <div
+    aria-live="polite"
+    class=[
+      "popup__overlay",
+      "popup__overlay--left",
+      (isActive || isHover) && "popup__overlay--force",
+    ]
+    onTransitionEnd() {
+      isPending = isActive;
+    }
+  >
+    ${isActive || isPending ? "Copied!" : "Copy"}
+  </div>
+</div>
+<on-timeout/reset() {
+  isActive = false;
+} duration=2000/>
+
+<style.scss>
+  .copy-to-clipboard {
+    background: none;
+    border: none;
+    border-radius: $radius-m;
+    padding: $s-4;
+
+    @media (scripting: none) {
+      display: none !important;
+    }
+  }
+</style>

@@ -1,0 +1,28 @@
+<if=($global.flash.current.length || $global.lastQueryErrors.length)>
+  <section aria-label="Notices" class="flash">
+    <div class="flash-notice">
+      <for|{ message, status }| of=($global.flash.current)>
+        <notification level=status>
+          ${message}
+        </notification>
+      </for>
+      <for|{ name, message }| of=$global.lastQueryErrors>
+        <notification level="error">
+          ${name} ${message}
+        </notification>
+      </for>
+    </div>
+  </section>
+</if>
+
+<style.scss>
+  .flash-notice {
+    display: grid;
+    gap: $v-5;
+    left: 50%;
+    position: fixed;
+    top: $v-5;
+    transform: translateX(-50%);
+    z-index: 1;
+  }
+</style>

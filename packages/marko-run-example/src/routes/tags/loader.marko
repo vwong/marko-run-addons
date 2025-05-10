@@ -1,0 +1,23 @@
+<span class="loader">
+  <span class="loader__spinner">
+    <icon="loader" title="Please wait"/>
+  </span>
+   &nbsp;
+</span>
+
+<style.scss>
+  .loader {
+    position: relative;
+
+    &__spinner {
+      animation: spin 2s linear infinite;
+      position: absolute;
+    }
+  }
+
+  @keyframes spin {
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+</style>

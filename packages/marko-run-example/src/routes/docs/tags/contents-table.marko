@@ -1,0 +1,111 @@
+import "#styles/button.scss";
+import "#styles/link.scss";
+import { contents } from "#lib/contents";
+
+<id/heading/>
+<div/popup class="navigation">
+  <details/details>
+    <summary class="button button--circle navigation__button" id=heading>
+      <icon="menu" title="Menu"/>
+    </summary>
+  </details>
+
+  <nav aria-labelledby=heading class="navigation__list">
+    <ul>
+      <for|{ contents: innerContents, href, text }| of=contents>
+        <li>
+          <if=innerContents>
+            <${href ? "a" : "span"}
+              aria-current=(href === $global.url.pathname ? "page" : undefined)
+              class=(href ? "link" : undefined)
+              href=href
+            >
+              ${text}
+            </>
+            <ul>
+              <for|{ href, text }| of=innerContents>
+                <li>
+                  <a
+                    aria-current=(
+                      href === $global.url.pathname ? "page" : undefined
+                    )
+                    class="link"
+                    href=href
+                  >
+                    ${text}
+                  </a>
+                </li>
+              </for>
+            </ul>
+          </if>
+          <else>
+            <a
+              aria-current=(href === $global.url.pathname ? "page" : undefined)
+              class="link"
+              href=href
+            >
+              ${text}
+            </a>
+          </else>
+        </li>
+      </for>
+    </ul>
+  </nav>
+</div>
+<on-keyboard-tab ref=popup/>
+<on-blur() {
+  details().open = false;
+} ref=popup/>
+
+<style.scss>
+  .navigation {
+    $menu-margin: $s-8;
+    $menu-offset: 0.6125rem;
+    $menu-size: 2.5rem;
+
+    left: $menu-offset;
+    position: fixed;
+    top: $menu-offset;
+    z-index: $z-high;
+
+    &__button {
+      --button-size: #{$menu-size};
+
+      position: relative;
+      view-transition-name: navigation-button;
+      z-index: $z-medium;
+    }
+
+    &__list {
+      $inset-block: (0.5 * $menu-offset + 0.5 * $menu-size - $menu-margin);
+      $inset-inline: $menu-offset;
+
+      background: $background-color-neutral-00;
+      border: 1px solid $foreground-color-neutral-60;
+      border-radius: $radius-m;
+      box-shadow: $shadow;
+      box-sizing: content-box;
+      display: none;
+      inset: $inset-block $inset-inline;
+      max-width: 18rem;
+      overflow: auto;
+      padding: $v-10 $s-16;
+      position: fixed;
+      transform: translate(calc(-100% - $menu-size - $menu-margin), 0);
+      transition:
+        display $time-fast allow-discrete,
+        transform ease-in-out $time-fast;
+      view-transition-name: navigation-list;
+      z-index: 1;
+    }
+
+    [open] + &__list {
+      display: initial;
+      transform: translate(0, 0);
+
+      @starting-style {
+        transform: translate(calc(-100% - $menu-size - $menu-margin), 0);
+      }
+    }
+  }
+</style>

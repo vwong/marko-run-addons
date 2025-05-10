@@ -1,0 +1,46 @@
+import "#styles/popup.scss";
+export interface Input {
+  content: Marko.Body;
+}
+
+<let/isMouse=false/>
+<div/popup class="popup">
+  <details/details>
+    <summary
+      class="popup-icon"
+      onPointerEnter(event: PointerEvent) {
+        if (event.pointerType === "mouse") {
+          isMouse = true;
+          details().open = true;
+        }
+      }
+      onClick(event: PointerEvent) {
+        if (isMouse) {
+          event.preventDefault();
+        }
+      }
+      onPointerLeave() {
+        if (isMouse) {
+          isMouse = false;
+          details().open = false;
+        }
+      }
+    >
+      <icon="info" title="Help"/>
+    </summary>
+  </details>
+  <div class="popup__overlay popup__overlay--top-right">
+    <${input.content}/>
+  </div>
+</div>
+<on-blur() {
+  details().open = false;
+} ref=popup/>
+
+<style.scss>
+  .popup-icon {
+    border-radius: $radius-m;
+    display: inline;
+    padding: $s-4;
+  }
+</style>
