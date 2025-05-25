@@ -17,14 +17,13 @@
     "compression": "^1.8.0",
     "express": "^5.1.0",
     "lodash-es": "^4.17.21",
-    "marko": "^6.0.17"
+    "marko": "^6.0.20"
   },
   "devDependencies": {
     "@marko/babel-utils": "^6.6.3",
     "@marko/run": "^0.6.6",
-    "@types/compression": "^1.7.5",
-    "@types/express": "^5.0.1",
-    "rollup-plugin-visualizer": "^5.14.0"
+    "@types/compression": "^1.8.0",
+    "@types/express": "^5.0.2"
   },
   "scripts": {
     "build": "NODE_ENV=production marko-run build src/index.ts",
