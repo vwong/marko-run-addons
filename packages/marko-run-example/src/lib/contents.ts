@@ -23,16 +23,8 @@ export const contents: Page[] = [
     ],
   },
   {
-    href: "/docs/subpages",
-    text: "Subpage navigation",
-    contents: [
-      { href: "/docs/subpages/tabbed-interface", text: "Tabbed interface" },
-      { href: "/docs/subpages/read", text: "Reading Subpage Frames" },
-      {
-        href: "/docs/subpages/write",
-        text: "Modifying Subpage Frames",
-      },
-    ],
+    href: "/docs/frames",
+    text: "Frames",
   },
   { href: "/docs/hosting", text: "Hosting" },
   {

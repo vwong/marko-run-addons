@@ -5,6 +5,7 @@ import {
   csrf,
   flash,
   frecency,
+  loader,
   requestParser,
   session,
   validate,
@@ -52,6 +53,9 @@ export default [
   async (context, next) => {
     context.cspNonce = randomBytes(16).toString("base64");
     context.csrfToken = context.csrf.current;
+    context.isHardReload =
+      context.request.headers.get("pragma") === "no-cache" || // Safari, Firefox
+      context.request.headers.get("cache-control") === "no-cache"; // Chrome
     context.isXHR =
       context.request.headers.get("X-Requested-With") === "XMLHttpRequest";
 
@@ -61,6 +65,7 @@ export default [
     }
 
     context.serializedGlobals.csrfToken = true;
+    context.serializedGlobals.isHardReload = true;
 
     const response = await next();
 
@@ -68,4 +73,5 @@ export default [
 
     return response;
   },
+  loader(),
 ] as MarkoRun.Handler[];

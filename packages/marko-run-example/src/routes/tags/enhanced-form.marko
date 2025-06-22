@@ -1,0 +1,71 @@
+import { pickBy } from "lodash-es";
+export interface Input<T> extends Marko.Input<"form"> {
+  action: string;
+  class?: string;
+  content: Marko.Body;
+  isError?: boolean;
+  isErrorChange?: (value: boolean) => void;
+  isPending?: boolean;
+  isPendingChange?: (value: boolean) => void;
+  method: "GET" | "POST";
+  onSubmit?: () => void;
+  onSuccess?: (payload: T) => void;
+}
+<form/form
+  action=input.action
+  class=input.class
+  method=input.method
+  onSubmit(event: SubmitEvent) {
+    event.preventDefault();
+
+    const isPost = input.method === "POST";
+    input.onSubmit?.();
+    input.isPendingChange?.(true);
+    input.isErrorChange?.(false);
+
+    const params = new URLSearchParams(
+      new FormData(
+        this as unknown as HTMLFormElement,
+      ) as unknown as URLSearchParams,
+    );
+
+    const submitter = event.submitter as HTMLButtonElement | undefined;
+    if (submitter?.name) {
+      params.append(submitter.name, submitter.value);
+    }
+
+    const query = isPost ? "" : `?${params.toString()}`;
+    const body = isPost ? params : undefined;
+
+    fetch(input.action + query, {
+      body,
+      credentials: "same-origin",
+      headers: pickBy({
+        "Content-Type": isPost
+          ? "application/x-www-form-urlencoded"
+          : undefined,
+        "X-Requested-With": "XMLHttpRequest",
+      }) as HeadersInit,
+      method: input.method,
+    })
+      .then((response) => {
+        if (response.ok) {
+          if (input.onSuccess) {
+            response.json().then(input.onSuccess);
+          }
+        } else {
+          input.isErrorChange?.(true);
+        }
+      })
+      .catch(() => {
+        input.isErrorChange?.(true);
+      })
+      .finally(() => {
+        input.isPendingChange?.(false);
+      });
+  }
+>
+  <${input.content}/>
+</form>
+
+<return=form/>

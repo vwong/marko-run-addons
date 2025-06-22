@@ -1,4 +1,5 @@
 export interface Input<T> {
+  navKey: string;
   value: T;
   valueChange: (p: T) => void;
 }
@@ -6,20 +7,16 @@ export interface Input<T> {
 <script>
   if (globalThis.history) {
     globalThis.history.replaceState(
-      {
-        page: input.value,
-      },
+      Object.assign({}, globalThis.history.state, {
+        [input.navKey]: input.value,
+      }),
       "",
     );
-    globalThis.addEventListener(
-      "popstate",
-      (event: PopStateEvent) => {
-        input.valueChange(event.state!.page);
-      },
-      {
-        signal: $signal,
-      },
-    );
+    globalThis.addEventListener("popstate", (event: PopStateEvent) => {
+      if (event.state && event.state[input.navKey] !== input.value) {
+        input.valueChange(event.state[input.navKey]);
+      }
+    });
   }
 </script>
 
@@ -27,8 +24,15 @@ export interface Input<T> {
   (page: T) => (event: Event) => {
     event.preventDefault();
 
-    const { href } = event.target as HTMLLinkElement;
-    globalThis.history.pushState({ page }, "", href);
+    const params = Object.assign({}, globalThis.history.state, {
+      [input.navKey]: page,
+    });
+
+    globalThis.history.pushState(
+      params,
+      "",
+      "?" + new URLSearchParams(params).toString(),
+    );
     input.valueChange(page);
   }
 )/>

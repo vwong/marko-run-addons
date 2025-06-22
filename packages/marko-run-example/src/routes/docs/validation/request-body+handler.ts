@@ -1,6 +1,6 @@
 import { redirect } from "#lib/responses";
 
-export const POST: MarkoRun.Handler = (context) => {
+export const POST = ((context) => {
   if (Math.random() > 0.5) {
     context.flash.success("Successfully processed! Form has been reset");
     context.body = undefined;
@@ -9,4 +9,4 @@ export const POST: MarkoRun.Handler = (context) => {
   }
 
   return redirect(context.url.pathname);
-};
+}) satisfies MarkoRun.Handler;

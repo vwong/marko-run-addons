@@ -1,7 +1,7 @@
 import { redirect } from "#lib/responses";
 import type { MySession } from "./types";
 
-export const POST: MarkoRun.Handler = (context) => {
+export const POST = ((context) => {
   const step = Number(context.params.step);
 
   if (step <= 3) {
@@ -15,4 +15,4 @@ export const POST: MarkoRun.Handler = (context) => {
   }
 
   return context.activityStack.pop() || redirect(context.url.pathname);
-};
+}) satisfies MarkoRun.Handler;

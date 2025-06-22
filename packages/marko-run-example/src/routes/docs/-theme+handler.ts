@@ -1,7 +1,7 @@
 import { json, redirect } from "#lib/responses";
 import { BodySchema } from "./-theme+meta";
 
-export const POST: MarkoRun.Handler = (context) => {
+export const POST = ((context) => {
   const { theme } = context.body as BodySchema;
 
   context.session.theme = theme;
@@ -9,4 +9,4 @@ export const POST: MarkoRun.Handler = (context) => {
   return context.isXHR
     ? json({ theme })
     : redirect(context.request.headers.get("referer") || "/");
-};
+}) satisfies MarkoRun.Handler;

@@ -13,8 +13,9 @@ export { FlashService, flash } from "./flash";
 export type { FlashMessage, FlashSession } from "./flash";
 export type { FrecencyOptions } from "./frecency";
 export { frecency } from "./frecency";
-export { session } from "./session";
+export { loader } from "./loader";
 export { requestParser } from "./requestParser";
+export { session } from "./session";
 export type { Session, SessionStore, SessionOptions } from "./session";
 export { validate } from "./validation";
 export type { ValidationCheck, Validator, ValidateOptions } from "./validation";
@@ -33,6 +34,7 @@ declare module "@marko/run" {
     lastBodyErrors: ValidationCheck[];
     lastQuery?: unknown;
     lastQueryErrors: ValidationCheck[];
+    loader?: unknown;
     query?: unknown;
     queryErrors: ValidationCheck[];
     session: Session;

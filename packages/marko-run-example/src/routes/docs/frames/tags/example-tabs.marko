@@ -1,0 +1,12 @@
+import { QuerySchema } from "../+meta";
+import qs from "node:querystring";
+export interface Input {}
+
+<const/tabHref=(
+  (tab: string) => `?${qs.stringify(Object.assign({}, $global.query, { tab }))}`
+)/>
+<tabs current=(($global.query as QuerySchema).tab) navKey="tab">
+  <@tab href=tabHref("one") src="one" title="Tab 1"/>
+  <@tab href=tabHref("two") src="two" title="Tab 2"/>
+  <@tab href=tabHref("three") src="three" title="Tab 3 (XHR failure)"/>
+</tabs>

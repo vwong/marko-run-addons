@@ -14,7 +14,14 @@ static const themes: Theme[] = [
 <let/theme=input.theme || ""/>
 <let/index=themes.findIndex((t) => t.value === theme)/>
 
-<form/form action="/docs/-theme" class="theme-switcher" method="POST">
+<enhanced-form/form
+  action="/docs/-theme"
+  class="theme-switcher"
+  method="POST"
+  onSuccess({ theme: newTheme }: { theme: string }) {
+    theme = newTheme;
+  }
+>
   <csrf-token/>
   <label>Theme</label>
   <for|{ icon, label, value }: Theme| of=themes>
@@ -28,12 +35,9 @@ static const themes: Theme[] = [
       <icon=icon/>
     </button>
   </for>
-</form>
+</enhanced-form>
 
 <on-keyboard-tab index=index ref=form/>
-<on-submit({ theme: newTheme }: { theme: string }) {
-  theme = newTheme;
-} ref=form/>
 <script>
   const update = () => {
     const { classList } = document.documentElement;

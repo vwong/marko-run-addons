@@ -3,6 +3,7 @@ declare module "@marko/run" {
     componentIdPrefix: string;
     cspNonce: string;
     csrfToken: string;
+    isHardReload: boolean;
     isXHR: boolean;
   }
 }

@@ -1,6 +1,6 @@
-static const sleep = (
-  (duration: number) => new Promise((resolve) => setTimeout(resolve, duration))
-);
+import type { PageLoader } from "./server+meta";
+
+<const/loader=$global.loader as PageLoader/>
 
 <layout-doc>
   <h1>Server enhancements</h1>
@@ -12,7 +12,7 @@ static const sleep = (
   <p>
     For example, without client JS, streaming HTML must be generated sequentially, even if intermediate dynamic fragments may block later static fragments. With client JS, the server can generate these fragments out-of-order, to be reassembled in the correct order by the client. This reduces the time to contentful paint, making the page feel faster, even if the time to the${" "}
     <strong>last byte</strong>
-     doesn't actually change.
+     does not actually change.
   </p>
 
   <try>
@@ -23,7 +23,7 @@ static const sleep = (
         </p>
       </@placeholder>
     </if>
-    <await|_|=sleep(3000)>
+    <await|_|=loader.sleep3Promise>
       <p>Fragment that took 3 seconds to generate</p>
     </await>
   </try>
@@ -36,7 +36,7 @@ static const sleep = (
         </p>
       </@placeholder>
     </if>
-    <await|_|=sleep(5000)>
+    <await|_|=loader.sleep5Promise>
       <p>Fragment that took 5 seconds to generate</p>
     </await>
   </try>

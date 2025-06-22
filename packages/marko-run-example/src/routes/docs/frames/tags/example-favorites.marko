@@ -1,0 +1,56 @@
+import "#styles/button.scss";
+export interface Input {
+  name: string;
+}
+
+<let/key=0/>
+<let/isPendingSubmit=false/>
+<let/isErrorSubmit=false/>
+<let/isPendingGet=false/>
+<let/isErrorGet=false/>
+
+<enhanced-form
+  action=`${$global.url.pathname}/~favorites/${input.name}`
+  class="example-favorites"
+  isError:=isErrorSubmit
+  isPending:=isPendingSubmit
+  method="POST"
+  onSubmit() {
+    isErrorGet = false;
+  }
+  onSuccess() {
+    key = Math.random();
+  }
+>
+  <csrf-token/>
+
+  <button class="button" disabled=isPendingSubmit type="submit">
+    Favorite ${input.name}
+  </button>
+
+  <if=isErrorSubmit>
+    <notification level="error">
+      Error incrementing favorite
+    </notification>
+  </if>
+
+  <micro-frame
+    isError:=isErrorGet
+    isPending:=isPendingGet
+    src=`${$global.url.pathname}/~favorites/${input.name}#${key}`
+  >
+    <@error>
+      <notification level="error">
+        Error retrieving updated favorite
+      </notification>
+    </@error>
+  </micro-frame>
+</enhanced-form>
+
+<style.scss>
+  .example-favorites {
+    align-items: center;
+    display: flex;
+    gap: $s-8;
+  }
+</style>

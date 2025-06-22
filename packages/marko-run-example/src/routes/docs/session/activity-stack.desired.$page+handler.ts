@@ -1,6 +1,6 @@
 import type { MySession } from "./types";
 
-export const GET: MarkoRun.Handler = (context) => {
+export const GET = ((context) => {
   context.activityStack.reset();
 
   context.activityStack.push(context.url.pathname + context.url.search);
@@ -13,4 +13,4 @@ export const GET: MarkoRun.Handler = (context) => {
   }
 
   return context.activityStack.pop();
-};
+}) satisfies MarkoRun.Handler;

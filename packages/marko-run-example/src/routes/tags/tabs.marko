@@ -1,5 +1,6 @@
 export interface Input {
   current: string;
+  navKey: string;
   tab?: Marko.AttrTag<{
     href: string;
     src: string;
@@ -11,7 +12,7 @@ export interface Input {
 <let/isError=false/>
 <let/page=input.current/>
 
-<on-navigation/gotoPage:=page/>
+<on-navigation/gotoPage:=page navKey=input.navKey/>
 
 <ul class="tabs">
   <for|{ href, src, title }| of=input.tab>
@@ -29,37 +30,58 @@ export interface Input {
 </ul>
 
 <div class="tabs__contents">
-  <micro-frame isError:=isError isPending:=isPending src=page/>
-  <if=isPending>
-    <loader/>
-  </if>
+  <micro-frame
+    isError:=isError
+    isPending:=isPending
+    src=`${$global.url.pathname}/~tab/${page}`
+  >
+    <@error>
+      <notification level="error">
+        Unable to retrieve tab
+      </notification>
+    </@error>
+  </micro-frame>
 </div>
 
 <style.scss>
+  $border: 1px solid $foreground-color-neutral-60;
+
   .tabs {
-    border-bottom: 1px solid $foreground-color-neutral-30;
     display: flex;
     padding: 0;
 
     &__tab {
-      display: flex;
-    }
-
-    &__contents {
-      min-height: 5rem;
-    }
-
-    & a {
+      border: $border;
       border-radius: $radius-m $radius-m 0 0;
-      padding: $v-5 $s-16;
+      display: flex;
 
-      &:hover {
-        border-bottom: 4px solid $foreground-color-neutral-60;
+      & + & {
+        margin-left: -1px;
       }
     }
 
-    & [aria-current="page"] {
-      border-bottom: 4px solid $foreground-color-accent;
+    &__contents {
+      border: $border;
+      border-radius: 0 $radius-m $radius-m;
+      margin-top: -1px;
+      min-height: 5rem;
+      padding: $v-10 $s-16;
+    }
+
+    & a {
+      --highlight: transparent;
+
+      border-radius: $radius-m $radius-m 0 0;
+      border-top: 4px solid var(--highlight);
+      padding: $v-5 $s-16;
+
+      &:hover {
+        --highlight: #{$foreground-color-neutral-60};
+      }
+
+      &[aria-current="page"] {
+        --highlight: #{$foreground-color-accent};
+      }
     }
   }
 </style>

@@ -1,0 +1,15 @@
+export interface Input extends Marko.Input<"form"> {
+  action: string;
+  class?: string;
+  content: Marko.Body;
+}
+
+<form/form action=input.action class=input.class>
+  <${input.content}/>
+</form>
+
+<return() {
+  return new URLSearchParams(
+    new FormData(form() as HTMLFormElement) as unknown as URLSearchParams,
+  );
+}/>
