@@ -29,7 +29,7 @@ static const base = "http://ignored";
       signal: $signal,
     })
 ).then((response) => {
-  if (response.ok) {
+  if (response?.ok) {
     return response.text();
   } else {
     throw new Error(`Error fetching ${input.src}`);

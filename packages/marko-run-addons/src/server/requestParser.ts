@@ -27,3 +27,11 @@ export const requestParser = (): MarkoRun.Handler => async (context) => {
     context.body = qs.parse(form, parse?.body);
   }
 };
+
+declare module "@marko/run" {
+  interface Context {
+    body?: unknown;
+    form?: string;
+    query?: unknown;
+  }
+}

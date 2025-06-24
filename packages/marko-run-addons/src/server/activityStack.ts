@@ -51,3 +51,9 @@ export const activityStack = (): MarkoRun.Handler => (context) => {
     session: context.session,
   });
 };
+
+declare module "@marko/run" {
+  interface Context {
+    activityStack: ActivityStackService;
+  }
+}

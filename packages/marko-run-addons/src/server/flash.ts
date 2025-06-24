@@ -51,3 +51,9 @@ export const flash = (): MarkoRun.Handler => (context) => {
     session: context.session,
   });
 };
+
+declare module "@marko/run" {
+  interface Context {
+    flash: FlashService;
+  }
+}

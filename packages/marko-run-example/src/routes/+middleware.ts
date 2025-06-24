@@ -59,9 +59,8 @@ export default [
     context.isXHR =
       context.request.headers.get("X-Requested-With") === "XMLHttpRequest";
 
-    // TODO: this will be renamed to "renderId" in Marko 6
     if (context.isXHR) {
-      context.componentIdPrefix = `c-${Math.random()}`;
+      context.renderId = `c-${Math.random()}`;
     }
 
     context.serializedGlobals.csrfToken = true;

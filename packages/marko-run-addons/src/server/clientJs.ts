@@ -17,3 +17,9 @@ export const clientJs = (): MarkoRun.Handler => async (context, next) => {
 
   return response;
 };
+
+declare module "@marko/run" {
+  interface Context {
+    hasClientJs?: boolean;
+  }
+}

@@ -7,3 +7,9 @@ export const loader = (): MarkoRun.Handler => (context) => {
 
   context.loader = load?.(context) || {};
 };
+
+declare module "@marko/run" {
+  interface Context {
+    loader?: unknown;
+  }
+}

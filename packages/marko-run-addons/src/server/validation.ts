@@ -107,3 +107,15 @@ export const validate =
 
     return response;
   };
+
+declare module "@marko/run" {
+  interface Context {
+    bodyErrors: ValidationCheck[];
+    lastBody?: unknown;
+    lastBodyErrors: ValidationCheck[];
+
+    lastQuery?: unknown;
+    lastQueryErrors: ValidationCheck[];
+    queryErrors: ValidationCheck[];
+  }
+}

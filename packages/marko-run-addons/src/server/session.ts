@@ -118,3 +118,9 @@ export const session = ({
     return response;
   };
 };
+
+declare module "@marko/run" {
+  interface Context {
+    session: Session;
+  }
+}

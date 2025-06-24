@@ -1,10 +1,10 @@
 declare module "@marko/run" {
   interface Context {
-    componentIdPrefix: string;
     cspNonce: string;
     csrfToken: string;
     isHardReload: boolean;
     isXHR: boolean;
+    renderId: string;
   }
 }
 

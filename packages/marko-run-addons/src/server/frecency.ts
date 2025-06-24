@@ -22,12 +22,12 @@ export class FrecencyService {
     this.#session._frecency ||= {};
   }
 
-  clear(type: string, name: string) {
+  clear(type: string, name: string): void {
     const index = this.history[type].findIndex((h) => h.name === name);
     this.history[type].splice(index, 1);
   }
 
-  list(type: string) {
+  list(type: string): History[] {
     return (this.history[type] || []).sort((a, b) => b.score - a.score);
   }
 
@@ -69,3 +69,9 @@ export const frecency =
       session: context.session,
     });
   };
+
+declare module "@marko/run" {
+  interface Context {
+    frecency: FrecencyService;
+  }
+}

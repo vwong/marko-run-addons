@@ -81,3 +81,9 @@ export const csrf =
 
     context.csrf = csrf;
   };
+
+declare module "@marko/run" {
+  interface Context {
+    csrf: CsrfService;
+  }
+}
