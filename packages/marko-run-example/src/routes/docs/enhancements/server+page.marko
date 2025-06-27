@@ -1,7 +1,3 @@
-import type { PageLoader } from "./server+meta";
-
-<const/loader=$global.loader as PageLoader/>
-
 <layout-doc>
   <h1>Server enhancements</h1>
 
@@ -23,7 +19,12 @@ import type { PageLoader } from "./server+meta";
         </p>
       </@placeholder>
     </if>
-    <await|_|=loader.sleep3Promise>
+    <@catch>
+      <notification level="error">
+        Error generating fragment
+      </notification>
+    </@catch>
+    <await|_|=($global.loader.sleep3Promise as Promise<void>)>
       <p>Fragment that took 3 seconds to generate</p>
     </await>
   </try>
@@ -36,7 +37,12 @@ import type { PageLoader } from "./server+meta";
         </p>
       </@placeholder>
     </if>
-    <await|_|=loader.sleep5Promise>
+    <@catch>
+      <notification level="error">
+        Error generating fragment
+      </notification>
+    </@catch>
+    <await|_|=($global.loader.sleep5Promise as Promise<void>)>
       <p>Fragment that took 5 seconds to generate</p>
     </await>
   </try>

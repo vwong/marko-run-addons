@@ -26,6 +26,10 @@ export const contents: Page[] = [
     href: "/docs/frames",
     text: "Frames",
   },
+  {
+    href: "/docs/dynamic-content",
+    text: "Dynamic Content",
+  },
   { href: "/docs/hosting", text: "Hosting" },
   {
     href: "/docs/enhancements",

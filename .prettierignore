@@ -5,3 +5,8 @@ tmp/
 stats.html
 vitest.config.ts
 .marko-run/
+
+packages/marko-run-example/src/routes/docs/session/frecency+page.marko
+packages/marko-run-example/src/routes/docs/tags/contents-prev-next.marko
+packages/marko-run-example/src/routes/tags/speculation-rules.marko
+

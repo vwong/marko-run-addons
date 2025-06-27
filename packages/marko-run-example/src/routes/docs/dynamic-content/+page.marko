@@ -1,0 +1,54 @@
+import "#styles/link.scss";
+static const load = (
+  (name: string) =>
+    `<try>
+  <await|content${name}|=\$global.content${name}Promise>
+    <@placeholder>
+      <div>Loading ${name}...</div>
+    </@placeholder>
+    <div>\${content${name}}</div>
+  </await>
+</try>`
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+);
+
+<layout-doc>
+  <h1>Dynamic Content</h1>
+  <p>
+    Web pages consist of static and dynamic content. Static content can be delivered immediately, and forms the performance basis of${" "}
+    <a class="link" href="https://jamstack.org/">
+      Jamstack
+    </a>
+    ${" "}. Dynamic content needs to be fetched from some persistence layer before it can be rendered and delivered. In general, multiple fetch promises need to be fulfilled for any page &mdash; user-specific and page-specific content, the latter of which there are usually multiple of.
+  </p>
+
+  <p>
+    Ideally, these fetch promises are independent, but sometimes they need to be "joined". Parallel combinations block rendering until the slowest in fulfilled. Serial combinations block rendering until the entire chain is fulfilled. To reduce latency associated with content lookup, these "join" should be co-located with the persistence layer (or its cache). Then, as far as the rendering layer is concerned, it is await-ing on independent pre-joined promises.
+  </p>
+
+  <p>
+    Content is sequentially streamed across the Internet. Browsers have optimised for this, and can render partial streaming HTML. Web servers can take advantage of this too and deliver partial HTML immediately as content promises resolve. HTML rendering can be broken up into multiple promises or async iterators to deliver fragments as soon as content is available.
+  </p>
+
+  <p>
+    These render promises don't need to match the content promises 1:1 to avoid head-of-line blocking. In Example 1 below${" "}
+    <code>$global.contentAPromise</code>
+     is await-ed twice, but neither
+    <code>A</code>
+     nor
+    <code>B</code>
+    ${" "}block each other. All fragments are rendered as soon as their underlying promise is resolved.
+  </p>
+
+  <figure>
+    <pre><code>$!{[load("A"), load("B"), load("A")].join("\n\n")}</code></pre>
+    <figcaption>
+      Example 1: Some content promise, different HTML fragment
+    </figcaption>
+  </figure>
+
+  <p>
+    To reduced download latency, these web servers should ideally reside close to users. For global sites, this may necessitate multiple web servers distributed across the globe near concentrations of users.
+  </p>
+</layout-doc>

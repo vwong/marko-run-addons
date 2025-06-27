@@ -9,17 +9,17 @@ export interface FlashSession {
 }
 
 export class FlashService {
-  readonly #session: FlashSession;
-  readonly #previous: FlashMessage[];
-  error: (message: string) => void;
-  information: (message: string) => void;
-  success: (message: string) => void;
-  warning: (message: string) => void;
+  current: FlashMessage[];
+  next: FlashMessage[];
+  error: (message: string, immediate?: boolean) => void;
+  information: (message: string, immediate?: boolean) => void;
+  success: (message: string, immediate?: boolean) => void;
+  warning: (message: string, immediate?: boolean) => void;
 
   constructor({ session }: { session: FlashSession }) {
-    this.#session = session;
-    this.#previous = session._flash || [];
+    this.current = session._flash || [];
     session._flash = [];
+    this.next = session._flash;
 
     this.error = this.#set("error");
     this.information = this.#set("information");
@@ -27,17 +27,11 @@ export class FlashService {
     this.warning = this.#set("warning");
   }
 
-  get current(): FlashMessage[] {
-    return this.#previous;
-  }
-
-  get next(): FlashMessage[] {
-    return this.#session._flash!;
-  }
-
   #set(status: FlashMessage["status"]) {
-    return (message: string): void => {
-      this.#session._flash!.push({
+    return (message: string, immediate?: boolean): void => {
+      const messages = immediate ? this.current : this.next;
+
+      messages.push({
         id: Math.random(),
         message,
         status,

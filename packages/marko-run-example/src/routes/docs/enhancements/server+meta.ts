@@ -1,14 +1,11 @@
-export interface PageLoader {
-  sleep3Promise: Promise<void>;
-  sleep5Promise: Promise<void>;
-}
-
-const sleep = (duration: number) =>
-  new Promise((resolve) => setTimeout(resolve, duration)) as Promise<void>;
+const sleep = (duration: number, succeed = true) =>
+  new Promise((resolve, reject) =>
+    setTimeout(succeed ? resolve : reject, duration),
+  ) as Promise<void>;
 
 export default {
-  load: (): PageLoader => ({
+  load: () => ({
     sleep3Promise: sleep(3000),
-    sleep5Promise: sleep(5000),
+    sleep5Promise: sleep(5000, false),
   }),
 };
