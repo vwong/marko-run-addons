@@ -27,7 +27,7 @@ export interface ValidateOptions<E, S> {
   validator: Validator<E, S>;
 }
 
-interface Meta {
+export interface Meta {
   schema?: {
     body?: unknown;
     query?: unknown;

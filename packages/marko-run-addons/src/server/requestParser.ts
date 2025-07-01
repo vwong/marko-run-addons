@@ -1,6 +1,6 @@
 import qs, { type IParseOptions } from "qs";
 
-interface Meta {
+export interface Meta {
   parse?: {
     body?: IParseOptions;
     query?: IParseOptions;

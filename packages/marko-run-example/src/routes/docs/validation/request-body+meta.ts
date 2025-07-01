@@ -1,4 +1,5 @@
 import { type Static, Type } from "@sinclair/typebox";
+import type { Meta } from "@vwong/marko-run-addons/server";
 
 export const BodySchema = Type.Object({
   count: Type.Number({ maximum: 5, errorMessage: "no more than 5 please" }),
@@ -11,4 +12,4 @@ export default {
   schema: {
     body: BodySchema,
   },
-};
+} satisfies Meta;

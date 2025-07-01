@@ -2,7 +2,7 @@ interface Loader {
   [key: string]: Promise<unknown>;
 }
 
-interface Meta {
+export interface Meta {
   load?: (context: MarkoRun.Context) => Loader;
 }
 

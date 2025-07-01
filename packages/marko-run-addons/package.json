@@ -29,7 +29,7 @@
     "./client": "./src/client/index.ts",
     "./server": "./src/server/index.ts",
     "./marko.json": "./marko.json",
-    "./src/components/client-js.marko": "./src/components/client-js.marko"
+    "./src/tags/client-js.marko": "./src/tags/client-js.marko"
   },
   "type": "module"
 }

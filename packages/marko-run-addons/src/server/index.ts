@@ -12,3 +12,9 @@ export { session } from "./session";
 export type { Session, SessionStore, SessionOptions } from "./session";
 export { validate } from "./validation";
 export type { ValidationCheck, Validator, ValidateOptions } from "./validation";
+
+import type { Meta as LoaderMeta } from "./loader";
+import type { Meta as ParserMeta } from "./requestParser";
+import type { Meta as ValidationMeta } from "./validation";
+
+export interface Meta extends LoaderMeta, ParserMeta, ValidationMeta {}
