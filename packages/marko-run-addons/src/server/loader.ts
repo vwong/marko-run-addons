@@ -4,7 +4,7 @@ interface Loader {
 
 // FIXME: ideally, this is MarkoRun.Context, but it is not available here
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface LoaderContext {};
+export interface LoaderContext {}
 
 export interface Meta {
   load?: (context: LoaderContext) => Loader;
