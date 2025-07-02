@@ -7,6 +7,7 @@ export type { FlashMessage, FlashSession } from "./flash";
 export type { FrecencyOptions } from "./frecency";
 export { frecency } from "./frecency";
 export { loader } from "./loader";
+export type { LoaderContext } from "./loader";
 export { requestParser } from "./requestParser";
 export { session } from "./session";
 export type { Session, SessionStore, SessionOptions } from "./session";
