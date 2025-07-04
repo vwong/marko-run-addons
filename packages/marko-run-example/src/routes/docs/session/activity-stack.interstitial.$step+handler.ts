@@ -1,4 +1,3 @@
-import { redirect } from "#lib/responses";
 import type { MySession } from "./types";
 
 export const POST = ((context) => {
@@ -14,5 +13,5 @@ export const POST = ((context) => {
     context.activityStack.push("/docs/session/activity-stack/interstitial/100");
   }
 
-  return context.activityStack.pop() || redirect(context.url.pathname);
+  return context.activityStack.pop() || context.redirect(context.url.pathname);
 }) satisfies MarkoRun.Handler;

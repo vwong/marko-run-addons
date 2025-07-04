@@ -23,8 +23,9 @@ static const base = "http://ignored";
     )
   : fetch(input.src, {
       headers: pickBy({
+        "Cache-control": $global.isHardReload ? "no-cache" : undefined,
+        "X-Nonce": $global.cspNonce,
         "X-Requested-With": "XMLHttpRequest",
-        "cache-control": $global.isHardReload ? "no-cache" : undefined,
       }) as HeadersInit,
       signal: $signal,
     })
@@ -43,7 +44,20 @@ static const base = "http://ignored";
       <html-comment/>
     </@catch>
     <await|html: string|=loader>
-      <div>$!{html}</div>
+      <if=globalThis.__marko_run__>
+        <div>$!{html}</div>
+      </if>
+      <else>
+        <div/result/>
+        <script>
+          const fragment = document
+            .createRange()
+            .createContextualFragment(html);
+          const el = result();
+          el.textContent = "";
+          el.append(fragment);
+        </script>
+      </else>
     </await>
   </try>
 </if>

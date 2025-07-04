@@ -1,5 +1,5 @@
 import { debounce } from "lodash-es";
-import type { ValidationCheck } from "../server/validation";
+import type { ValidationCheck } from "../server/validateInit";
 
 export interface FormValidatorOptions {
   formEl: HTMLFormElement;

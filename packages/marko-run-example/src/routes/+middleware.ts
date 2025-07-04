@@ -5,14 +5,16 @@ import {
   csrf,
   flash,
   frecency,
-  loader,
-  requestParser,
+  parseBody,
+  parseQuery,
   session,
-  validate,
+  validateInit,
 } from "@vwong/marko-run-addons/server";
 import { AjvValidator } from "#lib/ajvValidator";
 import { MemorySessionStore } from "#lib/memorySessionStore";
-import { badRequest, redirect } from "#lib/responses";
+import { badRequest } from "#lib/responses";
+
+const validator = new AjvValidator();
 
 export default [
   session({
@@ -30,7 +32,8 @@ export default [
     store: new MemorySessionStore({ maxAge: 86_400_000 }),
   }),
   flash(),
-  requestParser(),
+  parseBody(),
+  parseQuery(),
   csrf({
     maxAge: 3_600,
     minAge: 1_800,
@@ -40,22 +43,22 @@ export default [
         return badRequest({ error: message });
       } else {
         context.flash.error(message);
-        return redirect(context.request.headers.get("referer")!);
+        return context.back();
       }
     },
   }),
-  validate({
-    validator: new AjvValidator(),
-  }),
+  validateInit(validator),
   activityStack(),
   frecency({ decay: 0.99 }),
   clientJs(),
   async (context, next) => {
-    context.cspNonce = randomBytes(16).toString("base64");
+    context.cspNonce =
+      context.request.headers.get("X-Nonce") ||
+      randomBytes(16).toString("base64");
     context.csrfToken = context.csrf.current;
     context.isHardReload =
-      context.request.headers.get("pragma") === "no-cache" || // Safari, Firefox
-      context.request.headers.get("cache-control") === "no-cache"; // Chrome
+      context.request.headers.get("Pragma") === "no-cache" || // Safari, Firefox
+      context.request.headers.get("Cache-control") === "no-cache"; // Chrome
     context.isXHR =
       context.request.headers.get("X-Requested-With") === "XMLHttpRequest";
 
@@ -63,6 +66,7 @@ export default [
       context.renderId = `c-${Math.random()}`;
     }
 
+    context.serializedGlobals.cspNonce = true;
     context.serializedGlobals.csrfToken = true;
     context.serializedGlobals.isHardReload = true;
 
@@ -72,5 +76,4 @@ export default [
 
     return response;
   },
-  loader(),
 ] as MarkoRun.Handler[];

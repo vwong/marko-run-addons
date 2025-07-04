@@ -1,3 +1,2 @@
-import { redirect } from "#lib/responses";
-
-export const GET = () => redirect("/docs");
+export const GET = ((context) =>
+  context.redirect("/docs")) satisfies MarkoRun.Handler;

@@ -1,4 +1,4 @@
-import type { BodySchema } from "./request-body+meta";
+import type { BodySchema } from "./request-body+handler";
 
 <let/errors=Object.fromEntries(
   $global.lastBodyErrors.map(({ name, message }) => [name, message]),
@@ -33,11 +33,18 @@ import type { BodySchema } from "./request-body+meta";
       type="number"
       value=(($global.lastBody as BodySchema)?.count2 || 0)
     />
-  </form>
-  <p>
+
     <button class="button" disabled=isPending || isError type="submit">
       Submit
     </button>
+  </form>
+  <p>
     <on-change-validate isError:=isError isPending:=isPending ref=form/>
   </p>
 </layout-doc>
+
+<style.scss>
+  .button {
+    margin-top: $v-10;
+  }
+</style>

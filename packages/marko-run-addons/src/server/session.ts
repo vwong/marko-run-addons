@@ -6,14 +6,16 @@ import type { ActivityStackSession } from "./activityStack";
 import type { CsrfSession } from "./csrf";
 import type { FlashSession } from "./flash";
 import type { FrecencySession } from "./frecency";
-import type { ValidationSession } from "./validation";
+import type { ValidateBodySession } from "./validateBody";
+import type { ValidateQuerySession } from "./validateQuery";
 
 export interface Session
   extends ActivityStackSession,
     CsrfSession,
     FlashSession,
     FrecencySession,
-    ValidationSession {}
+    ValidateBodySession,
+    ValidateQuerySession {}
 
 export abstract class SessionStore {
   abstract get(sessionId: string): Promise<Session | undefined>;

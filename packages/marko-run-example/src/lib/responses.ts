@@ -6,14 +6,6 @@ export const json = (payload: unknown) =>
     },
   });
 
-export const redirect = (location: string) =>
-  new Response(null, {
-    status: 302,
-    headers: {
-      location,
-    },
-  });
-
 export const badRequest = (payload: unknown) =>
   new Response(JSON.stringify(payload), {
     status: 400,

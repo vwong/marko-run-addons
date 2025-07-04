@@ -1,10 +1,20 @@
+import { type Static, Type } from "@sinclair/typebox";
+import { validateQuery } from "@vwong/marko-run-addons/server";
 import { badRequest } from "#lib/responses";
-import type { QuerySchema } from "./~search+meta";
 
-export const GET = ((context) => {
-  const { search } = context.query as QuerySchema;
+export const QuerySchema = Type.Object({
+  search: Type.Optional(Type.String()),
+});
 
-  if (context.isXHR && search === "break") {
-    return badRequest({});
-  }
-}) satisfies MarkoRun.Handler;
+export type QuerySchema = Static<typeof QuerySchema>;
+
+export const GET = [
+  validateQuery(QuerySchema),
+  (context) => {
+    const { search } = context.query as QuerySchema;
+
+    if (context.isXHR && search === "break") {
+      return badRequest({});
+    }
+  },
+] as MarkoRun.Handler;

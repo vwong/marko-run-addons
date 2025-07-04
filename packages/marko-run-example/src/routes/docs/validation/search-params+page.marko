@@ -1,6 +1,6 @@
 import "#styles/button.scss";
 import "#styles/link.scss";
-import type { QuerySchema } from "./search-params+meta";
+import type { QuerySchema } from "./search-params+handler";
 
 <let/errors=Object.fromEntries(
   $global.lastQueryErrors.map(({ name, message }) => [name, message]),
@@ -15,7 +15,7 @@ import type { QuerySchema } from "./search-params+meta";
   <p>
     This page validates search parameters. Try negative values to see an error.
   </p>
-  <form/form>
+  <form/form class="form">
     <input-field
       data-touched="1"
       error=errors.page
@@ -24,11 +24,12 @@ import type { QuerySchema } from "./search-params+meta";
       type="number"
       value=(($global.query as QuerySchema)?.page)
     />
-  </form>
-  <p>
+
     <button class="button" disabled=isPending || isError type="submit">
       Submit
     </button>
+  </form>
+  <p>
     <on-change-validate isError:=isError isPending:=isPending ref=form/>
   </p>
 
@@ -47,3 +48,9 @@ import type { QuerySchema } from "./search-params+meta";
     </li>
   </ul>
 </layout-doc>
+
+<style.scss>
+  .button {
+    margin-top: $v-10;
+  }
+</style>

@@ -1,4 +1,3 @@
-import { redirect } from "#lib/responses";
 import type { MySession } from "./types";
 
 export const POST = ((context) => {
@@ -6,5 +5,5 @@ export const POST = ((context) => {
     delete (context.session as unknown as MySession)[`interstitial-${p}`];
   }
 
-  return redirect(context.url.toString());
+  return context.redirect(context.url.toString());
 }) satisfies MarkoRun.Handler;

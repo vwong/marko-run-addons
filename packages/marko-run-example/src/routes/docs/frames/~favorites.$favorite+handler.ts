@@ -1,4 +1,4 @@
-import { badRequest, json, redirect } from "#lib/responses";
+import { badRequest, json } from "#lib/responses";
 import type { MySession } from "./types";
 
 export const GET = ((context) => {
@@ -24,5 +24,5 @@ export const POST = (async (context) => {
 
   return context.isXHR
     ? json({})
-    : redirect(context.request.headers.get("referer")!);
+    : context.redirect(context.request.headers.get("referer")!);
 }) satisfies MarkoRun.Handler;
