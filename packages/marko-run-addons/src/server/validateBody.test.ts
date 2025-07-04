@@ -4,6 +4,7 @@ import { validateBody } from "./validateBody";
 
 type CallableHandler = (
   context: MarkoRun.Context,
+  next?: () => Response,
 ) => Promise<Response | undefined>;
 
 const url = new URL("http://foo/path");
@@ -71,17 +72,31 @@ describe("validateBody", () => {
         }),
         session: {},
         url,
-        redirect: vi.fn(),
+        redirect: vi.fn(() => new Response(null, { status: 302 })),
       } as unknown as MarkoRun.Context;
     });
 
     it("validates with no errors", async () => {
+      const nextResponse = new Response();
       validator.asJson.mockReturnValueOnce([]);
 
       initMiddleware(context);
-      const response = await middleware(context);
+      const response = await middleware(context, () => nextResponse);
 
-      expect(response).toBeUndefined();
+      expect(response).toEqual(nextResponse);
+    });
+
+    it("validates with no errors, but downstream also redirects", async () => {
+      const nextResponse = new Response(null, { status: 302 });
+      validator.asJson.mockReturnValueOnce([]);
+
+      initMiddleware(context);
+      const response = await middleware(context, () => nextResponse);
+
+      expect(response).toEqual(nextResponse);
+      expect(context.session._redirectTo).toEqual(context.url.pathname);
+      expect(context.session._lastBody).toEqual("body");
+      expect(context.session._lastBodyErrors).toEqual([]);
     });
 
     it("validates with errors in body", async () => {
@@ -91,6 +106,7 @@ describe("validateBody", () => {
       await middleware(context);
 
       expect(context.bodyErrors).toEqual(validationChecks);
+      expect(context.session._redirectTo).toEqual(context.url.pathname);
       expect(context.session._lastBody).toEqual("body");
       expect(context.session._lastBodyErrors).toEqual(validationChecks);
       expect(context.redirect).toBeCalledWith(context.url.pathname);

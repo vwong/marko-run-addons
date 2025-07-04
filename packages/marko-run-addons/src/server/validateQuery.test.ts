@@ -4,6 +4,7 @@ import { validateQuery } from "./validateQuery";
 
 type CallableHandler = (
   context: MarkoRun.Context,
+  next?: () => Response,
 ) => Promise<Response | undefined>;
 
 const url = new URL("http://foo/path");
@@ -41,12 +42,13 @@ describe("validateQuery", () => {
     });
 
     it("validates with no errors", async () => {
+      const nextResponse = new Response();
       validator.asJson.mockReturnValueOnce([]);
 
       initMiddleware(context);
-      const response = await middleware(context);
+      const response = await middleware(context, () => nextResponse);
 
-      expect(response).toBeUndefined();
+      expect(response).toEqual(nextResponse);
     });
 
     it("validates with errors in query params", async () => {
@@ -71,17 +73,31 @@ describe("validateQuery", () => {
         }),
         session: {},
         url,
-        redirect: vi.fn(),
+        redirect: vi.fn(() => new Response(null, { status: 302 })),
       } as unknown as MarkoRun.Context;
     });
 
     it("validates with no errors", async () => {
+      const nextResponse = new Response();
       validator.asJson.mockReturnValueOnce([]);
 
       initMiddleware(context);
-      const response = await middleware(context);
+      const response = await middleware(context, () => nextResponse);
 
-      expect(response).toBeUndefined();
+      expect(response).toEqual(nextResponse);
+    });
+
+    it("validates with no errors, but downstream also redirects", async () => {
+      const nextResponse = new Response(null, { status: 302 });
+      validator.asJson.mockReturnValueOnce([]);
+
+      initMiddleware(context);
+      const response = await middleware(context, () => nextResponse);
+
+      expect(response).toEqual(nextResponse);
+      expect(context.session._redirectTo).toEqual(context.url.pathname);
+      expect(context.session._lastQuery).toEqual("query");
+      expect(context.session._lastQueryErrors).toEqual([]);
     });
 
     it("validates with errors in query params", async () => {

@@ -17,11 +17,9 @@ export const validateBody =
     );
 
     if (context.request.headers.has("X-Validate-Only")) {
-      if (context.bodyErrors.length) {
-        return badRequest(context.bodyErrors);
-      } else {
-        return noContent();
-      }
+      return context.bodyErrors.length
+        ? badRequest(context.bodyErrors)
+        : noContent();
     }
 
     const response = context.bodyErrors.length
