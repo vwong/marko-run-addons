@@ -17,21 +17,24 @@ export const validateInit =
   (context) => {
     context.validator = validator;
 
-    context.lastBodyErrors = [];
-
-    // restore query params errors if being redirected
+    // restore errors if being redirected
     if (
       context.request.method === "GET" &&
       (context.session._redirectTo === context.url.href || // full path
         context.session._redirectTo === context.url.pathname) // relative path
     ) {
+      context.lastBody = context.session._lastBody;
+      context.lastBodyErrors = context.session._lastBodyErrors || [];
       context.lastQuery = context.session._lastQuery;
       context.lastQueryErrors = context.session._lastQueryErrors || [];
 
       delete context.session._redirectTo;
+      delete context.session._lastBody;
+      delete context.session._lastBodyErrors;
       delete context.session._lastQuery;
       delete context.session._lastQueryErrors;
     } else {
+      context.lastBodyErrors = [];
       context.lastQueryErrors = [];
     }
   };

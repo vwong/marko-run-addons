@@ -9,7 +9,7 @@ export interface ValidateBodySession {
 
 export const validateBody =
   <S>(schema: S): MarkoRun.Handler =>
-  async (context) => {
+  async (context, next) => {
     context.bodyErrors = context.validator.asJson(
       context.body && schema
         ? await context.validator.validate(context, schema, context.body)
@@ -24,11 +24,17 @@ export const validateBody =
       }
     }
 
-    if (context.bodyErrors.length) {
+    const response = context.bodyErrors.length
+      ? context.redirect(context.url.pathname)
+      : await next();
+
+    if (response.status === 302) {
+      context.session._redirectTo = context.url.pathname;
       context.session._lastBody = cloneDeep(context.body);
       context.session._lastBodyErrors = context.bodyErrors;
-      return context.redirect(context.url.pathname);
     }
+
+    return response;
   };
 
 declare module "@marko/run" {

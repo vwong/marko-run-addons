@@ -10,7 +10,7 @@ export interface ValidateQuerySession {
 
 export const validateQuery =
   <S>(schema: S): MarkoRun.Handler =>
-  async (context) => {
+  async (context, next) => {
     context.queryErrors = context.validator.asJson(
       context.query && schema
         ? await context.validator.validate(context, schema, context.query)
@@ -24,14 +24,17 @@ export const validateQuery =
       return badRequest(context.queryErrors);
     }
 
-    if (context.queryErrors.length) {
-      // redirect to same path, but without query parameters
-      // remember the errors for reuse
+    const response = context.queryErrors.length
+      ? context.redirect(context.url.pathname)
+      : await next();
+
+    if (response.status === 302) {
       context.session._redirectTo = context.url.pathname;
       context.session._lastQuery = cloneDeep(context.query);
       context.session._lastQueryErrors = context.queryErrors;
-      return context.redirect(context.url.pathname);
     }
+
+    return response;
   };
 
 declare module "@marko/run" {
