@@ -10,6 +10,6 @@ export const load =
 
 declare module "@marko/run" {
   interface Context {
-    loader: Record<string, Promise<unknown>>;
+    loader: Record<string, Promise<unknown> | undefined>;
   }
 }
