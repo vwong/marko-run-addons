@@ -45,7 +45,7 @@ describe("parseBody", () => {
 
         await middleware(context);
 
-        expect(context.body).toBeUndefined();
+        expect(context.body).toEqual({});
       });
     });
 
@@ -63,7 +63,7 @@ describe("parseBody", () => {
 
         await middleware(context);
 
-        expect(context.body).toBeUndefined();
+        expect(context.body).toEqual({});
       });
     });
 
@@ -78,7 +78,7 @@ describe("parseBody", () => {
 
         await middleware(context);
 
-        expect(context.body).toBeUndefined();
+        expect(context.body).toEqual({});
       });
     });
   });
