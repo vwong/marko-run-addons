@@ -32,7 +32,7 @@ describe("parseBody", () => {
     });
 
     describe("other body content types", () => {
-      it("ignores the body", async () => {
+      it("pretends to parse the body", async () => {
         const context = {
           request: new Request(url, {
             method: "POST",
@@ -50,7 +50,7 @@ describe("parseBody", () => {
     });
 
     describe("unspecified content-type", () => {
-      it("ignores the body", async () => {
+      it("pretends to parse the body", async () => {
         const context = {
           request: new Request(url, {
             method: "POST",
@@ -68,7 +68,7 @@ describe("parseBody", () => {
     });
 
     describe("other HTTP methods", () => {
-      it("ignores the body", async () => {
+      it("does not parse the body", async () => {
         const context = {
           request: new Request(url, {
             method: "PUT",
@@ -78,7 +78,7 @@ describe("parseBody", () => {
 
         await middleware(context);
 
-        expect(context.body).toEqual({});
+        expect(context.body).toBeUndefined();
       });
     });
   });
