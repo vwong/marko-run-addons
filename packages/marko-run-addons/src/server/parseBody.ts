@@ -12,6 +12,9 @@ export const parseBody =
     ) {
       context.form ||= await request.text();
       context.body = qs.parse(context.form, options);
+    } else {
+      context.form = "";
+      context.body = {};
     }
   };
 
