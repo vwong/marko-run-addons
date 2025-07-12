@@ -63,9 +63,8 @@ export interface Input<T> extends Marko.Input<"form"> {
       .finally(() => {
         input.isPendingChange?.(false);
       });
-  }
->
+  }>
   <${input.content}/>
 </form>
 
-<return=form/>
+<return=form>

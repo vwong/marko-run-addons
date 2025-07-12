@@ -11,8 +11,8 @@ export interface Input {
 }
 static const base = "http://ignored";
 
-<let/isPending=input.isPending || false/>
-<let/isError=input.isError || false/>
+<let/isPending=input.isPending || false>
+<let/isError=input.isError || false>
 
 <const/loader=(globalThis.__marko_run__
   ? globalThis.__marko_run__.fetch(
@@ -35,7 +35,7 @@ static const base = "http://ignored";
   } else {
     throw new Error(`Error fetching ${input.src}`);
   }
-})/>
+})>
 
 <if=!isPending>
   <try>
@@ -85,7 +85,7 @@ static const base = "http://ignored";
       isError = true;
       isPending = false;
     });
-}/>
+}>
 
 <script>
   input.isPendingChange?.(isPending);

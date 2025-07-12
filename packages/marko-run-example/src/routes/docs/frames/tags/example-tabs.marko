@@ -2,9 +2,8 @@ import type { QuerySchema } from "../+handler";
 import qs from "node:querystring";
 export interface Input {}
 
-<const/tabHref=(
-  (tab: string) => `?${qs.stringify(Object.assign({}, $global.query, { tab }))}`
-)/>
+<const/tabHref=(tab: string) =>
+  `?${qs.stringify(Object.assign({}, $global.query, { tab }))}`>
 <tabs current=(($global.query as QuerySchema).tab) navKey="tab">
   <@tab href=tabHref("one") src="one" title="Tab 1"/>
   <@tab href=tabHref("two") src="two" title="Tab 2"/>

@@ -2,9 +2,9 @@ import type { BodySchema } from "./request-body+handler";
 
 <let/errors=Object.fromEntries(
   $global.lastBodyErrors.map(({ name, message }) => [name, message]),
-)/>
-<let/isPending=false/>
-<let/isError=false/>
+)>
+<let/isPending=false>
+<let/isError=false>
 
 <layout-doc>
   <h1>Request Body</h1>
@@ -22,8 +22,7 @@ import type { BodySchema } from "./request-body+handler";
       required
       title=" "
       type="number"
-      value=(($global.lastBody as BodySchema)?.count || 0)
-    />
+      value=(($global.lastBody as BodySchema)?.count || 0)/>
 
     <input-field
       error=errors.count2
@@ -31,8 +30,7 @@ import type { BodySchema } from "./request-body+handler";
       name="count2"
       required
       type="number"
-      value=(($global.lastBody as BodySchema)?.count2 || 0)
-    />
+      value=(($global.lastBody as BodySchema)?.count2 || 0)/>
 
     <button class="button" disabled=isPending || isError type="submit">
       Submit

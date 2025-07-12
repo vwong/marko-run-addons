@@ -3,8 +3,8 @@ export interface Input {
   ref: () => HTMLElement;
 }
 
-<const/{ ref }=input/>
-<let/index=input.index || 0/>
+<const/{ ref }=input>
+<let/index=input.index || 0>
 <script>
   const root = ref();
   const items = root.querySelectorAll("a, button");

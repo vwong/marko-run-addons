@@ -1,11 +1,29 @@
-import { load } from "@vwong/marko-run-addons/server";
+import { preventUnhandledRejections } from "#lib/promises";
 
-const sleep = (duration: number, succeed = true) =>
-  new Promise((resolve, reject) =>
-    setTimeout(succeed ? resolve : reject, duration),
-  ) as Promise<void>;
+export interface Loader {
+  promise1: Promise<void>;
+  promise2: Promise<void>;
+}
+
+const resolveAfter = (duration: number): Promise<void> =>
+  new Promise((resolve) => setTimeout(resolve, duration));
+
+const rejectAfter = (duration: number): Promise<void> =>
+  new Promise((_, reject) =>
+    setTimeout(() => reject(new Error("boom")), duration),
+  );
 
 export const GET = [
-  load("sleep3Promise", () => sleep(3000)),
-  load("sleep5Promise", () => sleep(5000, false)),
+  (context) => {
+    const promise1 = resolveAfter(5000);
+    const promise2 = rejectAfter(3000);
+    const rejection = Promise.reject(new Error("catch me if you can"));
+
+    preventUnhandledRejections(promise1, promise2, rejection);
+
+    context.loader = {
+      promise1,
+      promise2,
+    } as Loader;
+  },
 ] as MarkoRun.Handler[];

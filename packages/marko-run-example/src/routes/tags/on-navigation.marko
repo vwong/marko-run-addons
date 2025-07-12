@@ -20,19 +20,17 @@ export interface Input<T> {
   }
 </script>
 
-<return=(
-  (page: T) => (event: Event) => {
-    event.preventDefault();
+<return=(page: T) => (event: Event) => {
+  event.preventDefault();
 
-    const params = Object.assign({}, globalThis.history.state, {
-      [input.navKey]: page,
-    });
+  const params = Object.assign({}, globalThis.history.state, {
+    [input.navKey]: page,
+  });
 
-    globalThis.history.pushState(
-      params,
-      "",
-      "?" + new URLSearchParams(params).toString(),
-    );
-    input.valueChange(page);
-  }
-)/>
+  globalThis.history.pushState(
+    params,
+    "",
+    "?" + new URLSearchParams(params).toString(),
+  );
+  input.valueChange(page);
+}>

@@ -4,6 +4,7 @@ declare module "@marko/run" {
     csrfToken: string;
     isHardReload: boolean;
     isXHR: boolean;
+    loader: unknown;
     renderId: string;
   }
 }

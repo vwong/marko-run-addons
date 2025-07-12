@@ -11,8 +11,8 @@ static const themes: Theme[] = [
   { icon: "moon", label: "Dark theme", value: "dark" },
   { icon: "monitor", label: "System theme", value: "" },
 ];
-<let/theme=input.theme || ""/>
-<let/index=themes.findIndex((t) => t.value === theme)/>
+<let/theme=input.theme || "">
+<let/index=themes.findIndex((t) => t.value === theme)>
 
 <enhanced-form/form
   action="/docs/~theme"
@@ -20,8 +20,7 @@ static const themes: Theme[] = [
   method="POST"
   onSuccess({ theme: newTheme }: { theme: string }) {
     theme = newTheme;
-  }
->
+  }>
   <csrf-token/>
   <label>Theme</label>
   <for|{ icon, label, value }: Theme| of=themes>
@@ -30,8 +29,7 @@ static const themes: Theme[] = [
       aria-pressed=(theme === value ? "true" : "false")
       name="theme"
       type="submit"
-      value=value
-    >
+      value=value>
       <icon=icon/>
     </button>
   </for>

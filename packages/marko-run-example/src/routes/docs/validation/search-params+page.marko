@@ -4,9 +4,9 @@ import type { QuerySchema } from "./search-params+handler";
 
 <let/errors=Object.fromEntries(
   $global.lastQueryErrors.map(({ name, message }) => [name, message]),
-)/>
-<let/isPending=false/>
-<let/isError=false/>
+)>
+<let/isPending=false>
+<let/isError=false>
 
 <layout-doc>
   <h1>Search Params</h1>
@@ -22,8 +22,7 @@ import type { QuerySchema } from "./search-params+handler";
       label="Page"
       name="page"
       type="number"
-      value=(($global.query as QuerySchema)?.page)
-    />
+      value=(($global.query as QuerySchema)?.page)/>
 
     <button class="button" disabled=isPending || isError type="submit">
       Submit

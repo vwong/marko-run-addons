@@ -1,10 +1,8 @@
 import { randomBytes } from "node:crypto";
 import {
-  activityStack,
   clientJs,
   csrf,
   flash,
-  frecency,
   parseBody,
   parseQuery,
   session,
@@ -48,8 +46,6 @@ export default [
     },
   }),
   validateInit(validator),
-  activityStack(),
-  frecency({ decay: 0.99 }),
   clientJs(),
   async (context, next) => {
     context.cspNonce =

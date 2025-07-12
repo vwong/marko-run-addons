@@ -3,10 +3,10 @@ export interface Input {
   ref: () => HTMLElement;
 }
 
-<const/{ ref }=input/>
-<let/isActive=false/>
-<let/isHover=false/>
-<let/isPending=false/>
+<const/{ ref }=input>
+<let/isActive=false>
+<let/isHover=false>
+<let/isPending=false>
 <div class="popup">
   <button
     class="copy-to-clipboard"
@@ -28,8 +28,7 @@ export interface Input {
       console.log(textContent);
       reset();
     }
-    type="button"
-  >
+    type="button">
     <icon="copy" title="Copy to clipboard"/>
   </button>
 
@@ -42,8 +41,7 @@ export interface Input {
     ]
     onTransitionEnd() {
       isPending = isActive;
-    }
-  >
+    }>
     ${isActive || isPending ? "Copied!" : "Copy"}
   </div>
 </div>

@@ -8,9 +8,9 @@ export interface Input {
   }>;
 }
 
-<let/isPending=false/>
-<let/isError=false/>
-<let/page=input.current/>
+<let/isPending=false>
+<let/isError=false>
+<let/page=input.current>
 
 <on-navigation/gotoPage:=page navKey=input.navKey/>
 
@@ -21,8 +21,7 @@ export interface Input {
         aria-current=page === src && "page"
         class="no-prerender"
         href=href
-        onClick=gotoPage(src)
-      >
+        onClick=gotoPage(src)>
         ${title}
       </a>
     </li>
@@ -30,17 +29,16 @@ export interface Input {
 </ul>
 
 <div class="tabs__contents">
-  <micro-frame
+  <fragment
     isError:=isError
     isPending:=isPending
-    src=`${$global.url.pathname}/~tab/${page}`
-  >
+    src=`${$global.url.pathname}/~tab/${page}`>
     <@error>
       <notification level="error">
         Unable to retrieve tab
       </notification>
     </@error>
-  </micro-frame>
+  </fragment>
 </div>
 
 <style.scss>

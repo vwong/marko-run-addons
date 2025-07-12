@@ -3,11 +3,11 @@ export interface Input {
   name: string;
 }
 
-<let/key=0/>
-<let/isPendingSubmit=false/>
-<let/isErrorSubmit=false/>
-<let/isPendingGet=false/>
-<let/isErrorGet=false/>
+<let/key=0>
+<let/isPendingSubmit=false>
+<let/isErrorSubmit=false>
+<let/isPendingGet=false>
+<let/isErrorGet=false>
 
 <enhanced-form
   action=`${$global.url.pathname}/~favorites/${input.name}`
@@ -20,8 +20,7 @@ export interface Input {
   }
   onSuccess() {
     key = Math.random();
-  }
->
+  }>
   <csrf-token/>
 
   <button class="button" disabled=isPendingSubmit type="submit">
@@ -34,17 +33,16 @@ export interface Input {
     </notification>
   </if>
 
-  <micro-frame
+  <fragment
     isError:=isErrorGet
     isPending:=isPendingGet
-    src=`${$global.url.pathname}/~favorites/${input.name}#${key}`
-  >
+    src=`${$global.url.pathname}/~favorites/${input.name}#${key}`>
     <@error>
       <notification level="error">
         Error retrieving updated favorite
       </notification>
     </@error>
-  </micro-frame>
+  </fragment>
 </enhanced-form>
 
 <style.scss>

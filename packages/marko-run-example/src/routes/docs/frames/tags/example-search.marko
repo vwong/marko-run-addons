@@ -2,15 +2,14 @@ import "#styles/button.scss";
 import type { QuerySchema } from "../+handler";
 export interface Input {}
 
-<let/isPending=false/>
-<let/search=(($global.query as QuerySchema).search || "")/>
+<let/isPending=false>
+<let/search=(($global.query as QuerySchema).search || "")>
 
 <on-navigation/gotoPage:=search navKey="search"/>
 
 <enhanced-form-get/searchParams
   action=($global.url.pathname)
-  class="example-search"
->
+  class="example-search">
   <for|key, value| in=$global.query>
     <if=key !== "search">
       <input name=key type="hidden" value=value>
@@ -20,8 +19,7 @@ export interface Input {}
     name="search"
     placeholder="Search for nothing"
     type="search"
-    value=search
-  >
+    value=search>
   <script>
     searchEl().value = search;
   </script>
@@ -32,23 +30,21 @@ export interface Input {}
     onClick(event) {
       gotoPage(searchParams().get("search") || "")(event);
     }
-    type="submit"
-  >
+    type="submit">
     Search
   </button>
 </enhanced-form-get>
 
 <output class="example-search-results">
-  <micro-frame
+  <fragment
     isPending:=isPending
-    src=`${$global.url.pathname}/~search?search=${search}`
-  >
+    src=`${$global.url.pathname}/~search?search=${search}`>
     <@error>
       <notification level="error">
         Error retrieving search results
       </notification>
     </@error>
-  </micro-frame>
+  </fragment>
 </output>
 
 <style.scss>

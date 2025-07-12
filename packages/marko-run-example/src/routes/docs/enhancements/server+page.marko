@@ -1,3 +1,7 @@
+import "#styles/link.scss";
+import type { Loader } from "./server+handler";
+
+<let/loader=$global.loader as Loader>
 <layout-doc>
   <h1>Server enhancements</h1>
 
@@ -11,41 +15,9 @@
      does not actually change.
   </p>
 
-  <try>
-    <if=$global.hasClientJs>
-      <@placeholder>
-        <p>
-          <loader/>
-        </p>
-      </@placeholder>
-    </if>
-    <@catch>
-      <notification level="error">
-        Error generating fragment
-      </notification>
-    </@catch>
-    <await|_|=($global.loader.sleep3Promise as Promise<void>)>
-      <p>Fragment that took 3 seconds to generate</p>
-    </await>
-  </try>
+  <example-promise=loader.promise1 message="First result"/>
 
-  <try>
-    <if=$global.hasClientJs>
-      <@placeholder>
-        <p>
-          <loader/>
-        </p>
-      </@placeholder>
-    </if>
-    <@catch>
-      <notification level="error">
-        Error generating fragment
-      </notification>
-    </@catch>
-    <await|_|=($global.loader.sleep5Promise as Promise<void>)>
-      <p>Fragment that took 5 seconds to generate</p>
-    </await>
-  </try>
+  <example-promise=loader.promise2 message="Second result"/>
 
   <p>
     But content proceeding it may appear immediately if client JS is available.
@@ -62,4 +34,14 @@
   </p>
 
   <p>Try loading this page with and without JS to experience the difference.</p>
+
+  <a class="link" href="/docs/enhancements/server-500">
+    Force a 500 error
+  </a>
+  <a class="link" href="/docs/enhancements/server-404">
+    Programmatic 404
+  </a>
+  <a class="link" href="/unrouted-404">
+    Static 404
+  </a>
 </layout-doc>

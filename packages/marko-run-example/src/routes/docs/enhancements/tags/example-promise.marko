@@ -1,0 +1,22 @@
+export interface Input {
+  message: string;
+  value: Promise<void>;
+}
+
+<try>
+  <if=$global.hasClientJs>
+    <@placeholder>
+      <p>
+        <loader/>
+      </p>
+    </@placeholder>
+  </if>
+  <@catch>
+    <notification level="error">
+      Error generating fragment
+    </notification>
+  </@catch>
+  <await|_|=input.value>
+    <p>${input.message}</p>
+  </await>
+</try>
