@@ -3,7 +3,7 @@
   "private": true,
   "devDependencies": {
     "@eslint/js": "^9.31.0",
-    "@marko/type-check": "^2.0.0",
+    "@marko/type-check": "^2.0.2",
     "@vitest/coverage-v8": "^3.2.4",
     "eslint": "^9.31.0",
     "eslint-config-prettier": "^10.1.5",
@@ -17,7 +17,7 @@
     "stylelint-config-standard-scss": "^15.0.1",
     "stylelint-order": "^7.0.0",
     "stylelint-scss": "^6.12.1",
-    "typescript-eslint": "^8.36.0",
+    "typescript-eslint": "^8.37.0",
     "vite": "^7.0.4",
     "vitest": "^3.2.4"
   },
@@ -28,7 +28,6 @@
     "lint": "npm run lint:js && npm run lint:css",
     "lint:css": "stylelint '**/*.scss' '**/*.marko'",
     "lint:js": "eslint --max-warnings=0",
-    "postinstall": "patch-package",
     "prettier": "prettier --list-different --plugin=prettier-plugin-marko .",
     "prettier:fix": "prettier --cache --list-different --write --plugin=prettier-plugin-marko .",
     "test": "vitest",
@@ -39,8 +38,5 @@
     "packages/marko-run-addons",
     "packages/marko-run-example"
   ],
-  "type": "module",
-  "dependencies": {
-    "patch-package": "^8.0.0"
-  }
+  "type": "module"
 }
