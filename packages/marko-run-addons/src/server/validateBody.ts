@@ -27,7 +27,7 @@ export const validateBody =
       : await next();
 
     if (response.status === 302) {
-      context.session._redirectTo = context.url.pathname;
+      context.session._redirectTo = response.headers.get("location") as string;
       context.session._lastBody = cloneDeep(context.body);
       context.session._lastBodyErrors = context.bodyErrors;
     }

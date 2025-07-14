@@ -72,7 +72,13 @@ describe("validateBody", () => {
         }),
         session: {},
         url,
-        redirect: vi.fn(() => new Response(null, { status: 302 })),
+        redirect: vi.fn(
+          () =>
+            new Response(null, {
+              headers: { location: "/redirected" },
+              status: 302,
+            }),
+        ),
       } as unknown as MarkoRun.Context;
     });
 
@@ -87,14 +93,17 @@ describe("validateBody", () => {
     });
 
     it("validates with no errors, but downstream also redirects", async () => {
-      const nextResponse = new Response(null, { status: 302 });
+      const nextResponse = new Response(null, {
+        headers: { location: "/redirected-downstream" },
+        status: 302,
+      });
       validator.asJson.mockReturnValueOnce([]);
 
       initMiddleware(context);
       const response = await middleware(context, () => nextResponse);
 
       expect(response).toEqual(nextResponse);
-      expect(context.session._redirectTo).toEqual(context.url.pathname);
+      expect(context.session._redirectTo).toEqual("/redirected-downstream");
       expect(context.session._lastBody).toEqual("body");
       expect(context.session._lastBodyErrors).toEqual([]);
     });
@@ -106,7 +115,7 @@ describe("validateBody", () => {
       await middleware(context);
 
       expect(context.bodyErrors).toEqual(validationChecks);
-      expect(context.session._redirectTo).toEqual(context.url.pathname);
+      expect(context.session._redirectTo).toEqual("/redirected");
       expect(context.session._lastBody).toEqual("body");
       expect(context.session._lastBodyErrors).toEqual(validationChecks);
       expect(context.redirect).toBeCalledWith(context.url.pathname);
