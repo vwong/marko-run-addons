@@ -6,13 +6,13 @@
 
   <h2>Note about Session life</h2>
   <p>
-    A session has a finite
+    A session has a finite${" "}
     <code>maxAge</code>
-    ${" "}life, usually about a month. However, without any write activity in the session to refresh it, it becomes possible that the underlying store, as well as the session cookie will eventually expire, even as the user continues to use it for read activity. The
+    ${" "}life, usually about a month. However, without any write activity in the session to refresh it, it becomes possible that the underlying store, as well as the session cookie will eventually expire, even as the user continues to use it for read activity. The${" "}
     <code>session</code>
     ${" "}middleware automatically prolongs the life of both the underlying store, and the session cookie to guarantee a${" "}
     <code>minAge</code>
-     value to reduce the risk of loosing the session.
+    ${" "}value to reduce the risk of loosing the session.
   </p>
 
   <h2>Note about CSRF Tokens life</h2>

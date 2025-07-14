@@ -24,7 +24,7 @@ import "#styles/link.scss";
   <p>
     However, when there are multiple widgets on a page, it can be distracting to have operations on one widget reset the entire page. Instead, we can start with the baseline default behaviour - to allow the page to function even as the page is being loaded; and thus have no Javascript - then apply${" "}
     <em>progressive enhancement</em>
-     to allow each widget independent operation when Javascript is available.
+    ${" "}to allow each widget independent operation when Javascript is available.
   </p>
 
   <p>
@@ -48,7 +48,7 @@ import "#styles/link.scss";
   </ul>
 
   <p>
-    That is
+    That is${" "}
     <strong>a lot of Javascript</strong>
     ${" "}for functionality that the browser already natively provides. Popular Javascript frameworks may handle a subset of these edge cases, but not all, and often especially the no-Javascript scenario, so it is up to the developer to ensure correct behaviour.
   </p>
@@ -66,7 +66,7 @@ import "#styles/link.scss";
   <p>
     Consider a tabbed or paginated interface whereby the parts of the page content is replaced as links are clicked. For example, as the tabs below are clicked, the default handler on the${" "}
     <code>&lt;a&gt;</code>
-    ${" "}tags is prevented (the default is to navigate to the specified
+    ${" "}tags is prevented (the default is to navigate to the specified${" "}
     <code>href</code>
     ${" "}), and instead a sub-frame is fetched to replace the current sub-frame.
   </p>
@@ -79,17 +79,17 @@ import "#styles/link.scss";
   <h2>Form GET submissions</h2>
 
   <p>
-    Consider a form with
+    Consider a form with${" "}
     <code>method=GET</code>
-    ${" "}which allows users to customise the page parameters - usually to perform a search or filter operation. As the form is submitted, the default handler on the
+    ${" "}which allows users to customise the page parameters - usually to perform a search or filter operation. As the form is submitted, the default handler on the${" "}
     <code>form</code>
     ${" "}is prevented (the default is to navigate to the specified form action with the specified parameters), and instead a sub-frame is fetched to replace the current sub-frame.
   </p>
 
   <p>
-    Search for the term
+    Search for the term${" "}
     <code>break</code>
-     to emulate an XHR error.
+    ${" "}to emulate an XHR error.
   </p>
 
   <figure>
@@ -100,7 +100,7 @@ import "#styles/link.scss";
   <h2>Form POST submissions</h2>
 
   <p>
-    Consider a form with
+    Consider a form with${" "}
     <code>method=POST</code>
     ${" "}which allows users to submit data to the server. As the form is submitted, the default handler on the${" "}
     <code>form</code>

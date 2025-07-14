@@ -9,7 +9,7 @@
     "eslint-config-prettier": "^10.1.5",
     "globals": "^16.3.0",
     "prettier": "^3.6.2",
-    "prettier-plugin-marko": "^3.2.4",
+    "prettier-plugin-marko": "^3.2.7",
     "rollup-plugin-visualizer": "^6.0.3",
     "sass": "^1.89.2",
     "stylelint": "^16.21.1",
@@ -28,6 +28,7 @@
     "lint": "npm run lint:js && npm run lint:css",
     "lint:css": "stylelint '**/*.scss' '**/*.marko'",
     "lint:js": "eslint --max-warnings=0",
+    "postinstall": "patch-package",
     "prettier": "prettier --list-different --plugin=prettier-plugin-marko .",
     "prettier:fix": "prettier --cache --list-different --write --plugin=prettier-plugin-marko .",
     "test": "vitest",
@@ -38,5 +39,8 @@
     "packages/marko-run-addons",
     "packages/marko-run-example"
   ],
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "patch-package": "^8.0.0"
+  }
 }

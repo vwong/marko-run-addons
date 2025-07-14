@@ -12,7 +12,7 @@ import type { Loader } from "./server+handler";
   <p>
     For example, without client JS, streaming HTML must be generated sequentially, even if intermediate dynamic fragments may block later static fragments. With client JS, the server can generate these fragments out-of-order, to be reassembled in the correct order by the client. This reduces the time to contentful paint, making the page feel faster, even if the time to the${" "}
     <strong>last byte</strong>
-     does not actually change.
+    ${" "}does not actually change.
   </p>
 
   <example-promise=loader.promise1 message="First result"/>
@@ -24,7 +24,7 @@ import type { Loader } from "./server+handler";
   </p>
 
   <p>
-    This enhancement can be used to accelerate
+    This enhancement can be used to accelerate${" "}
     <em>subsequent</em>
     ${" "}pages, as the first page has to be assumed to be requested by a client without JS.
   </p>
