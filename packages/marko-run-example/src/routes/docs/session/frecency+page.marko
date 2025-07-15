@@ -16,11 +16,16 @@ static const TYPE = "category";
   <h1>Frecency</h1>
 
   <p>
-    While the browser has a recommendation engine to auto-complete URLs in the address bar, suggesting frequently and recently used URLs, we can build a similar engine server-side to enhance the user experience.
+    While the browser has a recommendation engine to auto-complete URLs in the
+    address bar, suggesting frequently and recently used URLs, we can build a
+    similar engine server-side to enhance the user experience.
   </p>
 
   <p>
-    Click on one of the links from the fixed list, and observe how the list of frecent items change with the selection. Frequent and recent items bubble up the top of the list, while lesser used ones will eventually decay off the list.
+    Click on one of the links from the fixed list, and observe how the list of
+    frecent items change with the selection. Frequent and recent items bubble up
+    the top of the list, while lesser used ones will eventually decay off the
+    list.
   </p>
 
   <h2>Fixed list of items</h2>
@@ -46,7 +51,8 @@ static const TYPE = "category";
   </if>
   <else>
     <p>
-      The numbers in the parenthesis shows the frecency score. Under normal circumstances, this might be omitted to hide the implementation detail.
+      The numbers in the parenthesis shows the frecency score. Under normal
+      circumstances, this might be omitted to hide the implementation detail.
     </p>
     <ol class="frecency">
       <for|{ name, score }| of=$global.frecency.list(TYPE)>

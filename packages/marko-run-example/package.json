@@ -17,7 +17,7 @@
     "compression": "^1.8.0",
     "express": "^5.1.0",
     "lodash-es": "^4.17.21",
-    "marko": "^6.0.39"
+    "marko": "^6.0.40"
   },
   "devDependencies": {
     "@marko/babel-utils": "^6.6.3",
