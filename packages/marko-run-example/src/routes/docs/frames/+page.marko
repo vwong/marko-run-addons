@@ -8,38 +8,51 @@ import "#styles/link.scss";
   <ul>
     <li>navigating using hyperlinks from one page to another.</li>
     <li>
-      submitting GET forms to retrieve parameterised pages using dynamic user-supplied query parameters.
+      submitting GET forms to retrieve parameterised pages using dynamic
+      user-supplied query parameters.
     </li>
     <li>
-      submitting POST forms to submit data, and follow the subsequent redirect (the Post-Redirect-Get pattern).
+      submitting POST forms to submit data, and follow the subsequent redirect
+      (the Post-Redirect-Get pattern).
     </li>
   </ul>
 
   <p>
-    This set of capabilities is enough to build most common interaction on the web${" "}
+    This set of capabilities is enough to build most common interaction on the
+    web${" "}
     <em>without any Javascript</em>
-    ${" "}. On completion of these actions, the incoming page gets a fresh start: with forms, scroll positions, focus positions, and accessibility cursors all reset to default values. In most cases, this is desirable.
+    ${" "}. On completion of these actions, the incoming page gets a fresh
+    start: with forms, scroll positions, focus positions, and accessibility
+    cursors all reset to default values. In most cases, this is desirable.
   </p>
 
   <p>
-    However, when there are multiple widgets on a page, it can be distracting to have operations on one widget reset the entire page. Instead, we can start with the baseline default behaviour - to allow the page to function even as the page is being loaded; and thus have no Javascript - then apply${" "}
+    However, when there are multiple widgets on a page, it can be distracting to
+    have operations on one widget reset the entire page. Instead, we can start
+    with the baseline default behaviour - to allow the page to function even as
+    the page is being loaded; and thus have no Javascript - then apply${" "}
     <em>progressive enhancement</em>
-    ${" "}to allow each widget independent operation when Javascript is available.
+    ${" "}to allow each widget independent operation when Javascript is
+    available.
   </p>
 
   <p>
     However, traps abound. Whenever default browser behaviour is prevented using${" "}
     <code>event.preventDefault()</code>
-    ${" "}all edge cases normally handled by the browser now also need to be explicitly handled in Javascript, such as:
+    ${" "}all edge cases normally handled by the browser now also need to be
+    explicitly handled in Javascript, such as:
   </p>
 
   <ul>
     <li>showing a spinner while the content is being fetched.</li>
     <li>
-      showing relevant messages for the various error conditions like DNS errors, HTTP(s) errors, timeout errors, and more; preferably localised to the user's native operating system language.
+      showing relevant messages for the various error conditions like DNS
+      errors, HTTP(s) errors, timeout errors, and more; preferably localised to
+      the user's native operating system language.
     </li>
     <li>
-      handling backward/foreward navigation and updating the history stack correctly.
+      handling backward/foreward navigation and updating the history stack
+      correctly.
     </li>
     <li>handling refreshing the page; for both soft and hard refreshes.</li>
     <li>handling opening in a new tab or window.</li>
@@ -50,25 +63,36 @@ import "#styles/link.scss";
   <p>
     That is${" "}
     <strong>a lot of Javascript</strong>
-    ${" "}for functionality that the browser already natively provides. Popular Javascript frameworks may handle a subset of these edge cases, but not all, and often especially the no-Javascript scenario, so it is up to the developer to ensure correct behaviour.
+    ${" "}for functionality that the browser already natively provides. Popular
+    Javascript frameworks may handle a subset of these edge cases, but not all,
+    and often especially the no-Javascript scenario, so it is up to the
+    developer to ensure correct behaviour.
   </p>
 
   <p>
-    To avoid unnecessary complexity, whenever possible, the strategy of replicating native browser behaviour in Javascript should only be used for high-value and high-touch pages, where the complexity is acceptable for the improved user experience. Alternatively, designs that minimise the number of widgets on a page should be preferred.
+    To avoid unnecessary complexity, whenever possible, the strategy of
+    replicating native browser behaviour in Javascript should only be used for
+    high-value and high-touch pages, where the complexity is acceptable for the
+    improved user experience. Alternatively, designs that minimise the number of
+    widgets on a page should be preferred.
   </p>
 
   <p>
-    In the following examples, try the following widgets with and without Javascript enabled to see the difference.
+    In the following examples, try the following widgets with and without
+    Javascript enabled to see the difference.
   </p>
 
   <h2>Page navigation</h2>
 
   <p>
-    Consider a tabbed or paginated interface whereby the parts of the page content is replaced as links are clicked. For example, as the tabs below are clicked, the default handler on the${" "}
+    Consider a tabbed or paginated interface whereby the parts of the page
+    content is replaced as links are clicked. For example, as the tabs below are
+    clicked, the default handler on the${" "}
     <code>&lt;a&gt;</code>
     ${" "}tags is prevented (the default is to navigate to the specified${" "}
     <code>href</code>
-    ${" "}), and instead a sub-frame is fetched to replace the current sub-frame.
+    ${" "}), and instead a sub-frame is fetched to replace the current
+    sub-frame.
   </p>
 
   <figure>
@@ -81,9 +105,13 @@ import "#styles/link.scss";
   <p>
     Consider a form with${" "}
     <code>method=GET</code>
-    ${" "}which allows users to customise the page parameters - usually to perform a search or filter operation. As the form is submitted, the default handler on the${" "}
+    ${" "}which allows users to customise the page parameters - usually to
+    perform a search or filter operation. As the form is submitted, the default
+    handler on the${" "}
     <code>form</code>
-    ${" "}is prevented (the default is to navigate to the specified form action with the specified parameters), and instead a sub-frame is fetched to replace the current sub-frame.
+    ${" "}is prevented (the default is to navigate to the specified form action
+    with the specified parameters), and instead a sub-frame is fetched to
+    replace the current sub-frame.
   </p>
 
   <p>
@@ -102,9 +130,11 @@ import "#styles/link.scss";
   <p>
     Consider a form with${" "}
     <code>method=POST</code>
-    ${" "}which allows users to submit data to the server. As the form is submitted, the default handler on the${" "}
+    ${" "}which allows users to submit data to the server. As the form is
+    submitted, the default handler on the${" "}
     <code>form</code>
-    ${" "}is prevented, and instead the form data is sent using XHR, and the corresponding redirect fetched to replace the current sub-frame.
+    ${" "}is prevented, and instead the form data is sent using XHR, and the
+    corresponding redirect fetched to replace the current sub-frame.
   </p>
 
   <figure>
