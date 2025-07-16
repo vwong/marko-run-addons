@@ -14,28 +14,34 @@ import type { BodySchema } from "./request-body+handler";
     This uses native form POST submissions. It will fail server-side validation
     when the count is greater than 5.
   </p>
-  <form/form method="POST">
+  <form/form class="count-form" method="POST">
     <csrf-token/>
-    <input-field
-      error=errors.count
-      label="Count"
-      name="count"
-      required
-      title=" "
-      type="number"
-      value=(($global.lastBody as BodySchema)?.count || 0)/>
+    <div>
+      <input-field
+        error=errors.count
+        label="Count"
+        name="count"
+        required
+        title=" "
+        type="number"
+        value=(($global.lastBody as BodySchema)?.count || 0)/>
+    </div>
 
-    <input-field
-      error=errors.count2
-      label="Count2"
-      name="count2"
-      required
-      type="number"
-      value=(($global.lastBody as BodySchema)?.count2 || 0)/>
+    <div>
+      <input-field
+        error=errors.count2
+        label="Count2"
+        name="count2"
+        required
+        type="number"
+        value=(($global.lastBody as BodySchema)?.count2 || 0)/>
+    </div>
 
-    <button class="button" disabled=isPending || isError type="submit">
-      Submit
-    </button>
+    <div>
+      <button class="button" disabled=isPending || isError type="submit">
+        Submit
+      </button>
+    </div>
   </form>
   <p>
     <on-change-validate isError:=isError isPending:=isPending ref=form/>
@@ -43,7 +49,8 @@ import type { BodySchema } from "./request-body+handler";
 </layout-doc>
 
 <style.scss>
-  .button {
-    margin-top: $v-10;
+  .count-form {
+    display: grid;
+    gap: $v-10;
   }
 </style>

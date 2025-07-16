@@ -15,18 +15,22 @@ import type { QuerySchema } from "./search-params+handler";
   <p>
     This page validates search parameters. Try negative values to see an error.
   </p>
-  <form/form class="form">
-    <input-field
-      data-touched="1"
-      error=errors.page
-      label="Page"
-      name="page"
-      type="number"
-      value=(($global.query as QuerySchema)?.page)/>
+  <form/form class="search-form">
+    <div>
+      <input-field
+        data-touched="1"
+        error=errors.page
+        label="Page"
+        name="page"
+        type="number"
+        value=(($global.query as QuerySchema)?.page)/>
+    </div>
 
-    <button class="button" disabled=isPending || isError type="submit">
-      Submit
-    </button>
+    <div>
+      <button class="button" disabled=isPending || isError type="submit">
+        Submit
+      </button>
+    </div>
   </form>
   <p>
     <on-change-validate isError:=isError isPending:=isPending ref=form/>
@@ -49,7 +53,8 @@ import type { QuerySchema } from "./search-params+handler";
 </layout-doc>
 
 <style.scss>
-  .button {
-    margin-top: $v-10;
+  .search-form {
+    display: grid;
+    gap: $v-10;
   }
 </style>
