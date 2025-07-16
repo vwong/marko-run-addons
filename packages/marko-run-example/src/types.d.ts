@@ -1,5 +1,8 @@
+import type { Contents } from "#lib/contents";
+
 declare module "@marko/run" {
   interface Context {
+    contents: Contents;
     cspNonce: string;
     csrfToken: string;
     isHardReload: boolean;

@@ -1,6 +1,24 @@
+import type { Page } from "#lib/contents";
 import "#styles/button.scss";
 import "#styles/link.scss";
-import { contents } from "#lib/contents";
+
+<define/Navlist|{ contents }: { contents: Page[] }|>
+  <ul>
+    <for|{ contents: innerContents, href, text }: Page| of=contents>
+      <li>
+        <a
+          aria-current=(href === $global.url.pathname ? "page" : undefined)
+          class="link"
+          href=href>
+          ${text}
+        </a>
+        <if=innerContents>
+          <Navlist contents=innerContents/>
+        </if>
+      </li>
+    </for>
+  </ul>
+</define>
 
 <id/heading>
 <div/popup class="navigation">
@@ -11,42 +29,7 @@ import { contents } from "#lib/contents";
   </details>
 
   <nav aria-labelledby=heading class="navigation__list">
-    <ul>
-      <for|{ contents: innerContents, href, text }| of=contents>
-        <li>
-          <if=innerContents>
-            <${href ? "a" : "span"}
-              aria-current=(href === $global.url.pathname ? "page" : undefined)
-              class=(href ? "link" : undefined)
-              href=href>
-              ${text}
-            </>
-            <ul>
-              <for|{ href, text }| of=innerContents>
-                <li>
-                  <a
-                    aria-current=(
-                      href === $global.url.pathname ? "page" : undefined
-                    )
-                    class="link"
-                    href=href>
-                    ${text}
-                  </a>
-                </li>
-              </for>
-            </ul>
-          </if>
-          <else>
-            <a
-              aria-current=(href === $global.url.pathname ? "page" : undefined)
-              class="link"
-              href=href>
-              ${text}
-            </a>
-          </else>
-        </li>
-      </for>
-    </ul>
+    <Navlist contents=($global.contents.toc)/>
   </nav>
 </div>
 <on-keyboard-tab ref=popup/>

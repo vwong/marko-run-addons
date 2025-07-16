@@ -1,34 +1,29 @@
 import "#styles/tile.scss";
-import { flatContents } from "#lib/contents";
-<let/current=flatContents.findIndex((c) => c.href === $global.url.pathname)>
-<const/previous=current - 1>
-<const/next=current + 1>
 
-<if=(current >= 0)>
-  <div class="navigation-footer">
-    <if=(previous >= 0)>
-      <a
-        class="tile navigation-footer__link navigation-footer__link--prev"
-        href=(flatContents[previous].href)>
-        ‹ ${flatContents[previous].text}
+<let/related=$global.contents.related($global.url.pathname)>
+<const/[previous, next]=related>
+
+<if=previous || next>
+  <div class="contents">
+    <if=previous>
+      <a class="tile contents__link contents__link--prev" href=previous.href>
+        ‹ ${previous.text}
       </a>
     </if>
     <else>
       <div/>
     </else>
 
-    <if=(next <= flatContents.length - 1)>
-      <a
-        class="tile navigation-footer__link navigation-footer__link--next"
-        href=(flatContents[next].href)>
-        ${flatContents[next].text} ›
+    <if=next>
+      <a class="tile contents__link contents__link--next" href=next.href>
+        ${next.text} ›
       </a>
     </if>
   </div>
 </if>
 
 <style.scss>
-  .navigation-footer {
+  .contents {
     display: grid;
     grid-gap: $s-8;
     grid-template-columns: 1fr 1fr;

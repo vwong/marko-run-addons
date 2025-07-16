@@ -9,6 +9,7 @@ import {
   validateInit,
 } from "@vwong/marko-run-addons/server";
 import { AjvValidator } from "#lib/ajvValidator";
+import { Contents } from "#lib/contents";
 import { MemorySessionStore } from "#lib/memorySessionStore";
 import { badRequest } from "#lib/responses";
 
@@ -48,6 +49,7 @@ export default [
   validateInit(validator),
   clientJs(),
   async (context, next) => {
+    context.contents = new Contents();
     context.cspNonce =
       context.request.headers.get("X-Nonce") ||
       randomBytes(16).toString("base64");

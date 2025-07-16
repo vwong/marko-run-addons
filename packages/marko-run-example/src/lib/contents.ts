@@ -1,10 +1,10 @@
-interface Page {
+export interface Page {
   href: string;
   text: string;
   contents?: Page[];
 }
 
-export const contents: Page[] = [
+const contents: Page[] = [
   { href: "/docs", text: "Introduction" },
   {
     href: "/docs/session",
@@ -41,10 +41,28 @@ export const contents: Page[] = [
   { href: "/docs/design", text: "Design" },
 ];
 
-export const flatContents = contents
-  .map((c) => {
-    const { contents, ...others } = c;
-    return contents ? [others, ...contents] : c;
-  })
-  .flat()
-  .filter((c) => c.href);
+export class Contents {
+  #cache?: Page[];
+  toc = contents;
+
+  related(href: string) {
+    const index = this.#flatToc.findIndex((c) => c.href === href);
+    const previous = index >= 0 ? this.#flatToc[index - 1] : undefined;
+    const next =
+      index <= this.#flatToc.length - 1 ? this.#flatToc[index + 1] : undefined;
+    return [previous, next];
+  }
+
+  get #flatToc() {
+    return (
+      this.#cache ||
+      this.toc
+        .map((c) => {
+          const { contents, ...others } = c;
+          return contents ? [others, ...contents] : c;
+        })
+        .flat()
+        .filter((c) => c.href)
+    );
+  }
+}
