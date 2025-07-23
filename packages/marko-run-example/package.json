@@ -9,15 +9,15 @@
   "dependencies": {
     "@isaacs/ttlcache": "^1.4.1",
     "@marko/run-adapter-node": "^2.0.3",
-    "@sinclair/typebox": "^0.34.37",
+    "@sinclair/typebox": "^0.34.38",
     "@vwong/marko-run-addons": "^1.0.0",
     "ajv": "^8.17.1",
     "ajv-errors": "^3.0.0",
     "ajv-formats": "^3.0.1",
-    "compression": "^1.8.0",
+    "compression": "^1.8.1",
     "express": "^5.1.0",
     "lodash-es": "^4.17.21",
-    "marko": "^6.0.40"
+    "marko": "^6.0.41"
   },
   "devDependencies": {
     "@marko/babel-utils": "^6.6.3",
