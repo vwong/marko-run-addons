@@ -10,27 +10,29 @@ export interface ValidateBodySession {
 export const parseAndValidateBody =
   <S>(schema: S, options: IParseOptions): MarkoRun.Handler =>
   async (context, next) => {
-    const body = qs.parse(context.form, options);
+    if (context.form) {
+      const body = qs.parse(context.form, options);
 
-    const bodyErrors = context.validator.asJson(
-      body && schema
-        ? await context.validator.validate(context, schema, body)
-        : [],
-    );
+      const bodyErrors = context.validator.asJson(
+        body && schema
+          ? await context.validator.validate(context, schema, body)
+          : [],
+      );
 
-    if (context.request.headers.has("X-Validate-Only")) {
-      return bodyErrors.length ? badRequest(bodyErrors) : noContent();
+      if (context.request.headers.has("X-Validate-Only")) {
+        return bodyErrors.length ? badRequest(bodyErrors) : noContent();
+      }
+
+      const response = bodyErrors.length
+        ? context.redirect(context.url.pathname)
+        : await next();
+
+      if (response.status === 302) {
+        context.session._redirectTo = response.headers.get("location")!;
+        context.session._lastBody = body;
+        context.session._lastBodyErrors = bodyErrors;
+      }
+
+      return response;
     }
-
-    const response = bodyErrors.length
-      ? context.redirect(context.url.pathname)
-      : await next();
-
-    if (response.status === 302) {
-      context.session._redirectTo = response.headers.get("location") as string;
-      context.session._lastBody = body;
-      context.session._lastBodyErrors = bodyErrors;
-    }
-
-    return response;
   };
