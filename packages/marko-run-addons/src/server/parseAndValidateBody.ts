@@ -19,9 +19,7 @@ export const parseAndValidateBody =
     );
 
     if (context.request.headers.has("X-Validate-Only")) {
-      return bodyErrors.length
-        ? badRequest(bodyErrors)
-        : noContent();
+      return bodyErrors.length ? badRequest(bodyErrors) : noContent();
     }
 
     const response = bodyErrors.length
