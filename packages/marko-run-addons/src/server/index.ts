@@ -6,7 +6,6 @@ export { FlashService, flash } from "./flash";
 export type { FlashMessage, FlashSession } from "./flash";
 export type { FrecencyOptions } from "./frecency";
 export { frecency } from "./frecency";
-export { parseAndValidateBody } from "./parseAndValidateBody";
 export { parseBody } from "./parseBody";
 export { parseQuery } from "./parseQuery";
 export { session } from "./session";
