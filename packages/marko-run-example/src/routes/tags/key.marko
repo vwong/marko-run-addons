@@ -1,0 +1,8 @@
+export interface Input {
+  content: Marko.Body;
+  value: any;
+}
+static const once = [1];
+<for of=once by=() => input.value>
+  <${input.content}/>
+</for>

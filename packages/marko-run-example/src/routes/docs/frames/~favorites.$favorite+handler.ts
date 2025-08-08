@@ -22,7 +22,5 @@ export const POST = (async (context) => {
   session.favorites ||= {};
   session.favorites[favorite] = (session.favorites[favorite] || 0) + 1;
 
-  return context.isXHR
-    ? json({})
-    : context.redirect(context.request.headers.get("referer")!);
+  return context.isXHR ? json({}) : context.back();
 }) satisfies MarkoRun.Handler;

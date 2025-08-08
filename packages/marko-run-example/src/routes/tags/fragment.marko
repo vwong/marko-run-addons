@@ -1,48 +1,56 @@
 import { pickBy } from "lodash-es";
 export interface Input {
-  error: Marko.AttrTag<{
-    content: Marko.Body;
-  }>;
-  isError?: boolean;
-  isErrorChange?: (value: boolean) => void;
-  isPending?: boolean;
-  isPendingChange?: (value: boolean) => void;
+  errorMessage: string;
   src: MarkoRun.GetPaths;
 }
-static const base = "http://ignored";
+server const base = "http://ignored";
 
-<let/isPending=input.isPending || false>
-<let/isError=input.isError || false>
-
-<const/loader=(globalThis.__marko_run__
-  ? globalThis.__marko_run__.fetch(
-      new Request(`${base}${input.src}`, {
-        headers: $global.request.headers,
-      }),
-      $global.platform,
-    )
-  : fetch(input.src, {
-      headers: pickBy({
-        "Cache-control": $global.isHardReload ? "no-cache" : undefined,
-        "X-Nonce": $global.cspNonce,
-        "X-Requested-With": "XMLHttpRequest",
-      }) as HeadersInit,
-      signal: $signal,
+<const/loader=(
+  (globalThis.__marko_run__
+    ? globalThis.__marko_run__.fetch(
+        new Request(`${base}${input.src}`, {
+          headers: $global.request.headers,
+        }),
+        $global.platform,
+      )
+    : fetch(input.src, {
+        headers: pickBy({
+          "Cache-control": $global.isHardReload ? "no-cache" : undefined,
+          "X-Nonce": $global.cspNonce,
+          "X-Requested-With": "XMLHttpRequest",
+        }) as HeadersInit,
+        signal: $signal,
+      })
+  )
+    .then((response) => {
+      if (response?.ok) {
+        return response.text();
+      } else {
+        throw new Error(`Error fetching ${input.src}`);
+      }
     })
-).then((response) => {
-  if (response?.ok) {
-    return response.text();
-  } else {
-    throw new Error(`Error fetching ${input.src}`);
-  }
-})>
+    .catch((error) => {
+      if (error.name === "AbortError") {
+        return;
+      }
+      throw error;
+    })
+)>
 
-<if=!isPending>
+<key=input.src>
   <try>
+    <if=!globalThis.__marko_run__ || $global.hasClientJs>
+      <@placeholder>
+        <loader/>
+      </@placeholder>
+    </if>
+
     <@catch>
-      <!-- can't have empty <@catch/>, but can't have textNode either -->
-      <html-comment/>
+      <notification level="error">
+        ${input.errorMessage}
+      </notification>
     </@catch>
+
     <await|html: string|=loader>
       <if=globalThis.__marko_run__>
         <div>$!{html}</div>
@@ -60,34 +68,4 @@ static const base = "http://ignored";
       </else>
     </await>
   </try>
-</if>
-
-<div hidden=!isPending>
-  <loader/>
-</div>
-
-<div hidden=!isError || isPending>
-  <${input.error}/>
-</div>
-
-<lifecycle onUpdate() {
-  isPending = true;
-  isError = false;
-  loader
-    .then(() => {
-      isPending = false;
-    })
-    .catch((error) => {
-      if (error.name === "AbortError") {
-        return;
-      }
-
-      isError = true;
-      isPending = false;
-    });
-}>
-
-<script>
-  input.isPendingChange?.(isPending);
-  input.isErrorChange?.(isError);
-</script>
+</key>

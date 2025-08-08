@@ -1,0 +1,42 @@
+export interface Input {
+  placeholder: Marko.AttrTag<{
+    content: Marko.Body;
+  }>;
+  error: Marko.AttrTag<{
+    content: Marko.Body;
+  }>;
+  content: Marko.Body;
+}
+
+<let/isIntersecting=false>
+
+<div/observed class=["observed", isIntersecting && "observed--intersecting"]/>
+
+<if=isIntersecting>
+  <${input.content}/>
+</if>
+
+<script>
+  const el = observed();
+  const observer = new IntersectionObserver((entries) => {
+    if (entries.some((e) => e.intersectionRatio > 0)) {
+      observer.unobserve(el);
+      isIntersecting = true;
+    }
+  });
+  observer.observe(el);
+  $signal.onabort = () => {
+    observer.disconnect();
+  };
+</script>
+
+<style.scss>
+  .observed {
+    height: 0;
+    width: 1px;
+
+    &--intersecting {
+      display: none;
+    }
+  }
+</style>

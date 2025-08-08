@@ -2,7 +2,6 @@ import "#styles/button.scss";
 import type { QuerySchema } from "../+handler";
 export interface Input {}
 
-<let/isPending=false>
 <let/search=(($global.query as QuerySchema).search || "")>
 
 <on-navigation/gotoPage:=search navKey="search"/>
@@ -26,7 +25,6 @@ export interface Input {}
 
   <button
     class="button"
-    disabled=isPending
     onClick(event) {
       gotoPage(searchParams().get("search") || "")(event);
     }
@@ -37,14 +35,8 @@ export interface Input {}
 
 <output class="example-search-results">
   <fragment
-    isPending:=isPending
-    src=`${$global.url.pathname}/~search?search=${search}`>
-    <@error>
-      <notification level="error">
-        Error retrieving search results
-      </notification>
-    </@error>
-  </fragment>
+    errorMessage="Error retrieving search results"
+    src=`${$global.url.pathname}/~search?search=${search}`/>
 </output>
 
 <style.scss>

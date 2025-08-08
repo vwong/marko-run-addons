@@ -144,4 +144,41 @@ import "#styles/link.scss";
     <example-favorites name="item-d (XHR GET failure)"/>
     <figcaption>Figure 3: Saving user data using form POST</figcaption>
   </figure>
+
+  <h2>Lazy loading</h2>
+
+  <p>
+    Browsers have support for${" "}
+    <code>loading=lazy</code>
+    ${" "}for${" "}
+    <code>&lt;img&gt;</code>
+    ${" "}and${" "}
+    <code>&lt;iframe&gt;</code>
+    ${" "}to lazily load content. But for arbitrary content, we rely on the${" "}
+    <a
+      class="link"
+      href="https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver">
+      Intersection Observer
+    </a>
+    ${" "}which requires Javascript.
+  </p>
+
+  <p>
+    As such, by feature detecting whether JS is present in the browser, the
+    server can selective choose whether to lazy load content.
+  </p>
+
+  <p>
+    Like its${" "}
+    <code>loading=lazy</code>
+    ${" "}cousin, the first few above-the-fold content should be eagerly loaded,
+    as lazy loading requires an additional round-trip time.
+  </p>
+
+  <figure>
+    <example-lazy/>
+    <figcaption>
+      Figure 4: Lazy loading with Javascript, else eager loaded
+    </figcaption>
+  </figure>
 </layout-doc>

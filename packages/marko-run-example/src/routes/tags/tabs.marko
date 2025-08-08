@@ -8,8 +8,6 @@ export interface Input {
   }>;
 }
 
-<let/isPending=false>
-<let/isError=false>
 <let/page=input.current>
 
 <on-navigation/gotoPage:=page navKey=input.navKey/>
@@ -30,15 +28,8 @@ export interface Input {
 
 <div class="tabs__contents">
   <fragment
-    isError:=isError
-    isPending:=isPending
-    src=`${$global.url.pathname}/~tab/${page}`>
-    <@error>
-      <notification level="error">
-        Unable to retrieve tab
-      </notification>
-    </@error>
-  </fragment>
+    errorMessage="Unable to retrieve tab"
+    src=`${$global.url.pathname}/~tab/${page}`/>
 </div>
 
 <style.scss>
