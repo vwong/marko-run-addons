@@ -1,4 +1,4 @@
-import { pickBy } from "lodash-es";
+client import { removeFalseyValues } from "#lib/utils";
 export interface Input {
   errorMessage: string;
   src: MarkoRun.GetPaths;
@@ -14,7 +14,7 @@ server const base = "http://ignored";
         $global.platform,
       )
     : fetch(input.src, {
-        headers: pickBy({
+        headers: removeFalseyValues({
           "Cache-control": $global.isHardReload ? "no-cache" : undefined,
           "X-Nonce": $global.cspNonce,
           "X-Requested-With": "XMLHttpRequest",

@@ -3,10 +3,9 @@ export interface Input {
   ref: () => HTMLElement;
 }
 
-<const/{ ref }=input>
 <let/index=input.index || 0>
 <script>
-  const root = ref();
+  const root = input.ref();
   const items = root.querySelectorAll("a, button");
   const N = items.length;
   root.addEventListener(
@@ -15,10 +14,12 @@ export interface Input {
       switch (event.key) {
         case "ArrowDown":
         case "ArrowRight":
+          event.preventDefault();
           index = (index + 1) % N;
           break;
         case "ArrowUp":
         case "ArrowLeft":
+          event.preventDefault();
           index = (index + N - 1) % N;
           break;
       }
@@ -29,7 +30,7 @@ export interface Input {
   );
 </script>
 <script>
-  const root = ref();
+  const root = input.ref();
   const items = root.querySelectorAll("a, button") as NodeListOf<HTMLElement>;
   for (const el of items) {
     el.setAttribute("tabindex", "-1");

@@ -6,9 +6,7 @@ export interface Input {}
 
 <on-navigation/gotoPage:=search navKey="search"/>
 
-<enhanced-form-get/searchParams
-  action=($global.url.pathname)
-  class="example-search">
+<form/form action=($global.url.pathname) class="example-search">
   <for|key, value| in=$global.query>
     <if=key !== "search">
       <input name=key type="hidden" value=value>
@@ -26,12 +24,14 @@ export interface Input {}
   <button
     class="button"
     onClick(event) {
-      gotoPage(searchParams().get("search") || "")(event);
+      gotoPage(getParams().get("search") || "")(event);
     }
     type="submit">
     Search
   </button>
-</enhanced-form-get>
+</form>
+
+<on-form-data/getParams ref=form/>
 
 <output class="example-search-results">
   <fragment

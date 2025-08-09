@@ -1,0 +1,8 @@
+export interface Input {
+  ref: () => HTMLFormElement;
+}
+
+<return() {
+  const el = input.ref();
+  return new URLSearchParams(new FormData(el) as unknown as URLSearchParams);
+}>

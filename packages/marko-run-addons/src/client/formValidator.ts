@@ -1,5 +1,21 @@
-import { debounce } from "lodash-es";
 import type { ValidationCheck } from "../server/validateInit";
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+function debounce<T extends (...args: any[]) => any>(fn: T, wait: number) {
+  let timeoutId: ReturnType<typeof setTimeout> | null = null;
+
+  return function (this: any, ...args: Parameters<T>) {
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+    }
+
+    timeoutId = setTimeout(() => {
+      timeoutId = null;
+      return fn.apply(this, args);
+    }, wait);
+  };
+}
+/* eslint-enable @typescript-eslint/no-explicit-any */
 
 export interface FormValidatorOptions {
   formEl: HTMLFormElement;

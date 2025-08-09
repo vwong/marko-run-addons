@@ -7,15 +7,10 @@ export interface Input {
 <let/isPending=false>
 <let/isError=false>
 
-<enhanced-form
+<form/form
   action=`${$global.url.pathname}/~favorites/${input.name}`
   class="example-favorites"
-  isError:=isError
-  isPending:=isPending
-  method="POST"
-  onSuccess() {
-    key = Math.random();
-  }>
+  method="POST">
   <csrf-token/>
 
   <button class="button" disabled=isPending type="submit">
@@ -31,7 +26,15 @@ export interface Input {
   <fragment
     errorMessage="Error retrieving updated favorite"
     src=`${$global.url.pathname}/~favorites/${input.name}#${key}`/>
-</enhanced-form>
+</form>
+
+<on-form-submit
+  isError:=isError
+  isPending:=isPending
+  onSuccess() {
+    key = Math.random();
+  }
+  ref=form/>
 
 <style.scss>
   .example-favorites {

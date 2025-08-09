@@ -1,0 +1,54 @@
+export interface Input<T> extends Marko.Input<"form"> {
+  isError?: boolean;
+  isErrorChange?: (value: boolean) => void;
+  isPending?: boolean;
+  isPendingChange?: (value: boolean) => void;
+  onSuccess?: (payload: T) => void;
+  ref: () => HTMLFormElement;
+}
+
+<script>
+  const el = input.ref();
+  el.addEventListener(
+    "submit",
+    (event) => {
+      event.preventDefault();
+      input.isPendingChange?.(true);
+      input.isErrorChange?.(false);
+      const body = new URLSearchParams(
+        new FormData(el) as unknown as URLSearchParams,
+      );
+      const submitter = event.submitter as HTMLButtonElement | undefined;
+      if (submitter?.name) {
+        body.append(submitter.name, submitter.value);
+      }
+      fetch(el.action, {
+        body,
+        credentials: "same-origin",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "X-Requested-With": "XMLHttpRequest",
+        },
+        method: "POST",
+      })
+        .then((response) => {
+          if (response.ok) {
+            if (input.onSuccess) {
+              response.json().then(input.onSuccess);
+            }
+          } else {
+            input.isErrorChange?.(true);
+          }
+        })
+        .catch(() => {
+          input.isErrorChange?.(true);
+        })
+        .finally(() => {
+          input.isPendingChange?.(false);
+        });
+    },
+    {
+      signal: $signal,
+    },
+  );
+</script>

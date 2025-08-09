@@ -3,7 +3,6 @@ export interface Input {
   value: () => void;
 }
 
-<const/{ ref }=input>
 <script>
   const handler = (event: KeyboardEvent) => {
     if (event.key === "Escape") {
@@ -16,7 +15,7 @@ export interface Input {
 </script>
 
 <script>
-  const el = ref();
+  const el = input.ref();
   const handler = (event: MouseEvent | FocusEvent) => {
     if (!el.contains(event.target as Node)) {
       input.value();

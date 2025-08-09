@@ -6,9 +6,8 @@ export interface Input {
   isPendingChange?: (value: boolean) => void;
   ref: () => HTMLFormElement;
 }
-<const/{ ref }=input>
 <script>
-  const formEl = ref();
+  const formEl = input.ref();
   new FormValidator({
     formEl,
     onInputError(el: HTMLInputElement, message: string) {
