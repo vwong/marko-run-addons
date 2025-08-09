@@ -1,9 +1,9 @@
 export interface Input {
   content: Marko.Body;
-  level: "error" | "information" | "success" | "warning";
+  value: "error" | "information" | "success" | "warning";
 }
 
-<div class=`notification notification--${input.level}`>
+<div class=`notification notification--${input.value}`>
   <${input.content}/>
 </div>
 
@@ -14,35 +14,23 @@ export interface Input {
     padding: $v-5 $s-8;
 
     &--error {
-      background-color: light-dark($color-status-error-05, $color-neutral-95);
-      border-color: light-dark($color-status-error-40, $color-status-error-30);
+      background-color: $bg-error-05;
+      border-color: $fg-error-40;
     }
 
     &--information {
-      background-color: light-dark(
-        $color-status-information-05,
-        $color-neutral-95
-      );
-      border-color: light-dark(
-        $color-status-information-40,
-        $color-status-information-30
-      );
+      background-color: $bg-info-05;
+      border-color: $fg-info-40;
     }
 
     &--success {
-      background-color: light-dark($color-status-success-05, $color-neutral-95);
-      border-color: light-dark(
-        $color-status-success-40,
-        $color-status-success-30
-      );
+      background-color: $bg-success-05;
+      border-color: $fg-success-40;
     }
 
     &--warning {
-      background-color: light-dark($color-status-warning-05, $color-neutral-95);
-      border-color: light-dark(
-        $color-status-warning-40,
-        $color-status-warning-30
-      );
+      background-color: $bg-warning-05;
+      border-color: $fg-warning-40;
     }
   }
 </style>

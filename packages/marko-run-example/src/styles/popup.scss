@@ -1,4 +1,4 @@
-$tip-background: $background-color-neutral-90;
+$tip-background: $bg-neutral-90;
 $tip-distance: 0.6rem;
 $tip-size: 0.4rem;
 
@@ -9,7 +9,7 @@ $tip-size: 0.4rem;
   &__overlay {
     background: $tip-background;
     border-radius: $radius-m;
-    color: $foreground-color-neutral-90;
+    color: $fg-neutral-90;
     display: none;
     font-size: $font-size-down-1;
     max-width: 13rem;

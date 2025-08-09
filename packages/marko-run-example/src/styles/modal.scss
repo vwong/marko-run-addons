@@ -1,6 +1,6 @@
 .modal {
-  background: $background-color-neutral-00;
-  border: 1px solid $foreground-color-neutral-60;
+  background: $bg-neutral-00;
+  border: 1px solid $fg-neutral-60;
   border-radius: $radius-m;
   box-shadow: $shadow;
   margin: auto;
@@ -8,6 +8,6 @@
   padding: $s-16;
 
   &::backdrop {
-    background: $background-color-overlay;
+    background: $bg-overlay;
   }
 }

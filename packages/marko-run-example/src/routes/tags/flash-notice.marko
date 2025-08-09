@@ -2,12 +2,12 @@
   <section aria-label="Notices" class="flash">
     <div class="flash-notice">
       <for|{ message, status }| of=($global.flash.current)>
-        <notification level=status>
+        <notification=status>
           ${message}
         </notification>
       </for>
       <for|{ name, message }| of=$global.lastQueryErrors>
-        <notification level="error">
+        <notification="error">
           ${name} ${message}
         </notification>
       </for>
