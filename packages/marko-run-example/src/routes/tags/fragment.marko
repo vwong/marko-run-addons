@@ -52,20 +52,16 @@ server const base = "http://ignored";
     </@catch>
 
     <await|html: string|=loader>
-      <if=globalThis.__marko_run__>
-        <div>$!{html}</div>
-      </if>
-      <else>
-        <div/result/>
-        <script>
-          const fragment = document
-            .createRange()
-            .createContextualFragment(html);
-          const el = result();
-          el.textContent = "";
-          el.append(fragment);
-        </script>
-      </else>
+      <div/result>
+        $!{html}
+      </div>
+
+      <script>
+        const fragment = document.createRange().createContextualFragment(html);
+        const el = result();
+        el.textContent = "";
+        el.append(fragment);
+      </script>
     </await>
   </try>
 </key>
