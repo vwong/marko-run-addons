@@ -1,5 +1,5 @@
 <if=($global.flash.current.length || $global.lastQueryErrors.length)>
-  <section aria-label="Notices" class="flash">
+  <section aria-label="Notices">
     <div class="flash-notice">
       <for|{ message, status }| of=($global.flash.current)>
         <notification=status>
