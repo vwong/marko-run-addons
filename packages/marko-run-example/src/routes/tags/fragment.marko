@@ -31,7 +31,7 @@ server const base = "http://ignored";
     })
     .catch((error) => {
       if (error.name === "AbortError") {
-        return;
+        return "";
       }
       throw error;
     })

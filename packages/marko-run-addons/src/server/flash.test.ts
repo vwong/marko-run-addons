@@ -1,7 +1,12 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import { flash } from "./flash";
 
-type CallableHandler = (context: MarkoRun.Context) => Promise<void>;
+type CallableHandler = (
+  context: MarkoRun.Context,
+  next: () => Response,
+) => Promise<void>;
+
+const next = (status: number) => () => new Response(null, { status });
 
 describe("flash", () => {
   let flashMiddleware: CallableHandler;
@@ -18,7 +23,7 @@ describe("flash", () => {
     });
 
     it("shows previous messages", async () => {
-      await flashMiddleware(context);
+      await flashMiddleware(context, next(200));
 
       expect(context.flash.current).toEqual([
         { status: "success", message: "previous" },
@@ -26,13 +31,22 @@ describe("flash", () => {
     });
 
     it("clears previous messages", async () => {
-      await flashMiddleware(context);
+      await flashMiddleware(context, next(200));
 
       expect(context.flash.next).toEqual([]);
+      expect(context.session._flash).toEqual([]);
+    });
+
+    it("retains messages across redirects", async () => {
+      await flashMiddleware(context, next(302));
+
+      expect(context.session._flash).toEqual([
+        { status: "success", message: "previous" },
+      ]);
     });
 
     it("sets new messages", async () => {
-      await flashMiddleware(context);
+      await flashMiddleware(context, next(200));
 
       context.flash.error("error-message");
       context.flash.information("information-message");
@@ -66,7 +80,7 @@ describe("flash", () => {
     });
 
     it("correctly initialises", async () => {
-      await flashMiddleware(context);
+      await flashMiddleware(context, next(200));
 
       expect(context.flash.next).toEqual([]);
     });

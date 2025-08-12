@@ -40,10 +40,23 @@ export class FlashService {
   }
 }
 
-export const flash = (): MarkoRun.Handler => (context) => {
+export const flash = (): MarkoRun.Handler => async (context, next) => {
+  const previous = context.session._flash;
+
   context.flash = new FlashService({
     session: context.session,
   });
+
+  const response = await next();
+
+  if (response.status === 302) {
+    context.session._flash = [
+      ...(context.session._flash || []),
+      ...(previous || []),
+    ];
+  }
+
+  return response;
 };
 
 declare module "@marko/run" {
