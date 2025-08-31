@@ -469,6 +469,18 @@ declare module "../src/routes/docs/validation/search-params+page.marko" {
   }
 }
 
+declare module "../src/routes/+layout.marko" {
+  export interface Input extends Run.LayoutInput<typeof import("../src/routes/+layout.marko")> {}
+  namespace MarkoRun {
+    export { NotHandled, NotMatched, GetPaths, PostPaths, GetablePath, GetableHref, PostablePath, PostableHref, Platform };
+    export type Route = Run.Routes["/docs" | "/docs/design" | "/docs/dynamic-content" | "/docs/enhancements" | "/docs/enhancements/server" | "/docs/frames" | "/docs/frames/~favorites/$favorite" | "/docs/frames/~lazy/$section" | "/docs/frames/~search" | "/docs/frames/~tab/$tab" | "/docs/hosting" | "/docs/session" | "/docs/session/activity-stack" | "/docs/session/activity-stack/desired/$page" | "/docs/session/activity-stack/interstitial/$step" | "/docs/session/frecency" | "/docs/validation" | "/docs/validation/request-body" | "/docs/validation/search-params"];
+    export type Context = Run.MultiRouteContext<Route> & Marko.Global;
+    export type Handler = Run.HandlerLike<Route>;
+    /** @deprecated use `((context, next) => { ... }) satisfies MarkoRun.Handler` instead */
+    export const route: Run.HandlerTypeFn<Route>;
+  }
+}
+
 declare module "../src/routes/+404.marko" {
   namespace MarkoRun {
     export { NotHandled, NotMatched, GetPaths, PostPaths, GetablePath, GetableHref, PostablePath, PostableHref, Platform };
