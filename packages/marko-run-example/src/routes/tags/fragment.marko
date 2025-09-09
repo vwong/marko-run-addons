@@ -52,15 +52,17 @@ server const base = "http://ignored";
     </@catch>
 
     <await|html: string|=loader>
-      <div/result>
+      <div/result data-src=input.src>
         $!{html}
       </div>
 
       <script>
-        const fragment = document.createRange().createContextualFragment(html);
         const el = result();
+        const range = document.createRange();
+        range.selectNode(el);
+        const fragment = range.createContextualFragment(html);
         el.textContent = "";
-        el.append(fragment);
+        el.appendChild(fragment);
       </script>
     </await>
   </try>

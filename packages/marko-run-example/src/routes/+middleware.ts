@@ -61,7 +61,7 @@ export default [
       context.request.headers.get("X-Requested-With") === "XMLHttpRequest";
 
     if (context.isXHR) {
-      context.renderId = `c-${Math.random()}`;
+      context.renderId = `c${Math.round(100 * Math.random())}`;
     }
 
     context.serializedGlobals.cspNonce = true;
