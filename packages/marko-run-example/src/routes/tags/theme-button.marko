@@ -1,0 +1,16 @@
+export interface Input {
+  disabled: boolean;
+  icon: string;
+  label: string;
+  pressed: boolean;
+  value: string;
+}
+<button
+  aria-label=input.label
+  aria-pressed=(input.pressed ? "true" : "false")
+  disabled=input.disabled
+  name="theme"
+  type="submit"
+  value=input.value>
+  <icon=input.icon/>
+</button>

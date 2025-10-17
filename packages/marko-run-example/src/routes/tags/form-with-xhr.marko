@@ -1,0 +1,47 @@
+export interface Input<T> extends Marko.Input<"form"> {
+  content: Marko.Body;
+  onSuccess: (payload: T) => void;
+}
+
+<let/isPending=false>
+<let/isError=false>
+
+<form
+  ...input
+  onSubmit(event: Event) {
+    event.preventDefault();
+    isPending = true;
+    isError = false;
+    const body = new URLSearchParams(
+      new FormData(this) as unknown as URLSearchParams,
+    );
+    const submitter = event.submitter as HTMLButtonElement | undefined;
+    if (submitter?.name) {
+      body.append(submitter.name, submitter.value);
+    }
+    fetch(this.action, {
+      body,
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "X-Requested-With": "XMLHttpRequest",
+      },
+      method: "POST",
+    })
+      .then((response) => {
+        if (response.ok) {
+          response.json().then(input.onSuccess);
+        } else {
+          isError = true;
+        }
+      })
+      .catch(() => {
+        isError = true;
+      })
+      .finally(() => {
+        isPending = false;
+      });
+  }>
+  <csrf-token/>
+  <${input.content} isError=isError isPending=isPending/>
+</form>

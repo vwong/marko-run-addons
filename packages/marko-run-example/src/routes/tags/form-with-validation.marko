@@ -1,0 +1,42 @@
+import { FormValidator } from "@vwong/marko-run-addons/client";
+export interface Input extends Marko.Input<"form"> {
+  content: Marko.Body;
+}
+
+<let/isPending=false>
+<let/isError=false>
+
+<form/form
+  ...input
+  onSubmit() {
+    isPending = true;
+  }>
+  <csrf-token/>
+  <${input.content} isError=isError isPending=isPending/>
+</form>
+
+<script>
+  const formEl = form();
+  new FormValidator({
+    formEl,
+    onInputError(el: HTMLInputElement, message: string) {
+      const errorElementId = el.getAttribute("aria-errormessage");
+      if (errorElementId) {
+        const errorElement = document.getElementById(errorElementId);
+        errorElement!.innerText = message;
+      }
+    },
+    onInvalid: () => {
+      isPending = false;
+      isError = true;
+    },
+    onPending: () => {
+      isPending = true;
+      isError = false;
+    },
+    onValid: () => {
+      isPending = false;
+      isError = false;
+    },
+  });
+</script>

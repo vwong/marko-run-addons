@@ -2,11 +2,10 @@ import "#styles/button.scss";
 import "#styles/link.scss";
 import type { QuerySchema } from "./search-params+handler";
 
+<let/values=(($global.query || {}) as QuerySchema)>
 <let/errors=Object.fromEntries(
   $global.lastQueryErrors.map(({ name, message }) => [name, message]),
 )>
-<let/isPending=false>
-<let/isError=false>
 
 <layout-doc>
   <h1>Search Params</h1>
@@ -15,7 +14,7 @@ import type { QuerySchema } from "./search-params+handler";
   <p>
     This page validates search parameters. Try negative values to see an error.
   </p>
-  <form/form class="search-form">
+  <form-with-validation|{ isError, isPending }| class="search-form">
     <div>
       <input-field
         data-touched="1"
@@ -23,7 +22,7 @@ import type { QuerySchema } from "./search-params+handler";
         label="Page"
         name="page"
         type="number"
-        value=(($global.query as QuerySchema)?.page)/>
+        value=values.page/>
     </div>
 
     <div>
@@ -31,10 +30,7 @@ import type { QuerySchema } from "./search-params+handler";
         Submit
       </button>
     </div>
-  </form>
-  <p>
-    <on-change-validate isError:=isError isPending:=isPending ref=form/>
-  </p>
+  </form-with-validation>
 
   <h2>With direct links</h2>
   <p>Alternatively, instead of form GETs, we can link URLs directly</p>

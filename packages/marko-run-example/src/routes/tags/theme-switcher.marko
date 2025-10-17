@@ -1,38 +1,39 @@
 export interface Input {
   theme?: string;
 }
-static interface Theme {
-  icon: string;
-  label: string;
-  value: string;
+static interface FormBody {
+  theme: string;
 }
 
-<define/ThemeButton|{ icon, label, value }: Theme|>
-  <button
-    aria-label=label
-    aria-pressed=(theme === value ? "true" : "false")
-    name="theme"
-    type="submit"
-    value=value>
-    <icon=icon/>
-  </button>
-</define>
 <let/theme=input.theme || "">
 
-<form/form action="/docs/~theme" class="theme-switcher" method="POST">
-  <csrf-token/>
-  <label>Theme</label>
-  <ThemeButton icon="sun" label="Light theme" value="light"/>
-  <ThemeButton icon="moon" label="Dark theme" value="dark"/>
-  <ThemeButton icon="monitor" label="System theme" value=""/>
-</form>
-
-<on-form-submit
-  onSuccess({ theme: newTheme }: { theme: string }) {
-    theme = newTheme;
-  }
-  ref=form/>
-<on-keyboard-arrows ref=form/>
+<form-with-xhr|{ isPending }|
+  action="/docs/~theme"
+  class="theme-switcher"
+  method="POST"
+  onSuccess(body: FormBody) {
+    theme = body.theme;
+  }>
+  <label>Theme ${isPending ? "pending" : "idle"}</label>
+  <theme-button
+    disabled=isPending
+    icon="sun"
+    label="Light theme"
+    pressed=theme === "light"
+    value="light"/>
+  <theme-button
+    disabled=isPending
+    icon="moon"
+    label="Dark theme"
+    pressed=theme === "dark"
+    value="dark"/>
+  <theme-button
+    disabled=isPending
+    icon="monitor"
+    label="System theme"
+    pressed=theme === ""
+    value=""/>
+</form-with-xhr>
 
 <script>
   const update = () => {

@@ -1,11 +1,10 @@
 import type { BodySchema } from "./request-body+handler";
 import "#styles/button.scss";
 
+<let/values=(($global.lastBody || {}) as BodySchema)>
 <let/errors=Object.fromEntries(
   $global.lastBodyErrors.map(({ name, message }) => [name, message]),
 )>
-<let/isPending=false>
-<let/isError=false>
 
 <layout-doc>
   <h1>Request Body</h1>
@@ -15,8 +14,10 @@ import "#styles/button.scss";
     This uses native form POST submissions. It will fail server-side validation
     when the count is greater than 5.
   </p>
-  <form/form class="count-form" method="POST">
-    <csrf-token/>
+
+  <form-with-validation|{ isError, isPending }|
+    class="count-form"
+    method="POST">
     <div>
       <input-field
         error=errors.count
@@ -25,7 +26,7 @@ import "#styles/button.scss";
         required
         title=" "
         type="number"
-        value=(($global.lastBody as BodySchema)?.count || 0)/>
+        value=values.count || 0/>
     </div>
 
     <div>
@@ -35,7 +36,7 @@ import "#styles/button.scss";
         name="count2"
         required
         type="number"
-        value=(($global.lastBody as BodySchema)?.count2 || 0)/>
+        value=values.count2 || 0/>
     </div>
 
     <div>
@@ -43,10 +44,7 @@ import "#styles/button.scss";
         Submit
       </button>
     </div>
-  </form>
-  <p>
-    <on-change-validate isError:=isError isPending:=isPending ref=form/>
-  </p>
+  </form-with-validation>
 </layout-doc>
 
 <style.scss>
