@@ -6,27 +6,25 @@ static interface Theme {
   label: string;
   value: string;
 }
-static const themes: Theme[] = [
-  { icon: "sun", label: "Light theme", value: "light" },
-  { icon: "moon", label: "Dark theme", value: "dark" },
-  { icon: "monitor", label: "System theme", value: "" },
-];
+
+<define/ThemeButton|{ icon, label, value }: Theme|>
+  <button
+    aria-label=label
+    aria-pressed=(theme === value ? "true" : "false")
+    name="theme"
+    type="submit"
+    value=value>
+    <icon=icon/>
+  </button>
+</define>
 <let/theme=input.theme || "">
-<let/index=themes.findIndex((t) => t.value === theme)>
 
 <form/form action="/docs/~theme" class="theme-switcher" method="POST">
   <csrf-token/>
   <label>Theme</label>
-  <for|{ icon, label, value }: Theme| of=themes>
-    <button
-      aria-label=label
-      aria-pressed=(theme === value ? "true" : "false")
-      name="theme"
-      type="submit"
-      value=value>
-      <icon=icon/>
-    </button>
-  </for>
+  <ThemeButton icon="sun" label="Light theme" value="light"/>
+  <ThemeButton icon="moon" label="Dark theme" value="dark"/>
+  <ThemeButton icon="monitor" label="System theme" value=""/>
 </form>
 
 <on-form-submit
@@ -34,7 +32,7 @@ static const themes: Theme[] = [
     theme = newTheme;
   }
   ref=form/>
-<on-keyboard-arrows index=index ref=form/>
+<on-keyboard-arrows ref=form/>
 
 <script>
   const update = () => {

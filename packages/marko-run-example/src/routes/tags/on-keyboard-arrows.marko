@@ -1,9 +1,8 @@
 export interface Input {
-  index?: number;
   ref: () => HTMLElement;
 }
 
-<let/index=input.index || 0>
+<let/index=0>
 <script>
   const root = input.ref();
   const items = root.querySelectorAll("a, button");
@@ -36,6 +35,6 @@ export interface Input {
     el.setAttribute("tabindex", "-1");
   }
   const el = items[index];
-  el.setAttribute("tabindex", "0");
-  el.focus();
+  el?.setAttribute("tabindex", "0");
+  el?.focus();
 </script>
