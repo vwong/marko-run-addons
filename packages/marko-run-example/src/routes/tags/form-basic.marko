@@ -1,0 +1,8 @@
+export interface Input extends Marko.Input<"form"> {}
+
+<form ...input>
+  <if=(input.method === "POST")>
+    <csrf-token/>
+  </if>
+  <${input.content}/>
+</form>

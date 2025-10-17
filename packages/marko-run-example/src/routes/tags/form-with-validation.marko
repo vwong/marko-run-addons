@@ -1,7 +1,7 @@
 import { FormValidator } from "@vwong/marko-run-addons/client";
-export interface Input extends Marko.Input<"form"> {
-  content: Marko.Body;
-}
+export type Input = Omit<Marko.Input<"form">, "content"> & {
+  content: Marko.Body<[{ isError: boolean; isPending: boolean; }]>;
+};
 
 <let/isPending=false>
 <let/isError=false>
@@ -16,9 +16,8 @@ export interface Input extends Marko.Input<"form"> {
 </form>
 
 <script>
-  const formEl = form();
   new FormValidator({
-    formEl,
+    formEl: form(),
     onInputError(el: HTMLInputElement, message: string) {
       const errorElementId = el.getAttribute("aria-errormessage");
       if (errorElementId) {

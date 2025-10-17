@@ -1,25 +1,27 @@
-export interface Input<T> extends Marko.Input<"form"> {
-  content: Marko.Body;
+export type Input<T> = Omit<Marko.Input<"form">, "content"> & {
+  content: Marko.Body<[{ isError: boolean; isPending: boolean; }]>;
   onSuccess: (payload: T) => void;
-}
+};
 
 <let/isPending=false>
 <let/isError=false>
 
 <form
   ...input
-  onSubmit(event: Event) {
+  onSubmit(event: SubmitEvent) {
     event.preventDefault();
     isPending = true;
     isError = false;
     const body = new URLSearchParams(
-      new FormData(this) as unknown as URLSearchParams,
+      new FormData(
+        this as unknown as HTMLFormElement,
+      ) as unknown as URLSearchParams,
     );
     const submitter = event.submitter as HTMLButtonElement | undefined;
     if (submitter?.name) {
       body.append(submitter.name, submitter.value);
     }
-    fetch(this.action, {
+    fetch(this.action as string, {
       body,
       credentials: "same-origin",
       headers: {

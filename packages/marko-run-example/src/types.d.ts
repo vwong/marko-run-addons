@@ -4,7 +4,6 @@ declare module "@marko/run" {
   interface Context {
     contents: Contents;
     cspNonce: string;
-    csrfToken: string;
     isHardReload: boolean;
     isXHR: boolean;
     loader: unknown;

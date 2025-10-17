@@ -53,7 +53,6 @@ export default [
     context.cspNonce =
       context.request.headers.get("X-Nonce") ||
       randomBytes(16).toString("base64");
-    context.csrfToken = context.csrf.current;
     context.isHardReload =
       context.request.headers.get("Pragma") === "no-cache" || // Safari, Firefox
       context.request.headers.get("Cache-control") === "no-cache"; // Chrome
@@ -65,7 +64,6 @@ export default [
     }
 
     context.serializedGlobals.cspNonce = true;
-    context.serializedGlobals.csrfToken = true;
     context.serializedGlobals.isHardReload = true;
 
     const response = await next();

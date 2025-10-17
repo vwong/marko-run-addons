@@ -4,10 +4,9 @@ import "#styles/button.scss";
   <if=Number($global.params.step) === 100>
     <p>This is a dynamically added interstitital.</p>
   </if>
-  <form method="POST">
-    <csrf-token/>
+  <form-basic method="POST">
     <button class="button" type="submit">
       Next
     </button>
-  </form>
+  </form-basic>
 </layout-doc>

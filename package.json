@@ -2,10 +2,11 @@
   "name": "@marko/run-addons",
   "private": true,
   "devDependencies": {
-    "@eslint/js": "^9.37.0",
+    "@eslint/js": "^9.38.0",
+    "@marko/run": "^0.9.2",
     "@marko/type-check": "^2.1.6",
     "@vitest/coverage-v8": "^3.2.4",
-    "eslint": "^9.37.0",
+    "eslint": "^9.38.0",
     "eslint-config-prettier": "^10.1.8",
     "globals": "^16.4.0",
     "prettier": "^3.6.2",
