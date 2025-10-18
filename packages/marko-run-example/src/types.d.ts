@@ -7,7 +7,6 @@ declare module "@marko/run" {
     isHardReload: boolean;
     isXHR: boolean;
     loader: unknown;
-    renderId: string;
   }
 }
 

@@ -49,19 +49,15 @@ export default [
   validateInit(validator),
   clientJs(),
   async (context, next) => {
+    const { headers } = context.request;
+
     context.contents = new Contents();
     context.cspNonce =
-      context.request.headers.get("X-Nonce") ||
-      randomBytes(16).toString("base64");
+      headers.get("X-Nonce") || randomBytes(16).toString("base64");
     context.isHardReload =
-      context.request.headers.get("Pragma") === "no-cache" || // Safari, Firefox
-      context.request.headers.get("Cache-control") === "no-cache"; // Chrome
-    context.isXHR =
-      context.request.headers.get("X-Requested-With") === "XMLHttpRequest";
-
-    if (context.isXHR) {
-      context.renderId = `c${Math.round(100 * Math.random())}`;
-    }
+      headers.get("Pragma") === "no-cache" || // Safari, Firefox
+      headers.get("Cache-control") === "no-cache"; // Chrome
+    context.isXHR = headers.get("X-Requested-With") === "XMLHttpRequest";
 
     context.serializedGlobals.cspNonce = true;
     context.serializedGlobals.isHardReload = true;

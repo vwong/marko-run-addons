@@ -5,30 +5,36 @@ export interface Input {
 
 <let/key=0>
 
-<form-with-xhr|{ isError, isPending }|
-  action=`${$global.url.pathname}/~favorites/${input.name}`
-  class="example-favorites"
-  method="POST"
-  onSuccess() {
-    key = Math.random();
-  }>
-  <button class="button" disabled=isPending type="submit">
-    Favorite ${input.name}
-  </button>
+<div class="example-favorites inlined">
+  <form-with-xhr|{ isError, isPending }|
+    action=`${$global.url.pathname}/~favorites/${input.name}`
+    class="inlined"
+    method="POST"
+    onSuccess() {
+      key = Math.random();
+    }>
+    <button class="button" disabled=isPending type="submit">
+      Favorite ${input.name}
+    </button>
 
-  <if=isError>
-    <notification="error">
-      Error incrementing favorite
-    </notification>
-  </if>
+    <if=isError>
+      <notification="error">
+        Error incrementing favorite
+      </notification>
+    </if>
+  </form-with-xhr>
 
   <fragment
     errorMessage="Error retrieving updated favorite"
     src=`${$global.url.pathname}/~favorites/${input.name}#${key}`/>
-</form-with-xhr>
+</div>
 
 <style.scss>
   .example-favorites {
+    margin-top: $v-10;
+  }
+
+  .inlined {
     align-items: center;
     display: flex;
     gap: $s-8;
