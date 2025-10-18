@@ -21,8 +21,9 @@ import "#styles/link.scss";
 </define>
 
 <id/heading>
+<let/open=false>
 <div/popup class="navigation">
-  <details/details>
+  <details open:=open>
     <summary class="button button--circle navigation__button" id=heading>
       <icon="menu" title="Menu"/>
     </summary>
@@ -34,7 +35,7 @@ import "#styles/link.scss";
 </div>
 <on-keyboard-arrows ref=popup/>
 <on-blur() {
-  details().open = false;
+  open = false;
 } ref=popup/>
 
 <style.scss>

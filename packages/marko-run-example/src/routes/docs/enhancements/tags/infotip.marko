@@ -4,14 +4,15 @@ export interface Input {
 }
 
 <let/isMouse=false>
+<let/open=false>
 <div/popup class="popup">
-  <details/details>
+  <details open:=open>
     <summary
       class="popup-icon"
       onPointerEnter(event: PointerEvent) {
         if (event.pointerType === "mouse") {
           isMouse = true;
-          details().open = true;
+          open = true;
         }
       }
       onClick(event: PointerEvent) {
@@ -22,7 +23,7 @@ export interface Input {
       onPointerLeave() {
         if (isMouse) {
           isMouse = false;
-          details().open = false;
+          open = false;
         }
       }>
       <icon="info" title="Help"/>
@@ -33,7 +34,7 @@ export interface Input {
   </div>
 </div>
 <on-blur() {
-  details().open = false;
+  open = false;
 } ref=popup/>
 
 <style.scss>
