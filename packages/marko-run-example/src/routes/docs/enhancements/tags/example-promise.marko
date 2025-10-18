@@ -6,17 +6,19 @@ export interface Input {
 <try>
   <if=$global.hasClientJs>
     <@placeholder>
-      <p>
+      <notification="information">
         <loader/>
-      </p>
+      </notification>
     </@placeholder>
   </if>
   <@catch>
     <notification="error">
-      Error generating fragment
+      Fragment Error
     </notification>
   </@catch>
   <await|_|=input.value>
-    <p>${input.message}</p>
+    <notification="success">
+      ${input.message}
+    </notification>
   </await>
 </try>

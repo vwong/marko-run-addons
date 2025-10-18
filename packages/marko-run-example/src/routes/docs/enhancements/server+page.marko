@@ -21,9 +21,10 @@ import type { Loader } from "./server+handler";
     ${" "}does not actually change.
   </p>
 
-  <example-promise=loader.promise1 message="First result"/>
-
-  <example-promise=loader.promise2 message="Second result"/>
+  <div class="promises">
+    <example-promise=loader.promise1 message="First result"/>
+    <example-promise=loader.promise2 message="Second result"/>
+  </div>
 
   <p>
     But content proceeding it may appear immediately if client JS is available.
@@ -53,3 +54,11 @@ import type { Loader } from "./server+handler";
     Static 404
   </a>
 </layout-doc>
+
+<style.scss>
+  .promises {
+    display: flex;
+    gap: $s-8;
+    margin-top: $v-10;
+  }
+</style>
