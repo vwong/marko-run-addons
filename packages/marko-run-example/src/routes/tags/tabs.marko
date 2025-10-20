@@ -27,9 +27,16 @@ export interface Input {
 </ul>
 
 <div class="tabs__contents">
-  <fragment
-    errorMessage="Unable to retrieve tab"
-    src=`${$global.url.pathname}/~tab/${page}`/>
+  <lazy-html src=`${$global.url.pathname}/~tab/${page}`>
+    <@placeholder>
+      <loader/>
+    </@placeholder>
+    <@catch>
+      <notification="error">
+        Unable to retrieve tab
+      </notification>
+    </@catch>
+  </lazy-html>
 </div>
 
 <style.scss>

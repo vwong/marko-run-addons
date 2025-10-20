@@ -34,9 +34,16 @@ export interface Input {}
 </form>
 
 <output class="example-search-results">
-  <fragment
-    errorMessage="Error retrieving search results"
-    src=`${$global.url.pathname}/~search?search=${search}`/>
+  <lazy-html src=`${$global.url.pathname}/~search?search=${search}`>
+    <@placeholder>
+      <loader/>
+    </@placeholder>
+    <@catch>
+      <notification="error">
+        Error retrieving search results
+      </notification>
+    </@catch>
+  </lazy-html>
 </output>
 
 <style.scss>

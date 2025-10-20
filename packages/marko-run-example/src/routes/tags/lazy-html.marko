@@ -1,0 +1,71 @@
+client import { removeFalseyValues } from "#lib/utils";
+export interface Input {
+  catch: Marko.AttrTag<{ content: Marko.Body<[unknown]> }>;
+  placeholder?: Marko.AttrTag<{ content: Marko.Body }>;
+  src: MarkoRun.GetPaths;
+}
+server const base = "http://ignored";
+
+<const/loader=(
+  (globalThis.__marko_run__
+    ? globalThis.__marko_run__.fetch(
+        new Request(`${base}${input.src}`, {
+          headers: {
+            ...$global.request.headers,
+            "X-Nonce": $global.cspNonce,
+          },
+        }),
+        $global.platform,
+      )
+    : fetch(input.src, {
+        headers: removeFalseyValues({
+          "Cache-control": $global.isHardReload ? "no-cache" : undefined,
+          "X-Nonce": $global.cspNonce,
+          "X-Requested-With": "XMLHttpRequest",
+        }) as HeadersInit,
+        signal: $signal,
+      })
+  )
+    .then((response) => {
+      if (response?.ok) {
+        return response.text();
+      } else {
+        throw new Error(`Error fetching ${input.src}`);
+      }
+    })
+    .catch((error) => {
+      if (error.name === "AbortError") {
+        return "";
+      }
+      throw error;
+    })
+)>
+
+<key=input.src>
+  <try>
+    <if=(!globalThis.__marko_run__ || $global.hasClientJs) && input.placeholder>
+      <@placeholder>
+        <${input.placeholder}/>
+      </@placeholder>
+    </if>
+
+    <@catch|error: unknown|>
+      <${input.catch}(error)/>
+    </@catch>
+
+    <await|html: string|=loader>
+      <div/result data-src=input.src>
+        $!{html}
+      </div>
+
+      <script>
+        const el = result();
+        const range = document.createRange();
+        range.selectNode(el);
+        const fragment = range.createContextualFragment(html);
+        el.textContent = "";
+        el.appendChild(fragment);
+      </script>
+    </await>
+  </try>
+</key>

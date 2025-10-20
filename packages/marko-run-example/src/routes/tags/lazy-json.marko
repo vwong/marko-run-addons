@@ -1,6 +1,8 @@
 client import { removeFalseyValues } from "#lib/utils";
-export interface Input {
-  errorMessage: string;
+export interface Input<T> {
+  catch: Marko.AttrTag<{ content: Marko.Body<[unknown]> }>;
+  content: Marko.Body<[T]>;
+  placeholder?: Marko.AttrTag<{ content: Marko.Body }>;
   src: MarkoRun.GetPaths;
 }
 server const base = "http://ignored";
@@ -9,17 +11,13 @@ server const base = "http://ignored";
   (globalThis.__marko_run__
     ? globalThis.__marko_run__.fetch(
         new Request(`${base}${input.src}`, {
-          headers: {
-            ...$global.request.headers,
-            "X-Nonce": $global.cspNonce,
-          },
+          headers: $global.request.headers,
         }),
         $global.platform,
       )
     : fetch(input.src, {
         headers: removeFalseyValues({
           "Cache-control": $global.isHardReload ? "no-cache" : undefined,
-          "X-Nonce": $global.cspNonce,
           "X-Requested-With": "XMLHttpRequest",
         }) as HeadersInit,
         signal: $signal,
@@ -27,7 +25,7 @@ server const base = "http://ignored";
   )
     .then((response) => {
       if (response?.ok) {
-        return response.text();
+        return response.json();
       } else {
         throw new Error(`Error fetching ${input.src}`);
       }
@@ -42,31 +40,18 @@ server const base = "http://ignored";
 
 <key=input.src>
   <try>
-    <if=!globalThis.__marko_run__ || $global.hasClientJs>
+    <if=(!globalThis.__marko_run__ || $global.hasClientJs) && input.placeholder>
       <@placeholder>
-        <loader/>
+        <${input.placeholder}/>
       </@placeholder>
     </if>
 
-    <@catch>
-      <notification="error">
-        ${input.errorMessage}
-      </notification>
+    <@catch|error: unknown|>
+      <${input.catch}(error)/>
     </@catch>
 
-    <await|html: string|=loader>
-      <div/result data-src=input.src>
-        $!{html}
-      </div>
-
-      <script>
-        const el = result();
-        const range = document.createRange();
-        range.selectNode(el);
-        const fragment = range.createContextualFragment(html);
-        el.textContent = "";
-        el.appendChild(fragment);
-      </script>
+    <await|payload|=loader>
+      <${input.content}(payload)/>
     </await>
   </try>
 </key>

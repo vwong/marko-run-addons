@@ -24,9 +24,16 @@ export interface Input {
     </if>
   </form-with-xhr>
 
-  <fragment
-    errorMessage="Error retrieving updated favorite"
-    src=`${$global.url.pathname}/~favorites/${input.name}#${key}`/>
+  <lazy-html src=`${$global.url.pathname}/~favorites/${input.name}#${key}`>
+    <@placeholder>
+      <loader/>
+    </@placeholder>
+    <@catch>
+      <notification="error">
+        Error retrieving updated favorite
+      </notification>
+    </@catch>
+  </lazy-html>
 </div>
 
 <style.scss>

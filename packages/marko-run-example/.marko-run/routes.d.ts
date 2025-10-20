@@ -24,7 +24,8 @@ declare module "@marko/run" {
 			"/docs/enhancements/server-500": { verb: "get"; };
 			"/docs/frames": { verb: "get"; };
 			"/docs/frames/~favorites/$favorite": { verb: "get" | "post"; };
-			"/docs/frames/~lazy/$section": { verb: "get"; };
+			"/docs/frames/~lazy-html/$section": { verb: "get"; };
+			"/docs/frames/~lazy-json/$section": { verb: "get"; };
 			"/docs/frames/~search": { verb: "get"; };
 			"/docs/frames/~tab/$tab": { verb: "get"; };
 			"/docs/hosting": { verb: "get"; };
@@ -128,10 +129,21 @@ declare module "../src/routes/docs/frames/~favorites.$favorite+handler" {
   }
 }
 
-declare module "../src/routes/docs/frames/~lazy.$section+handler" {
+declare module "../src/routes/docs/frames/~lazy-html.$section+handler" {
   namespace MarkoRun {
     export { NotHandled, NotMatched, GetPaths, PostPaths, GetablePath, GetableHref, PostablePath, PostableHref, Platform };
-    export type Route = Run.Routes["/docs/frames/~lazy/$section"];
+    export type Route = Run.Routes["/docs/frames/~lazy-html/$section"];
+    export type Context = Run.MultiRouteContext<Route>;
+    export type Handler = Run.HandlerLike<Route>;
+    /** @deprecated use `((context, next) => { ... }) satisfies MarkoRun.Handler` instead */
+    export const route: Run.HandlerTypeFn<Route>;
+  }
+}
+
+declare module "../src/routes/docs/frames/~lazy-json.$section+handler" {
+  namespace MarkoRun {
+    export { NotHandled, NotMatched, GetPaths, PostPaths, GetablePath, GetableHref, PostablePath, PostableHref, Platform };
+    export type Route = Run.Routes["/docs/frames/~lazy-json/$section"];
     export type Context = Run.MultiRouteContext<Route>;
     export type Handler = Run.HandlerLike<Route>;
     /** @deprecated use `((context, next) => { ... }) satisfies MarkoRun.Handler` instead */
@@ -230,7 +242,7 @@ declare module "../src/routes/docs/validation/search-params+handler" {
 declare module "../src/routes/+middleware" {
   namespace MarkoRun {
     export { NotHandled, NotMatched, GetPaths, PostPaths, GetablePath, GetableHref, PostablePath, PostableHref, Platform };
-    export type Route = Run.Routes["/" | "/$$" | "/docs" | "/docs/~theme" | "/docs/design" | "/docs/dynamic-content" | "/docs/enhancements" | "/docs/enhancements/server" | "/docs/enhancements/server-404" | "/docs/enhancements/server-500" | "/docs/frames" | "/docs/frames/~favorites/$favorite" | "/docs/frames/~lazy/$section" | "/docs/frames/~search" | "/docs/frames/~tab/$tab" | "/docs/hosting" | "/docs/session" | "/docs/session/activity-stack" | "/docs/session/activity-stack/desired/$page" | "/docs/session/activity-stack/interstitial/$step" | "/docs/session/frecency" | "/docs/validation" | "/docs/validation/request-body" | "/docs/validation/search-params"];
+    export type Route = Run.Routes["/" | "/$$" | "/docs" | "/docs/~theme" | "/docs/design" | "/docs/dynamic-content" | "/docs/enhancements" | "/docs/enhancements/server" | "/docs/enhancements/server-404" | "/docs/enhancements/server-500" | "/docs/frames" | "/docs/frames/~favorites/$favorite" | "/docs/frames/~lazy-html/$section" | "/docs/frames/~lazy-json/$section" | "/docs/frames/~search" | "/docs/frames/~tab/$tab" | "/docs/hosting" | "/docs/session" | "/docs/session/activity-stack" | "/docs/session/activity-stack/desired/$page" | "/docs/session/activity-stack/interstitial/$step" | "/docs/session/frecency" | "/docs/validation" | "/docs/validation/request-body" | "/docs/validation/search-params"];
     export type Context = Run.MultiRouteContext<Route>;
     export type Handler = Run.HandlerLike<Route>;
     /** @deprecated use `((context, next) => { ... }) satisfies MarkoRun.Handler` instead */
@@ -337,10 +349,10 @@ declare module "../src/routes/docs/frames/~favorites.$favorite+page.marko" {
   }
 }
 
-declare module "../src/routes/docs/frames/~lazy.$section+page.marko" {
+declare module "../src/routes/docs/frames/~lazy-html.$section+page.marko" {
   namespace MarkoRun {
     export { NotHandled, NotMatched, GetPaths, PostPaths, GetablePath, GetableHref, PostablePath, PostableHref, Platform };
-    export type Route = Run.Routes["/docs/frames/~lazy/$section"];
+    export type Route = Run.Routes["/docs/frames/~lazy-html/$section"];
     export type Context = Run.MultiRouteContext<Route> & Marko.Global;
     export type Handler = Run.HandlerLike<Route>;
     /** @deprecated use `((context, next) => { ... }) satisfies MarkoRun.Handler` instead */
@@ -473,7 +485,7 @@ declare module "../src/routes/+layout.marko" {
   export interface Input extends Run.LayoutInput<typeof import("../src/routes/+layout.marko")> {}
   namespace MarkoRun {
     export { NotHandled, NotMatched, GetPaths, PostPaths, GetablePath, GetableHref, PostablePath, PostableHref, Platform };
-    export type Route = Run.Routes["/docs" | "/docs/design" | "/docs/dynamic-content" | "/docs/enhancements" | "/docs/enhancements/server" | "/docs/frames" | "/docs/frames/~favorites/$favorite" | "/docs/frames/~lazy/$section" | "/docs/frames/~search" | "/docs/frames/~tab/$tab" | "/docs/hosting" | "/docs/session" | "/docs/session/activity-stack" | "/docs/session/activity-stack/desired/$page" | "/docs/session/activity-stack/interstitial/$step" | "/docs/session/frecency" | "/docs/validation" | "/docs/validation/request-body" | "/docs/validation/search-params"];
+    export type Route = Run.Routes["/docs" | "/docs/design" | "/docs/dynamic-content" | "/docs/enhancements" | "/docs/enhancements/server" | "/docs/frames" | "/docs/frames/~favorites/$favorite" | "/docs/frames/~lazy-html/$section" | "/docs/frames/~search" | "/docs/frames/~tab/$tab" | "/docs/hosting" | "/docs/session" | "/docs/session/activity-stack" | "/docs/session/activity-stack/desired/$page" | "/docs/session/activity-stack/interstitial/$step" | "/docs/session/frecency" | "/docs/validation" | "/docs/validation/request-body" | "/docs/validation/search-params"];
     export type Context = Run.MultiRouteContext<Route> & Marko.Global;
     export type Handler = Run.HandlerLike<Route>;
     /** @deprecated use `((context, next) => { ... }) satisfies MarkoRun.Handler` instead */

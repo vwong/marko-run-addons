@@ -19,7 +19,7 @@ export const GET = [
 
     await sleep(delay!);
 
-    if (context.isXHR && section === "10") {
+    if (context.isXHR && section === "6") {
       return badRequest({});
     }
   },

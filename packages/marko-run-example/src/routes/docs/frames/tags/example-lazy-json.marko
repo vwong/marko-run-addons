@@ -1,0 +1,42 @@
+import OnIntersection from "<on-intersection>";
+static interface Payload {
+  number: number;
+}
+
+<div class="lazy-json">
+  <for|num| to=7>
+    <div class="lazy-json__section">
+      <${$global.hasClientJs && num >= 4 ? OnIntersection : null}>
+        <const/delay=500 + 1000 * Math.random()>
+        <lazy-json|
+          value: Payload,
+        | src=`${$global.url.pathname}/~lazy-json/${num}?delay=${delay}`>
+          <@placeholder>
+            <loader/>
+          </@placeholder>
+          <@catch>
+            <notification="error">
+              Error retrieving
+            </notification>
+          </@catch>
+          <code>${value.number}</code>
+        </lazy-json>
+      </>
+    </div>
+  </for>
+</div>
+
+<style.scss>
+  .lazy-json {
+    display: grid;
+    gap: $v-5;
+    grid-template-columns: 1fr 1fr;
+
+    &__section {
+      border: 1px solid $fg-neutral-60;
+      border-radius: $radius-m $radius-m 0 0;
+      height: $v-50;
+      padding: $v-10 $s-16;
+    }
+  }
+</style>

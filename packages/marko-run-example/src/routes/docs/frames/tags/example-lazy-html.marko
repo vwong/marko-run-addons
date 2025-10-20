@@ -1,0 +1,36 @@
+import OnIntersection from "<on-intersection>";
+
+<div class="lazy-html">
+  <for|num| from=0 to=7>
+    <div class="lazy-html__section">
+      <${$global.hasClientJs && num >= 4 ? OnIntersection : null}>
+        <const/delay=500 + 1000 * Math.random()>
+        <lazy-html src=`${$global.url.pathname}/~lazy-html/${num}?delay=${delay}`>
+          <@placeholder>
+            <loader/>
+          </@placeholder>
+          <@catch>
+            <notification="error">
+              Error retrieving
+            </notification>
+          </@catch>
+        </lazy-html>
+      </>
+    </div>
+  </for>
+</div>
+
+<style.scss>
+  .lazy-html {
+    display: grid;
+    gap: $v-5;
+    grid-template-columns: 1fr 1fr;
+
+    &__section {
+      border: 1px solid $fg-neutral-60;
+      border-radius: $radius-m $radius-m 0 0;
+      height: $v-50;
+      padding: $v-10 $s-16;
+    }
+  }
+</style>
