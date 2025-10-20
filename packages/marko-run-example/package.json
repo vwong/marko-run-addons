@@ -17,7 +17,7 @@
     "compression": "^1.8.1",
     "express": "^5.1.0",
     "lodash-es": "^4.17.21",
-    "marko": "^6.0.91"
+    "marko": "^6.0.92"
   },
   "devDependencies": {
     "@types/compression": "^1.8.1",
