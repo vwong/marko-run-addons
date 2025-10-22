@@ -11,7 +11,7 @@ server const base = "http://ignored";
     ? globalThis.__marko_run__.fetch(
         new Request(`${base}${input.src}`, {
           headers: {
-            ...$global.request.headers,
+            ...Object.fromEntries($global.request.headers.entries()),
             "X-Nonce": $global.cspNonce,
           },
         }),
