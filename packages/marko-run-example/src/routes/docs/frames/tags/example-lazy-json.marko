@@ -8,19 +8,21 @@ static interface Payload {
     <div class="lazy-json__section">
       <${$global.hasClientJs && num >= 4 ? OnIntersection : null}>
         <const/delay=500 + 1000 * Math.random()>
-        <lazy-json|
-          value: Payload,
-        | src=`${$global.url.pathname}/~lazy-json/${num}?delay=${delay}`>
-          <@placeholder>
-            <loader/>
-          </@placeholder>
-          <@catch>
-            <notification="error">
-              Error retrieving
-            </notification>
-          </@catch>
-          <code>${value.number}</code>
-        </lazy-json>
+        <await|RenderLazy|=import("<render-lazy>")>
+          <lazy-json|
+            value: Payload,
+          | src=`${$global.url.pathname}/~lazy-json/${num}?delay=${delay}`>
+            <@placeholder>
+              <loader/>
+            </@placeholder>
+            <@catch>
+              <notification="error">
+                Error retrieving
+              </notification>
+            </@catch>
+            <RenderLazy number=value.number/>
+          </lazy-json>
+        </await>
       </>
     </div>
   </for>
