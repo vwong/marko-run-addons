@@ -1,0 +1,53 @@
+import type { Page } from "#lib/contents";
+import "#styles/button.scss";
+import "#styles/link.scss";
+
+<define/Navlist|{ contents }: { contents: Page[] }|>
+  <ul>
+    <for|{ contents: innerContents, href, text }: Page| of=contents>
+      <li>
+        <a
+          aria-current=(href === $global.url.pathname ? "page" : undefined)
+          class="link"
+          href=href>
+          ${text}
+        </a>
+        <if=innerContents>
+          <Navlist contents=innerContents/>
+        </if>
+      </li>
+    </for>
+  </ul>
+</define>
+
+<id/popoverId>
+<button class="button" popovertarget=popoverId>
+  <icon="menu" title="Menu"/>
+</button>
+
+<div/popup aria-description="Menu" class="contents-menu" id=popoverId popover>
+  <Navlist contents=($global.contents.toc)/>
+</div>
+
+<on-keyboard-arrows ref=popup/>
+<on-blur() {
+  popup().hidePopover();
+} ref=popup/>
+
+<style.scss>
+  .contents-menu {
+    background: $bg-neutral-00;
+    border: 1px solid $fg-neutral-90;
+    border-radius: $radius-m;
+    box-shadow: $shadow;
+    padding: $v-10 $s-16;
+
+    &:popover-open {
+      height: calc(100vh - $v-40 - $s-16);
+      left: $s-8;
+      max-width: 100%;
+      top: $v-40 + $s-8;
+      width: 20rem;
+    }
+  }
+</style>

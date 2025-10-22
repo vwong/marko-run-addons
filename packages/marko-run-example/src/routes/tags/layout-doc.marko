@@ -16,9 +16,9 @@ export interface Input {
     </if>
   </head>
   <body>
-    <contents-table/>
     <div class="layout">
       <div class="layout__head">
+        <contents-menu/>
         <theme-switcher theme=($global.session.theme)/>
       </div>
       <div class="layout__body">
@@ -41,11 +41,12 @@ export interface Input {
     &__head {
       background: $bg-neutral-00;
       border-bottom: 1px solid $fg-neutral-90;
+      display: flex;
+      justify-content: space-between;
       left: 0;
       padding: $v-5 $s-8;
       position: sticky;
       right: 0;
-      text-align: right;
       top: 0;
       z-index: $z-low;
     }

@@ -25,14 +25,4 @@
     color: light-dark($color-neutral-50, $color-neutral-60);
     cursor: not-allowed;
   }
-
-  &--circle {
-    align-items: center;
-    border-radius: 50%;
-    display: inline-flex;
-    height: var(--button-size);
-    justify-content: center;
-    padding: 0;
-    width: var(--button-size);
-  }
 }
