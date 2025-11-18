@@ -43,6 +43,10 @@ export class ActivityStackService {
       this.#session._activityStack!.length - 1
     ];
   }
+
+  toString(): string {
+    return this.#session._activityStack!.join(",");
+  }
 }
 
 export const activityStack = (): MarkoRun.Handler => (context) => {
